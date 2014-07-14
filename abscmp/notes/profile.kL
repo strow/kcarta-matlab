@@ -1,0 +1,69 @@
+
+
+User Profile Format:
+--------------------
+The user profile format for kLAYERS is exactly the same as the input
+profile format used by the GENLN2 layering program.  The format is:
+
+   Header comments: an arbitrary number of lines each starting with a "!"
+
+   PORH, NIN, NGASES
+      PORH is either "'P'" or "'H'"; this signifies if the profile lists
+         altitudes (H) or not (P).
+      NIN is the (integer) number of levels in the input profile.
+      NGASES is the (integer) number of gases listed in the input profile.
+
+   GASID(1),...,GASID(NGASES)
+      These entries are the HITRAN gas IDs of the gases included in the
+      profile, in the order (left to right) their mixing ratios are listed.
+
+   LAT, RJUNK
+      LAT is the latitude (in degrees) describing the profiles location.
+      RJUNK is a dummy real number, read in but ignored.
+
+   loop I=1 to NIN of:
+      ZIN, PIN, TIN, RJUNK, MRIN(1),...,MRIN(NGASES)  if PORH = 'H'
+      or
+      PIN, TIN, RJUNK, MRIN(1),...,MRIN(NGASES)  if PORH = 'P'.
+
+      ZIN is the altitude (real, km)
+      PIN is the pressure (real, mb)
+      TIN is the temperature (real, K)
+      MRIN(I) are the mixing ratios (reals, ppmv) for the gases
+      RJUNK is ignored, but ignored. (usually air density in particles/cm^3)
+
+
+example #1: a profile without altitudes
+---
+! MODEL 1 : TROPICAL.
+! CO2 mixing ratio is AFGL value scaled by 363/330.
+!
+!
+'P'   50  3
+ 1  2  3
+ 15.0  0.0
+ 1.01300E+03  299.70  2.45000E+19  2.593E+04  3.630E+02  2.869E-02
+ 9.04000E+02  293.70  2.23100E+19  1.949E+04  3.630E+02  3.150E-02
+ 8.05000E+02  287.70  2.02800E+19  1.534E+04  3.630E+02  3.342E-02
+ 7.15000E+02  283.70  1.82700E+19  8.600E+03  3.630E+02  3.504E-02
+ ...
+---
+
+
+example #2: a profile with altitudes
+---
+! MODEL 6 : US STANDARD.  
+! H2O, CO2, and O3 mixing ratios only.  
+!  
+'H' 50  3  
+ 1 2 3  
+ 45.5397  0.0  
+   0.0  1.013E+03  288.20  2.548E+19  7.745E+03  3.300E+02  2.660E-02
+   1.0  8.988E+02  281.70  2.313E+19  6.071E+03  3.300E+02  2.931E-02
+   2.0  7.950E+02  275.20  2.094E+19  4.631E+03  3.300E+02  3.237E-02
+   3.0  7.012E+02  268.70  1.891E+19  3.182E+03  3.300E+02  3.318E-02
+   4.0  6.166E+02  262.20  1.704E+19  2.158E+03  3.300E+02  3.387E-02
+   5.0  5.405E+02  255.70  1.532E+19  1.397E+03  3.300E+02  3.768E-02
+ ...
+---
+

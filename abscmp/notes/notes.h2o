@@ -1,0 +1,133 @@
+
+H2O
+
+vchunk = 1680;
+slayind = 1:7:100; % SVD pressure level indices
+stemind = 1:2:11;  % SVD temperature offset indices
+ttemind = 6;  % test set temperature offset index
+tpprind = 3;  % test set partial presure index
+
+dim.= 2,  max errors:  lay=0.9068,  l2s=0.9562,  Tb=34.58
+dim.= 4,  max errors:  lay=0.3098,  l2s=0.3974,  Tb=15.00
+dim.= 6,  max errors:  lay=0.0716,  l2s=0.1360,  Tb=4.29
+dim.= 8,  max errors:  lay=0.0504,  l2s=0.0447,  Tb=1.58
+dim.=10,  max errors:  lay=0.0219,  l2s=0.0322,  Tb=0.64
+dim.=12,  max errors:  lay=0.0142,  l2s=0.0239,  Tb=0.63
+dim.=14,  max errors:  lay=0.0106,  l2s=0.0183,  Tb=0.41
+dim.=16,  max errors:  lay=0.0085,  l2s=0.0094,  Tb=0.33
+dim.=18,  max errors:  lay=0.0051,  l2s=0.0091,  Tb=0.17
+dim.=20,  max errors:  lay=0.0039,  l2s=0.0065,  Tb=0.13
+dim.=22,  max errors:  lay=0.0023,  l2s=0.0026,  Tb=0.06
+dim.=24,  max errors:  lay=0.0023,  l2s=0.0028,  Tb=0.05
+dim.=26,  max errors:  lay=0.0019,  l2s=0.0025,  Tb=0.04
+dim.=28,  max errors:  lay=0.0014,  l2s=0.0018,  Tb=0.04
+dim.=30,  max errors:  lay=0.0011,  l2s=0.0017,  Tb=0.04
+dim.=32,  max errors:  lay=0.0007,  l2s=0.0010,  Tb=0.02
+dim.=34,  max errors:  lay=0.0005,  l2s=0.0008,  Tb=0.01
+dim.=36,  max errors:  lay=0.0005,  l2s=0.0008,  Tb=0.01
+dim.=38,  max errors:  lay=0.0004,  l2s=0.0004,  Tb=0.01
+dim.=40,  max errors:  lay=0.0003,  l2s=0.0004,  Tb=0.01
+dim.=42,  max errors:  lay=0.0003,  l2s=0.0004,  Tb=0.01
+dim.=44,  max errors:  lay=0.0003,  l2s=0.0004,  Tb=0.01
+dim.=46,  max errors:  lay=0.0002,  l2s=0.0003,  Tb=0.01
+dim.=48,  max errors:  lay=0.0002,  l2s=0.0003,  Tb=0.01
+dim.=50,  max errors:  lay=0.0001,  l2s=0.0002,  Tb=0.01
+
+
+vchunk = 1505;
+slayind = 1:7:100; % SVD pressure level indices
+stemind = 1:2:11;  % SVD temperature offset indices
+ttemind = 6;  % test set temperature offset index
+tpprind = 3;  % test set partial presure index
+
+dim.= 2,  max errors:  lay=0.8743,  l2s=0.9450,  Tb=36.11
+dim.= 4,  max errors:  lay=0.2290,  l2s=0.3729,  Tb=11.86
+dim.= 6,  max errors:  lay=0.0883,  l2s=0.1327,  Tb=3.97
+dim.= 8,  max errors:  lay=0.0502,  l2s=0.0449,  Tb=1.04
+dim.=10,  max errors:  lay=0.0238,  l2s=0.0227,  Tb=0.58
+dim.=12,  max errors:  lay=0.0157,  l2s=0.0185,  Tb=0.57
+dim.=14,  max errors:  lay=0.0131,  l2s=0.0130,  Tb=0.48
+dim.=16,  max errors:  lay=0.0100,  l2s=0.0119,  Tb=0.45
+dim.=18,  max errors:  lay=0.0043,  l2s=0.0076,  Tb=0.16
+dim.=20,  max errors:  lay=0.0035,  l2s=0.0060,  Tb=0.12
+dim.=22,  max errors:  lay=0.0025,  l2s=0.0033,  Tb=0.07
+dim.=24,  max errors:  lay=0.0029,  l2s=0.0021,  Tb=0.05
+dim.=26,  max errors:  lay=0.0017,  l2s=0.0016,  Tb=0.05
+dim.=28,  max errors:  lay=0.0013,  l2s=0.0020,  Tb=0.03
+dim.=30,  max errors:  lay=0.0012,  l2s=0.0016,  Tb=0.03
+dim.=32,  max errors:  lay=0.0009,  l2s=0.0009,  Tb=0.01
+dim.=34,  max errors:  lay=0.0006,  l2s=0.0009,  Tb=0.01
+dim.=36,  max errors:  lay=0.0005,  l2s=0.0005,  Tb=0.01
+dim.=38,  max errors:  lay=0.0004,  l2s=0.0005,  Tb=0.01
+dim.=40,  max errors:  lay=0.0003,  l2s=0.0003,  Tb=0.01
+dim.=42,  max errors:  lay=0.0003,  l2s=0.0003,  Tb=0.01
+dim.=44,  max errors:  lay=0.0003,  l2s=0.0003,  Tb=0.01
+dim.=46,  max errors:  lay=0.0002,  l2s=0.0003,  Tb=0.01
+dim.=48,  max errors:  lay=0.0002,  l2s=0.0002,  Tb=0.01
+dim.=50,  max errors:  lay=0.0002,  l2s=0.0002,  Tb=0.01
+
+
+vchunk = 1505;
+slayind = 1:7:100; % SVD pressure level indices
+stemind = 1:2:11;  % SVD temperature offset indices
+ttemind = 1;  % test set temperature offset index
+tpprind = 1;  % test set partial presure index
+
+dim.= 2,  max errors:  lay=0.9038,  l2s=0.9601,  Tb=34.56
+dim.= 4,  max errors:  lay=0.3463,  l2s=0.4919,  Tb=16.28
+dim.= 6,  max errors:  lay=0.1699,  l2s=0.2722,  Tb=10.03
+dim.= 8,  max errors:  lay=0.1220,  l2s=0.1909,  Tb=7.13
+dim.=10,  max errors:  lay=0.0403,  l2s=0.0532,  Tb=1.64
+dim.=12,  max errors:  lay=0.0240,  l2s=0.0399,  Tb=1.35
+dim.=14,  max errors:  lay=0.0179,  l2s=0.0378,  Tb=1.30
+dim.=16,  max errors:  lay=0.0129,  l2s=0.0173,  Tb=0.51
+dim.=18,  max errors:  lay=0.0136,  l2s=0.0115,  Tb=0.25
+dim.=20,  max errors:  lay=0.0097,  l2s=0.0090,  Tb=0.16
+dim.=22,  max errors:  lay=0.0056,  l2s=0.0064,  Tb=0.16
+dim.=24,  max errors:  lay=0.0036,  l2s=0.0042,  Tb=0.12
+dim.=26,  max errors:  lay=0.0031,  l2s=0.0032,  Tb=0.10
+dim.=28,  max errors:  lay=0.0035,  l2s=0.0026,  Tb=0.08
+dim.=30,  max errors:  lay=0.0023,  l2s=0.0020,  Tb=0.04
+dim.=32,  max errors:  lay=0.0012,  l2s=0.0015,  Tb=0.04
+dim.=34,  max errors:  lay=0.0010,  l2s=0.0011,  Tb=0.03
+dim.=36,  max errors:  lay=0.0009,  l2s=0.0008,  Tb=0.02
+dim.=38,  max errors:  lay=0.0008,  l2s=0.0008,  Tb=0.02
+dim.=40,  max errors:  lay=0.0007,  l2s=0.0006,  Tb=0.02
+dim.=42,  max errors:  lay=0.0007,  l2s=0.0007,  Tb=0.02
+dim.=44,  max errors:  lay=0.0006,  l2s=0.0006,  Tb=0.02
+dim.=46,  max errors:  lay=0.0005,  l2s=0.0005,  Tb=0.01
+dim.=48,  max errors:  lay=0.0004,  l2s=0.0004,  Tb=0.01
+dim.=50,  max errors:  lay=0.0003,  l2s=0.0003,  Tb=0.01
+
+
+vchunk = 1505;
+slayind = 1:7:100; % SVD pressure level indices
+stemind = 1:2:11;  % SVD temperature offset indices
+ttemind = 11; % test set temperature offset index
+tpprind = 5;  % test set partial presure index
+
+dim.= 2,  max errors:  lay=0.8547,  l2s=0.9449,  Tb=38.09
+dim.= 4,  max errors:  lay=0.1852,  l2s=0.4121,  Tb=13.97
+dim.= 6,  max errors:  lay=0.1088,  l2s=0.1417,  Tb=5.26
+dim.= 8,  max errors:  lay=0.1405,  l2s=0.1343,  Tb=4.36
+dim.=10,  max errors:  lay=0.0256,  l2s=0.0597,  Tb=1.26
+dim.=12,  max errors:  lay=0.0152,  l2s=0.0356,  Tb=0.52
+dim.=14,  max errors:  lay=0.0157,  l2s=0.0232,  Tb=0.39
+dim.=16,  max errors:  lay=0.0125,  l2s=0.0134,  Tb=0.29
+dim.=18,  max errors:  lay=0.0056,  l2s=0.0117,  Tb=0.18
+dim.=20,  max errors:  lay=0.0034,  l2s=0.0072,  Tb=0.15
+dim.=22,  max errors:  lay=0.0024,  l2s=0.0049,  Tb=0.14
+dim.=24,  max errors:  lay=0.0022,  l2s=0.0032,  Tb=0.05
+dim.=26,  max errors:  lay=0.0018,  l2s=0.0019,  Tb=0.06
+dim.=28,  max errors:  lay=0.0017,  l2s=0.0018,  Tb=0.04
+dim.=30,  max errors:  lay=0.0011,  l2s=0.0014,  Tb=0.05
+dim.=32,  max errors:  lay=0.0009,  l2s=0.0012,  Tb=0.04
+dim.=34,  max errors:  lay=0.0007,  l2s=0.0008,  Tb=0.02
+dim.=36,  max errors:  lay=0.0004,  l2s=0.0007,  Tb=0.02
+dim.=38,  max errors:  lay=0.0004,  l2s=0.0005,  Tb=0.01
+dim.=40,  max errors:  lay=0.0002,  l2s=0.0004,  Tb=0.01
+dim.=42,  max errors:  lay=0.0002,  l2s=0.0004,  Tb=0.01
+dim.=44,  max errors:  lay=0.0002,  l2s=0.0004,  Tb=0.01
+dim.=46,  max errors:  lay=0.0002,  l2s=0.0003,  Tb=0.01
+dim.=48,  max errors:  lay=0.0002,  l2s=0.0002,  Tb=0.01
+dim.=50,  max errors:  lay=0.0002,  l2s=0.0002,  Tb=0.01

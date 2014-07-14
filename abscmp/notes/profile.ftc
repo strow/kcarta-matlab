@@ -1,0 +1,105 @@
+
+
+Input Profile Units and Format:
+------------------------------
+The input profiles for use with the CALPAR routine of the demo program must
+be in the following units:
+   Layer Altitude and thinckness: meter
+   Layer Pressure: atmosphere
+   Layer Temperature: Kelvin
+   Integrated Layer Absorber Amounts: kiloMoles/cm^2
+Note: these are layer slab values, and thus the altitude, pressure, and
+temperature refer to some sort of average across the slab. Our particular
+definitions for these variables can be found in the documentation of our
+AIRS_LAYERS package.
+
+The input profile text files read using the "rdprof" rountine must be in
+the following format:
+   An arbitrary number of header comment lines, defined as any line beginning
+      with the "!" character
+   A profile title or comment, up to 40 characters long
+   A loop (lowest to highest in altitude) over the 100 AIRS layers:
+      i, altitude, thickness, pressure, temperature, CO2, H2O, O3, CO, CH4
+      where "i" is just a loop counter (integer). All the other values are
+      reals with the units stated above. The values are read using the "*"
+      format, so the exact FORTRAN format used is not important.
+
+
+example:
+---
+! Profile created using TESTLAY
+! lat= 15.000, lon=  0.000, 1100mb alt(m)=-6.89000E+02
+! input=myp1                                                                  
+! Input altitudes: not supplied; calculated instead                     
+! Input mixing ratios treated as relative to: dry air                   
+! H2O saturation: checked & corrected if needed                         
+! no altitude(m)  thickness(m) pressure(atm) temp(K) "fixed" amnt  water amnt   
+ozone amnt  CO amount    methane amnt
+! -- ------------ ------------ ------------ -------- ------------ ------------ -
+----------- ------------ ------------
+regression profile 1
+   1 -5.68458E+02  2.41085E+02  1.07120E+00  303.340  3.65378E-07  3.09556E-05  
+2.71439E-11  1.53683E-10  1.71114E-09
+   2 -3.26406E+02  2.43019E+02  1.04269E+00  301.918  3.60762E-07  2.89560E-05  
+2.74713E-11  1.48402E-10  1.68952E-09
+   3 -8.24156E+01  2.44963E+02  1.01458E+00  300.478  3.56105E-07  2.69784E-05  
+2.77851E-11  1.43156E-10  1.66771E-09
+   4  1.63524E+02  2.46917E+02  9.86866E-01  299.018  3.51409E-07  2.50239E-05  
+2.80849E-11  1.37949E-10  1.64572E-09
+ ...
+--- 
+
+
+Profiles of the type required for use with our AIRS_FTC package can be
+created using our AIRS_LAYERS package. Alternately, some other layering
+program may be used, or the profiles may even be defined directly in the
+100 AIRS layers.
+
+If the profiles are not defined directly on the 100 AIRS layers, the starting
+point for all profile calculations is the agreed upon AIRS layer boundaries,
+defined as:
+
+For i=101 downto 1, Plev(i) (in mb) =
+     0.0050,    0.0161,    0.0384,    0.0769,    0.1370,
+     0.2244,    0.3454,    0.5064,    0.7140,    0.9753,
+     1.2972,    1.6872,    2.1526,    2.7009,    3.3398,
+     4.0770,    4.9204,    5.8776,    6.9567,    8.1655,
+     9.5119,   11.0038,   12.6492,   14.4559,   16.4318,
+    18.5847,   20.9224,   23.4526,   26.1829,   29.1210,
+    32.2744,   35.6505,   39.2566,   43.1001,   47.1882,
+    51.5278,   56.1260,   60.9895,   66.1253,   71.5398,
+    77.2396,   83.2310,   89.5204,   96.1138,  103.0172,
+   110.2366,  117.7775,  125.6456,  133.8462,  142.3848,
+   151.2664,  160.4959,  170.0784,  180.0183,  190.3203,
+   200.9887,  212.0277,  223.4415,  235.2338,  247.4085,
+   259.9691,  272.9191,  286.2617,  300.0000,  314.1369,
+   328.6753,  343.6176,  358.9665,  374.7241,  390.8926,
+   407.4738,  424.4698,  441.8819,  459.7118,  477.9607,
+   496.6298,  515.7200,  535.2322,  555.1669,  575.5248,
+   596.3062,  617.5112,  639.1398,  661.1920,  683.6673,
+   706.5654,  729.8857,  753.6275,  777.7897,  802.3714,
+   827.3713,  852.7880,  878.6201,  904.8659,  931.5236,
+   958.5911,  986.0666, 1013.9476, 1042.2319, 1070.9170,
+  1100.0000
+
+These values come from the equation:
+
+   Plev(x)=( a*x^2 + b*x + c )^power
+
+where
+   "power" = 7/2 = 3.50
+   "x" is level number (an integer)
+   and "a", "b", and "c" are solved for such that
+      Plev(1)  = 1100.0 mb
+      Plev(38) =  300.0 mb
+      Plev(101)=    0.005 mb
+   (the approximate values are: a=-1.55E-4, b=-5.59E-2, c=7.45)
+
+This layer boundary structure will serve as a mesh onto which the
+user's input profile can somehow be applied and then integrated to
+form the layer slab profile. It is the details of this procedure
+which has not yet been agreed upon and standardized. We have
+developed the AIRS_LAYERS package to do this.  Note: the 100 AIRS
+layers are the slabs between the 101 boundary levels.
+
+

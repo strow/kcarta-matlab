@@ -1,0 +1,20 @@
+
+
+% function [zang]=vaconv( sva, salt, alt );
+%
+% Convert the satellite viewing angle into the local path zenith angle.
+
+/home/hannon/matlab/vaconv.m
+
+
+matlab format fine solar data
+
+/home/hannon/Solar_data/Chris_Barnet/fine_solar.mat
+
+
+path to sergio examples:
+
+/salsify/users/sergio/KCARTAGENERAL/MATLAB/RADTrans/HOWARD
+
+
+

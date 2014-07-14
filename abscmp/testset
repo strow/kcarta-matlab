@@ -1,0 +1,17 @@
+#!/bin/sh
+#
+# test run
+#
+# usage: testset "<glist>"  
+
+DISPLAY=""
+export DISPLAY
+
+matlab <<MATEND
+more off
+glist = $1;
+vlist = 605:25:2805;
+testset(glist, vlist);
+quit
+MATEND
+

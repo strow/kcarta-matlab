@@ -1,0 +1,8 @@
+
+% scott's layer boundaries
+% nseq = 1:101
+% A = -1.5508E-4
+% B = -5.5937E-2
+% C =  7.4516
+% plevs1 = (A*nseq .^2 + B*nseq + C) .^ (7/2);
+

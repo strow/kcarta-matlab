@@ -1,0 +1,18 @@
+#!/bin/sh
+#
+# compression run
+#
+# USAGE:  cmprun <glist>
+#
+#   <glist> is a matlab list of HITRAN gas IDs, enclosed in quotes
+#
+
+DISPLAY=""
+export DISPLAY
+
+matlab <<MATEND
+more off
+cmprun($1);
+quit
+MATEND
+

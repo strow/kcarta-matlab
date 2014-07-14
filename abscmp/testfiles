@@ -1,0 +1,19 @@
+#!/bin/sh
+#
+# test files
+#
+# usage: testfiles
+#
+
+DISPLAY=""
+export DISPLAY
+
+matlab <<MATEND
+more off
+glist = 1:32;
+vlist = 605:25:2805;
+topts.testchunk = 0;
+testset(glist, vlist, topts)
+quit
+MATEND
+
