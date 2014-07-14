@@ -60,7 +60,7 @@ else
         disp('reference profile can supply gasIDs'); 
         II'
         error('reference profile does NOT have all missing gases!!!!')
-        end
+      end
       for ii = 1 : length(I)
         if C(ii) ~= 103
           fprintf(1,'    --> setting profile of gas %3i to ref profile\n',C(ii))
@@ -81,12 +81,12 @@ else
           head.glist(head.ngas) = C(ii); head.gunit(head.ngas) = 1;
           str = ['prof.gas_103 = prof.gas_1 * ' num2str(mult103) ';'];
           eval(str);
-          end
         end
+      end
      [igas,indglist,indgasid] = intersect(head.glist,gasid);
      ngas = length(igas);
-     end
-  end
+   end
+end
 
 [xigas,xindglist,xindgasid] = intersect(gasid,[30 34 35 37 41]);
 if length(xigas) >= 1
@@ -95,8 +95,8 @@ if length(xigas) >= 1
     fprintf(1,' warning : set gas %3i amt to 0; included in xsec! \n',xgasid)
     str = ['prof.gas_' num2str(xgasid) ' = 0.0 * prof.gas_' num2str(xgasid) ';'];
     eval(str);
-    end
   end
+end
 
 
 % Check gunit
@@ -105,9 +105,9 @@ if (~isfield(head,'gunit'))
 else
    ii = unique( head.gunit(indglist) );
    if (length(ii) ~= 1 | ii(1) ~= 1)
-      ii
-      head.gunit
-      error('head.gunit must be 1 (molecules/cm^2) for all gases in gasid')
+     ii
+     head.gunit
+     error('head.gunit must be 1 (molecules/cm^2) for all gases in gasid')
    end
 end
 

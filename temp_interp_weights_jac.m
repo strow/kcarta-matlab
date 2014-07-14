@@ -59,6 +59,6 @@ for Li = 1:nlay
     twlo(Li) = 0;
     %% probably gonna crash, but I hope this condition never met
     jtwhi(Li) = +1/(t12-t11);           jtwlo(Li) = -1/(t12-t11);
-    end
+  end
 end
 

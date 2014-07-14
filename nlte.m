@@ -47,7 +47,7 @@ ee = exist(fncoefn);
 if ee == 0
   fprintf(1,'you have set nlte file = %s \n',fncoefn)
   error('file DNE');
-  end
+end
 [ichan, frqchn, coefn] = rd_nte_le(fncoefn);
 nchnte = length(ichan);
 
@@ -63,5 +63,5 @@ radNLTE = interp1(frqchn,raDrad,raFreq,'linear');
 oo = find(raFreq > max(frqchn) | raFreq < min(frqchn));
 if length(oo) > 0
   radNLTE(oo) = 0.0;
-  end
+end
 

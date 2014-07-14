@@ -1,17 +1,18 @@
+%% paths to either tha Matlab or f77 kcompressed files
+ropt0.iMatlab_vs_f77 = iMatlab_vs_f77;
 if iMatlab_vs_f77 == +1 
    %% use Matlab kComp files
-  ropt0.iMatlab_vs_f77 = iMatlab_vs_f77;
   ropt0.kpath          = kpath;
 elseif iMatlab_vs_f77 == -1  
   %% use f77 kComp files
-  ropt0.iMatlab_vs_f77 = iMatlab_vs_f77;
   ropt0.kpathh2o = kpathh2o;
   ropt0.kpathhDo = kpathhDo;
   ropt0.kpathco2 = kpathco2;
   ropt0.kpathetc = kpathetc;
 else
   error('need kComp files to either be Matlab (+1) or f77 ieee-le (-1)')
-  end
+end
+
 ropt0.soldir         = soldir;
 ropt0.cdir           = cdir;
 ropt0.nltedir        = nltedir;
@@ -32,20 +33,22 @@ addpath([dirname(mfilename('fullpath')) '/private/JACOBIAN_AUX'])
 %% now check that dirs exist
 if iMatlab_vs_f77 == +1 
   if ~exist(kpath,'dir')
-    error('kpath set in user_set_dirs does not exist')
-    end
+    fprintf(1,'matlab kcomp kpath = %s \n',kpath)
+    error('matlab kcomp kpath set in user_set_dirs does not exist')
+  end
 elseif iMatlab_vs_f77 == -1 
   if ~exist(kpathh2o,'dir')
-    kpathh2o
+    fprintf(1,'f77 kpathh2o = %s \n',kpathh2o)
     error('kpathh2o set in user_set_dirs does not exist')
   elseif ~exist(kpathco2,'dir')
-    kpathco2
+    fprintf(1,'f77 kpathco2 = %s \n',kpathco2)
     error('kpathco2 set in user_set_dirs does not exist')
   elseif ~exist(kpathetc,'dir')
-    kpathetc
+    fprintf(1,'f77 kpathetc = %s \n',kpathetc)
     error('kpathetc set in user_set_dirs does not exist')
-    end
   end
+end
+
 if ~exist(refp,'file')
   error('refp set in user_set_dirs does not exist')
 elseif ~exist(soldir,'dir')
@@ -60,4 +63,4 @@ elseif ~exist(klayers_code.junkdir,'dir')
   error('klayers_code.junkdir set in user_set_dirs does not exist')
 elseif ~exist(klayers_code.airs,'file')
   error('klayers_code.airs set in user_set_dirs does not exist')
-  end
+end

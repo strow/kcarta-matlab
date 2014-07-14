@@ -25,10 +25,10 @@ for ip = iProfRun
   [nlays,prof,rFracBot,ropt0] = initialize_kcmix(prof,iDownLook,ropt0);
   aux_struct = auxiliary_set(fA,fB,nlays,rFracBot,CKD,cswt,cfwt,refp);
   odsOut = opticaldepths(head,prof,aux_struct,ropt0,iGasDoOD,iBreakoutCont);
-  end
+end
 
 stuff.freqs = [fA fB]; stuff.input_rtpfile = [dirin '/' fin];
-stuff.layersprof = p;  stuff.iGasDoOD = iGasDoOD;   stuff.iProfRun = iProfRun;
+stuff.layersprof = prof;  stuff.iGasDoOD = iGasDoOD;   stuff.iProfRun = iProfRun;
 stuff.iBreakoutCont = iBreakoutCont;
 
 clear aux_struct iProfRun iHITRAN

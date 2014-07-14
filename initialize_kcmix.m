@@ -28,17 +28,17 @@ kAvog = 6.022045e26;
 if ~isfield(prof,'zobs') 
   disp(' ------------>>>> warning : setting prof.zobs = 705000')
   prof.zobs = 705000;
-  end
+end
 
 if ~isfield(prof,'nrho') 
   disp(' ------------>>>> warning : setting prof.nrho = prof.nemis')
   prof.nrho = prof.nemis;
-  end
+end
 
 if ~isfield(prof,'rfreq') 
   disp(' ------------>>>> warning : setting prof.rfreq = prof.efreq')
   prof.rfreq = prof.efreq;
-  end
+end
 
 if ~isfield(prof,'plays') 
   prof.plays = zeros(size(prof.plevs));
@@ -46,7 +46,7 @@ if ~isfield(prof,'plays')
   playsA = plays(1:100,:)-plays(2:101,:);
   playsB = log(plays(1:100,:)./plays(2:101,:));
   prof.plays(1:100,:) = playsA./playsB;
-  end
+end
 
 if ~isfield(prof,'pobs') 
   if iDownLook == +1
@@ -55,22 +55,22 @@ if ~isfield(prof,'pobs')
   elseif iDownLook == -1
     disp(' ------------>>>> warning : setting prof.pobs = spres')
     prof.pobs = prof.spres;
-    end
   end
+end
 
 if prof.satzen == -9999
   disp(' ------------>>>> warning : setting prof.satzen = prof.scanang');
   prof.satzen = prof.scanang;
-  end
+end
 
 %%% need prof.plevs(nlays) < prof.spres < prof.plevs(nlays+1), which is same as
 %%% need prof.plevs(nlevs-1) < prof.spres < prof.plevs(nlevs)
 if (prof.plevs(nlays) > prof.spres)
   error('prof.plevs(nlays) > prof.spres');
-  end
+end
 if (prof.plevs(nlevs) < prof.spres)
   error('prof.plevs(nlevs) < prof.spres');
-  end
+end
 
 rFracBot = ...
    (prof.plevs(nlays)-prof.spres)/(prof.plevs(nlays)-prof.plevs(nlevs));
@@ -88,6 +88,7 @@ if prof.solzen < 90
   ropt.rsolar = +1;  %%sun on
 else
   ropt.rsolar = -1;
-  end
+end
+
 ropt.rtherm = 2;   %% 0,1,2 = none/simple/accurate background thermal
 

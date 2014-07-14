@@ -23,8 +23,8 @@ elseif (gid == 1)
   else
     %% H2o only (ie no HDO isotopes here!!!
     cgxfile = sprintf('%s%s%d_g1.dat', kpathh2o, prefix, vchunk);
-    end
+  end
 elseif (gid == 103)
   %% only exist for certain bands so don't worry
   cgxfile = sprintf('%s%s%d_g103.dat', kpathhDo, prefix, vchunk);
-  end
+end

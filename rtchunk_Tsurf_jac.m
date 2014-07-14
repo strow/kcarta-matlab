@@ -122,7 +122,7 @@ if rsolar > 0
     rsol = srad(:)*1000;      %%%change to correct units
   else
     rsol = ttorad(freq,5800);
-    end
+  end
   rsol0 = rsol * omega;
   clear srad sfrq
 
@@ -140,7 +140,7 @@ if rsolar > 0
     sunfine = interp_emiss_rho(freq,prof.rfreq,prof.rho,prof.nrho);
   else
     sunfine = (1-efine);
-    end
+  end
   % get the upwards reflected component
   rsol = rsol .* cos(solang(nlays)) .* omega .* exp(-solabs) .* sunfine;
 end
@@ -155,7 +155,7 @@ elseif rtherm == 2
   vary_rtherm;
 else
   rthm = zeros(size(freq));
-  end
+end
 
 % ------------------
 % main radiance path
@@ -184,7 +184,7 @@ for i = ipath
   raaRad(:,lenn-i+1) = ttorad(freq,prof.ptemp(i));
   rad = rad .* tran(:,i) + raaRad(:,lenn-i+1) .* (1 - tran(:,i));
   iout = iout + 1;
-  end
+end
 
 if prof.solzen < 90 & (freq(1) < 2391.098 & freq(length(freq)) > 2224.888)
   disp('  adding on NLTE')
@@ -193,7 +193,7 @@ if prof.solzen < 90 & (freq(1) < 2391.098 & freq(length(freq)) > 2224.888)
   radnlte = nlte(freq,prof.satzen,zang,sunang,raVT,length(raVT),nltedir);
   rad = rad + radnlte;
   %allrad(:,iout) = rad;
-  end
+end
 
 %% rthm = rthm./(1-efine);   %%% output total component, no modulation with 1-e
 rthm = rthm;                 %%% output total component, no modulation with 1-e

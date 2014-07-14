@@ -185,6 +185,7 @@ clear k2AllChunks jacQGAllChunks jacTGAllChunks
 
 rads.freqAllChunks             = freqAllChunks;
 rads.radAllChunks              = radAllChunks;
+rads.gaslist                   = gasids;    
 if iDebug > 0
   rads.abscAllChunks             = abscAllChunks;
   rads.abscAllChunksG2           = abscAllChunksG2;

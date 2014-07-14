@@ -55,6 +55,6 @@ for Li = 1:nlay
   else 
     twhi(Li) = 1;
     twlo(Li) = 0;
-    end
+  end
 end
 

@@ -86,5 +86,5 @@ for iL = 1 : nlays
   else
     tw2(iL) = 1;
     tw1(iL) = 0;
-    end
   end
+end

@@ -93,20 +93,24 @@ iMatlab_vs_f77 = -1;   % use f77 version
 % fA and fB are start and stop wavenumbers
 %fA = 500   fB =  605; 
 fA = 605;  fB = 2830; 
+fA = 1780;  fB = 1805; 
 
 % iGasDoOD gives the gasIDs to be included
 %iGasDoOD = [1 103];        %% only do WV (includes continuum) and CO2
-iGasDoOD = 9999;        %% only do WV (includes continuum) and CO2
+iGasDoOD = 9999;            %% do all
+iGasDoOD = [9999];            %% do all
 
 % CKD is the CKD version : choose 1,2,3,4,5
-CKD = '5';
+CKD = '6';
 
 % iBreakoutCont tells whether to output SELF/FORN continuum as well
 iBreakoutCont = +1;
 
 % these next two define the input dir and rtp file
 dirin = '/home/sergio/MATLABCODE/KCMIX2/PACKAGE_UPnDOWNLOOK_2011/RTPFILES/';
-fin   = 'desert_op.rtp'; 
+  fin   = 'desert_op.rtp'; 
+  iProfRun = 1;
+dirin = '/asl/s1/strow/rtprod_cris/2013/08/28/';
+  fin   = 'test.rtp';
+  iProfRun = 262;
 
-% iProfRun is which of the rtp profiles to run
-iProfRun = 1;

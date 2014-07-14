@@ -10,7 +10,7 @@ if length(donk) >= 1
   fAA = kcartachunks(donk);
 else
   fAA = kcartachunks(1);
-  end
+end
 
 donk = find(kcartachunks >= fB); 
 if length(donk) >= 1 
@@ -18,9 +18,10 @@ if length(donk) >= 1
   fBB = kcartachunks(donk);
 else
   fBB = kcartachunks(length(kcartachunks));
-  end
+end
+
 fBB = fBB-df;
 
 if fBB < fAA
   fBB = fAA;
-  end
+end

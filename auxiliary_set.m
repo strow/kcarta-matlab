@@ -19,10 +19,10 @@ function aux_struct = set_aux(fA,fB,nlays,rFracBot,CKD,cswt,cfwt,refp);
 
 if (fA ~= fA1) 
   fprintf(1,'warning : fA reset from %4i to %4i \n',fA,fA1);
-  end
+end
 if (fB ~= fB1) 
   fprintf(1,'warning : fB reset from %4i to %4i \n',fB,fB1);
-  end
+end
 
 fA = fA1;
 fB = fB1;

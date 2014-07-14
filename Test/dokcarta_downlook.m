@@ -19,7 +19,7 @@ global iDebug
 %iDebug = +1;      
 %iDebug = +1090;   
 iDebug = +0;      
-iDebug = +1;      
+%iDebug = +1;      
 
 for ip = iProfRun
   fprintf(1,'processing profile %5i \n',ip);
@@ -34,7 +34,7 @@ for ip = iProfRun
   end
 
 stuff.freqs = [fA fB]; stuff.input_rtpfile = [dirin '/' fin];
-stuff.layersprof = p;  stuff.iDoJac = iDoJac;   stuff.iProfRun = iProfRun;
+stuff.layersprof = prof;  stuff.iDoJac = iDoJac;   stuff.iProfRun = iProfRun;
 stuff.iJacobOutput = iJacobOutput;
 
 clear aux_struct iProfRun iHITRAN

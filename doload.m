@@ -13,7 +13,7 @@ elseif (iAirs == -1)
   klayers = ['!' klayers_code.aeri ' fin=' filein];
 else
   error('unknown instrument!!!')
-  end
+end
 
 [h,ha,p,pa] = rtpread(filein); 
 if h.ptype == 0 
@@ -30,7 +30,7 @@ if h.ptype == 0
   [h,ha,p,pa] = rtpread(fklayers1); 
   rmer = ['!/bin/rm ' fklayers1]; eval(rmer);  %%%%remove klayers run  
 
-  end
+end
 
 fprintf(1,'loaded in profile(s) from %s ....\n',filein)
 disp(' ')

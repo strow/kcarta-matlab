@@ -18,7 +18,16 @@ function [rads,jacs] = ...
 %                    with kpath,soldir,cdir,nltedir,co2chiDir
 %                    also whether or not to do Thermal BackGnd and solar
 %   iDoJac       = list of gasIDS for jacs
+%     iDoJac = -1;                      %% no jacs
+%     iDoJac = [iGid1 iGid2 ... iGidN]; %% do jacobians; the iGid tells which
+%                                       %% gases to do amt jacs for
+%                                       %% (temp jacs always done)
+%     warning : iGid1 = WV includes lines and continuum
+%     example : iDoJac = [1 3];
 %   iJacobOutput = what kind of jacobian output
+%     iJacobOutput = -1;        %% dr/dT, dr/dq
+%     iJacobOutput =  0;        %% dr/dT, dr/dq*q
+%     iJacobOutput = +1;        %% dBT/dT, dBT/dq*q
 %
 % output
 %   rads.freqAllChunks                  1x20000              freq
@@ -204,6 +213,7 @@ for cc = 1 : nchunk
 
 rads.freqAllChunks             = freqAllChunks;
 rads.radAllChunks              = radAllChunks;
+rads.gaslist                   = gasids;    
 if iDebug > 0
   rads.abscAllChunks             = abscAllChunks;
   end

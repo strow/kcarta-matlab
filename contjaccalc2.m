@@ -177,8 +177,9 @@ for iL = 1 : nlays
     blah2(ineed) = (  a1Q * (cfcoarse(ineed) * (pL - ppL)) .* fcoarse(ineed) .* tanh(a2 * fcoarse(ineed)));
     gah  = blah1 + blah2;
     jacQG(:,iL) = (gah(imid).*fw1 + gah(imid+1).*fw2); %
-    end
-  end % loop on layers
+  end
+
+end % loop on layers
 
 %if iBlah == 0
 %  save blah0 absc jacT

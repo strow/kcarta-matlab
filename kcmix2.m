@@ -58,42 +58,7 @@ function [absc, fr, iNumVec] = kcmix(itlo, ithi, twlo, twhi, pi1Out, gidIN, ...
 % be more general to read these in with the compressed data
 %
 
-% pre-compression transform
-kpow = 1/4; 
-
-% temperature tabulation offsets
-toffset = [-50, -40, -30, -20, -10, 0, 10, 20, 30, 40, 50];
-
-% pressure tabulation offsets (for H2O)
-poffset = [0.1, 1.0, 3.3, 6.7, 10.0];
-
-% load reference profile (defines profile structure "refpro")
-eval(sprintf('load %s', refp));
-
-ngas = length(prof.glist);  % number of gasses in input profile
-nlay = length(prof.mpres);  % number of layers in input profile
-
-% initialize absorption output array
-% absc = zeros(1e4, nlay);
-
-% initialize frequency array ...
-% fr = vchunk + (0:9999)*df;
-
-%% ropt0.iMatlab_vs_f77 = -1;    %% use f77 binary database
-%% ropt0.iMatlab_vs_f77 = +1;    %% use Matlab binary database
-if ropt0.iMatlab_vs_f77 == -1
-  % kCARTA databases
-  %datadir = '/strowdata1/shared/sergio/MATLABCODE/Kcarta/Data';
-  %kpathh2o = fullfile(datadir,'v07.ieee-le/h2o.ieee-le');
-  %kpathco2 = fullfile(datadir,'v24.ieee-le/co2.ieee-le');
-  %kpathetc = fullfile(datadir,'v07.ieee-le/etc.ieee-le');
-  kpathh2o = ropt0.kpathh2o;
-  kpathhDo = ropt0.kpathhDo;
-  kpathco2 = ropt0.kpathco2;
-  kpathetc = ropt0.kpathetc;
-elseif ropt0.iMatlab_vs_f77 == +1
-  kpath = ropt0.kpath;
-  end
+kcompress_inits
 
 % loop on required gas in the supplied profile
 xyz = find(prof.glist == gidIN);
@@ -105,7 +70,7 @@ for gind = xyz : xyz
     cgxfile = get_kcompname_F77(ropt0,vchunk,gid,prefix);
   else
     cgxfile = sprintf('%s/cg%dv%d.mat', kpath, gid, vchunk);
-    end
+  end
 
   % index of current gas ID in the reference profile
   rgind = find(refpro.glist == gid);
@@ -128,7 +93,7 @@ for gind = xyz : xyz
       [fr, fstep, toffset, kcomp, B, gid, ktype] = rdgaschunk_le(cgxfile); 
     else
       eval(sprintf('load %s', cgxfile));
-      end
+    end
 
     [n, d] = size(B);
     iNumVec = d;   %% we found compressed data
@@ -216,24 +181,24 @@ for gind = xyz : xyz
       elseif vchunk == 2405
         chix = 'co2_4um_fudge_2405_b.txt';
         iChi = +1;
-        end
+      end
       if iChi > 0
         fprintf(1,'   CO2 chi function for %5i \n',floor(vchunk));
         chi = [ropt0.co2ChiFilePath chix];
         chi = load(chi);
         chi = chi(:,2); chi = chi*ones(1,length(prof.mtemp));
         od_gas = od_gas.*chi;
-        end
       end
+    end
 
     wonk = find(isnan(od_gas));
     if length(wonk) > 0
       fprintf(1,'   warning : found %6i NaNs in ODs for gas % 3i \n',length(wonk),gid);
       od_gas(wonk) = 0.0;
-      end
+    end
 
     absc = absc + od_gas;    %%% update absc (output) from the (input) value
-    end % valid gas ID and compressed data existance check
+  end % valid gas ID and compressed data existance check
 
-  end % gas loop
+end % gas loop
 

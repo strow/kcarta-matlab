@@ -2,6 +2,7 @@
 % NAME
 %
 %   contcalc -- continuum calculation from kcarta tabulated values
+%            -- this adds together both self and forn continuum, used for RT and jac codes
 %
 % SYNOPSIS
 %

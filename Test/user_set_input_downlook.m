@@ -12,7 +12,7 @@
 %   example : iAirs = +1;     %%% doing things for AIRS
 %
 % iHITRAN sets the kCompressed directory, based on HITRAN
-%   iHITRAN = 2000,2004,2008 are your options
+%   iHITRAN = 2000,2004,2008,2012 are your options
 %
 % iMatlab_vs_f77 tells the code whether the database is Matlab or ieee-le 
 %   iMatlab_vs_f77 = +1   use Matlab version
@@ -106,7 +106,7 @@ iHITRAN = 2008;
 iHITRAN = 2012;
 
 % iMatlab_vs_f77 : use Matlab (+1) or ieee-le (-1) kcomp database
-%iMatlab_vs_f77 = +1;   % use Matlab version
+iMatlab_vs_f77 = +1;   % use Matlab version
 iMatlab_vs_f77 = -1;   % use f77 version
 
 % fA and fB are start and stop wavenumbers
@@ -114,6 +114,7 @@ fA = 2205;  fB = 2430;
 fA = 2255;  fB = 2305; 
 fA = 2105;  fB = 2405; 
 fA = 605;  fB = 2830; 
+fA = 1780;  fB = 1805; 
 
 % iDoJac tells controls the jacobians gasids (-1 for none)
 %iDoJac = [1 2];        %% WV (includes continuum) and CO2

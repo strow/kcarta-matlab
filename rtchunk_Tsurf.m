@@ -120,7 +120,7 @@ if rsolar > 0
     rsol = srad(:)*1000;      %%%change to correct units
   else
     rsol = ttorad(freq,5800);
-    end
+  end
   rsol0 = rsol * omega;
   clear srad sfrq
 
@@ -138,7 +138,7 @@ if rsolar > 0
     sunfine = interp_emiss_rho(freq,prof.rfreq,prof.rho,prof.nrho);
   else
     sunfine = (1-efine);
-    end
+  end
   % get the upwards reflected component
   rsol = rsol .* cos(solang(nlays)) .* omega .* exp(-solabs) .* sunfine;
 end
@@ -153,7 +153,7 @@ elseif rtherm == 2
   vary_rtherm;
 else
   rthm = zeros(size(freq));
-  end
+end
 
 % ------------------
 % main radiance path
@@ -187,7 +187,7 @@ if prof.solzen >= 90
     rad = rad .* tran(:,i) + pplanck .* (1 - tran(:,i));
     iout = iout + 1;
     %allrad(:,iout) = rad;
-    end
+  end
 elseif prof.solzen < 90
   if (freq(end) < 2205 | freq(1) > 2405)
     %% normal LTE

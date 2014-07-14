@@ -88,5 +88,5 @@ for iL = 1 : nlays
     tw2(iL) = 1;
     tw1(iL) = 0;
     jtw1(iL) = -1/(ts(i1(iL)+1) - ts(i1(iL))); jtw2 = +1/(ts(i1(iL)+1) - ts(i1(iL)));
-    end
   end
+end

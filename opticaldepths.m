@@ -50,7 +50,7 @@ if iDebug > 1000 & iDebug < 2000
   ind_perturb = iDebug - 1000;    %% perturb LAYTMP this layer if iDebug > 1000
 elseif iDebug > 2000 & iDebug < 3000
   ind_perturb = iDebug - 2000;    %% perturb GASAMT this layer if iDebug > 2000
-  end
+end
 iGasDebug = 2;
 
 %gasids = [[1 : 29],[51 : 63]];
@@ -71,7 +71,7 @@ elseif iGasDoOD(1) < 0
   abs(iGasDoOD);
   gasidsX = abs(iGasDoOD);
   gasids  = setdiff(gasids,gasidsX)
-  end
+end
 
 % edit this list to only keep gases you DO want!
 % gasids = 1
@@ -86,7 +86,7 @@ abscAllChunks = zeros(10000*nchunk,nlays);
 if length(intersect(1,gasids) == 1) & (iBreakoutCont == +1)
   selfAllChunks = zeros(10000*nchunk,nlays);
   fornAllChunks = zeros(10000*nchunk,nlays);
-  end
+end
 
 iaa_kcomprstats_AllChunks = [];
 
@@ -131,13 +131,13 @@ for cc = 1 : length(fchunk)
         cont = contcalc2(profileG,freq,copt,ci1,ci2,ctw1,ctw2);
       elseif iBreakoutCont == +1
         [cont,contS,contF]=contcalc2_S_F(profileG,freq,copt,ci1,ci2,ctw1,ctw2);
-        end
+      end
       absc = absc + cont; % disp(' >>>>>>>>>>>>> Adding cont!!! <<<<<<<<<<<')
       % absc = cont; disp(' >>>>>>>>>>>>> ONLY cont!!! <<<<<<<<<<<')
       % absc = absc; disp(' >>>>>>>>>>>>> NO cont!!! <<<<<<<<<<<')
-      end
+    end
 
-    end    %%% loop on gases
+  end    %%% loop on gases
 
   % absc(:,nlays) = absc(:,nlays)*rFracBot;
   freqAllChunks(chunkindex) = freq;
@@ -145,10 +145,10 @@ for cc = 1 : length(fchunk)
   if iBreakoutCont == 1 & length(intersect(1,gasids)== 1)
     selfAllChunks(chunkindex,:) = contS;  
     fornAllChunks(chunkindex,:) = contF;  
-    end
+  end
 
   iaa_kcomprstats_AllChunks = [iaa_kcomprstats_AllChunks; iaCountNumVec];
-  end
+end
 
 %profile off
 %toc
@@ -166,6 +166,6 @@ ods.abscTotalAllChunks        = abscAllChunks;
 if iBreakoutCont == 1 & length(intersect(1,gasids)== 1)
   ods.selfAllChunks           = selfAllChunks;
   ods.fornAllChunks           = fornAllChunks;
-  end
+end
 ods.iaa_kcomprstats_AllChunks = iaa_kcomprstats_AllChunks;
 

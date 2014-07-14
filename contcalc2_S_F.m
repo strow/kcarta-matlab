@@ -2,6 +2,7 @@
 % NAME
 %
 %   contcalc2_S_F -- continuum calculation from kcarta tabulated values : broken into self and forn
+%                 -- this breaks self and forn continuum, used for opticaldepth codes
 %
 % SYNOPSIS
 %
