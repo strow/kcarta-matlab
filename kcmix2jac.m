@@ -1,6 +1,7 @@
-function [absc, fr, iNumVec] = kcmix(itlo, ithi, twlo, twhi, pi1Out, gidIN, ...
-                                  prof, vchunk, ropt0, refp,...
-                                  fr,absc, prefix, df)
+function [absc, fr, iNumVec, gasQ, jacTG, jacQG, iGasExist] = ...
+     kcmix2jac(itlo, ithi, twlo, twhi, jtwlo, jtwhi, pi1Out, gidIN, iDoJac, ...
+                      prof, vchunk, ropt0, refp,...
+                      fr,absc,prefix, df)
 
 % function [absc, fr, iNumVec] = kcmix(prof, vchunk, kpath, refp)
 % 
@@ -95,6 +96,11 @@ elseif ropt0.iMatlab_vs_f77 == +1
   kpath = ropt0.kpath;
   end
 
+gasQ = [];
+jacQG = [];
+jacTG = [];
+iGasExist = -1;
+
 % loop on required gas in the supplied profile
 xyz = find(prof.glist == gidIN);
 for gind = xyz : xyz
@@ -102,9 +108,15 @@ for gind = xyz : xyz
 
   % get file name of compressed data for this gas and chunk
   if ropt0.iMatlab_vs_f77 < 0
+    % get file name of compressed data for this gas and chunk
     cgxfile = get_kcompname_F77(ropt0,vchunk,gid,prefix);
   else
     cgxfile = sprintf('%s/cg%dv%d.mat', kpath, gid, vchunk);
+    end
+
+  if length(intersect(iDoJac,gid)) == 1
+    gasQ = prof.gamnt(:,gind);
+    jacQG = zeros(1e4, nlay);
     end
 
   % index of current gas ID in the reference profile
@@ -115,7 +127,7 @@ for gind = xyz : xyz
   % check that we have reference and compressed data for this gas
   if ~isempty(rgind) & exist(cgxfile) == 2
     
-    % fprintf(1,'   found kCompressed file ... %s \n',cgxfile);
+    %disp('   found kCompressed file ... ');
 
     % load compressed coefficient file, defines var's:
     %
@@ -135,6 +147,8 @@ for gind = xyz : xyz
 
     % space for compact absorption coeff's for current gas
     kcmp1 = zeros(d, nlay);
+
+    iGasExist = +1;
 
     % loop on layer indices
     for Li = 1 : nlay
@@ -156,6 +170,9 @@ for gind = xyz : xyz
 	% interpolate four corners in 2-space
 	kcmp1(:,Li) = kcomp(:,iLr,itlo(Li)) * twlo(Li) + ...
 		      kcomp(:,iLr,ithi(Li)) * twhi(Li);
+
+        jac1(:,Li) = kcomp(:,iLr,itlo(Li)) * jtwlo(Li) + ...
+                     kcomp(:,iLr,ithi(Li)) * jtwhi(Li);
 
       else
         % do pressure, temperature, and partial pressure interp
@@ -185,22 +202,37 @@ for gind = xyz : xyz
 		      kcomp(:,iLr,itlo(Li),qi12) * twlo(Li) * qw12 + ...
 		      kcomp(:,iLr,ithi(Li),qi12) * twhi(Li) * qw12;
 
+        jac1(:,Li) =  kcomp(:,iLr,itlo(Li),qi11) * jtwlo(Li) * qw11 + ...
+                      kcomp(:,iLr,ithi(Li),qi11) * jtwhi(Li) * qw11 + ...
+                      kcomp(:,iLr,itlo(Li),qi12) * jtwlo(Li) * qw12 + ...
+                      kcomp(:,iLr,ithi(Li),qi12) * jtwhi(Li) * qw12;
+
       end % H2O test
 
       % scale interpolated compact absorptions by profile gas amount
 
-      kcmp1(:,Li) = kcmp1(:,Li) .* ...
-         ((prof.gamnt(Li,gind)./refpro.gamnt(iLr,rgind)) .^ kpow);
+      donk = ((prof.gamnt(Li,gind)/refpro.gamnt(iLr,rgind)) ^ kpow);
+      kcmp1(:,Li) = kcmp1(:,Li) * donk;
+      jac1(:,Li) = jac1(:,Li)   * donk;
 
     end % layer loop
 
-
     % accumulate expanded absorptions
     if kpow == 1/4
-      od_gas = ((B * kcmp1).^ 2) .^ 2;  % faster when kpow = 1/4
+      donk   = (B * kcmp1).^ 2;
+      od_gas = donk .^ 2;  % faster when kpow = 1/4
+      jacTG  = (B * kcmp1).*donk; % this is the cubic part
+      jacX   = (B * jac1);        % this is d(K)/dT
     else
       od_gas = (B * kcmp1).^(1/kpow);  % the general case
+      error('I have not coded jacs for a general case!!!!')
     end
+
+    jacTG = 4*jacX.*jacTG;
+
+    if length(intersect(iDoJac,gid)) == 1
+      jacQG = od_gas./(ones(1e4,1)*gasQ');
+      end
 
     if (gid == 2)
       iChi = -1;
@@ -230,6 +262,18 @@ for gind = xyz : xyz
     if length(wonk) > 0
       fprintf(1,'   warning : found %6i NaNs in ODs for gas % 3i \n',length(wonk),gid);
       od_gas(wonk) = 0.0;
+      end
+
+    wonk = find(isnan(jacQG));
+    if length(wonk) > 0
+      fprintf(1,'   warning : found %6i NaNs in JACQG for gas % 3i \n',length(wonk),gid);
+      jacQG(wonk) = 0.0;
+      end
+
+    wonk = find(isnan(jacTG));
+    if length(wonk) > 0
+      fprintf(1,'   warning : found %6i NaNs in JAC_TG for gas % 3i \n',length(wonk),gid);
+      jac_QG(wonk) = 0.0;
       end
 
     absc = absc + od_gas;    %%% update absc (output) from the (input) value

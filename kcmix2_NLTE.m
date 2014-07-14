@@ -1,6 +1,6 @@
-function [absc, fr, iNumVec] = kcmix(itlo, ithi, twlo, twhi, pi1Out, gidIN, ...
-                                  prof, vchunk, ropt0, refp,...
-                                  fr,absc, prefix, df)
+function [abscOUT, fr, iNumVec] = kcmix2_NLTE(itlo, ithi, twlo, twhi, pi1Out, ...
+                                  gidIN, prof, vchunk, ropt0, refp,...
+                                  fr,absc, prefix, iODorPL)
 
 % function [absc, fr, iNumVec] = kcmix(prof, vchunk, kpath, refp)
 % 
@@ -16,6 +16,7 @@ function [absc, fr, iNumVec] = kcmix(itlo, ithi, twlo, twhi, pi1Out, gidIN, ...
 %    vchunk  - start frequency of chunk
 %    kpath   - path to compressed absorption data
 %    refp    - matlab reference profile
+%    iODorPl - 1 for ODs, 2 for planc coeffs
 %
 % OUTPUT
 %  
@@ -95,17 +96,24 @@ elseif ropt0.iMatlab_vs_f77 == +1
   kpath = ropt0.kpath;
   end
 
+if iODorPL == +1
+  kpath = ropt0.kpathCO2_4umNLTE_OD;
+elseif iODorPL == +2
+  kpath = ropt0.kpathCO2_4umNLTE_PL;
+end
+
 % loop on required gas in the supplied profile
 xyz = find(prof.glist == gidIN);
 for gind = xyz : xyz
   gid = prof.glist(gind);
 
   % get file name of compressed data for this gas and chunk
-  if ropt0.iMatlab_vs_f77 < 0
-    cgxfile = get_kcompname_F77(ropt0,vchunk,gid,prefix);
+  if iODorPL == 1
+    cgxfile = [kpath 'r' num2str(vchunk) 'n00g2.dat'];
   else
-    cgxfile = sprintf('%s/cg%dv%d.mat', kpath, gid, vchunk);
-    end
+    cgxfile = [kpath 'r' num2str(vchunk) 'p00g2.dat'];
+  end
+
 
   % index of current gas ID in the reference profile
   rgind = find(refpro.glist == gid);
@@ -115,7 +123,7 @@ for gind = xyz : xyz
   % check that we have reference and compressed data for this gas
   if ~isempty(rgind) & exist(cgxfile) == 2
     
-    % fprintf(1,'   found kCompressed file ... %s \n',cgxfile);
+    fprintf(1,'   found kCompressed file ... %s \n',cgxfile);
 
     % load compressed coefficient file, defines var's:
     %
@@ -128,7 +136,7 @@ for gind = xyz : xyz
       [fr, fstep, toffset, kcomp, B, gid, ktype] = rdgaschunk_le(cgxfile); 
     else
       eval(sprintf('load %s', cgxfile));
-      end
+    end
 
     [n, d] = size(B);
     iNumVec = d;   %% we found compressed data
@@ -189,8 +197,14 @@ for gind = xyz : xyz
 
       % scale interpolated compact absorptions by profile gas amount
 
-      kcmp1(:,Li) = kcmp1(:,Li) .* ...
-         ((prof.gamnt(Li,gind)./refpro.gamnt(iLr,rgind)) .^ kpow);
+      if iODorPL == 1
+        kcmp1(:,Li) = kcmp1(:,Li) .* ...
+           ((prof.gamnt(Li,gind)./refpro.gamnt(iLr,rgind)) .^ kpow);
+      elseif iODorPL == 2
+        %% no scaling for PLANCK
+        kcmp1(:,Li) = kcmp1(:,Li) .* ...
+           ((refpro.gamnt(iLr,rgind)./refpro.gamnt(iLr,rgind)) .^ kpow);
+      end
 
     end % layer loop
 
@@ -202,6 +216,8 @@ for gind = xyz : xyz
       od_gas = (B * kcmp1).^(1/kpow);  % the general case
     end
 
+%{ 
+%%    NO NEED
     if (gid == 2)
       iChi = -1;
       if vchunk == 2255
@@ -219,21 +235,23 @@ for gind = xyz : xyz
         end
       if iChi > 0
         fprintf(1,'   CO2 chi function for %5i \n',floor(vchunk));
+        disp('how the heck am i here????')
         chi = [ropt0.co2ChiFilePath chix];
         chi = load(chi);
         chi = chi(:,2); chi = chi*ones(1,length(prof.mtemp));
         od_gas = od_gas.*chi;
         end
       end
+%}
 
     wonk = find(isnan(od_gas));
     if length(wonk) > 0
       fprintf(1,'   warning : found %6i NaNs in ODs for gas % 3i \n',length(wonk),gid);
       od_gas(wonk) = 0.0;
       end
-
-    absc = absc + od_gas;    %%% update absc (output) from the (input) value
-    end % valid gas ID and compressed data existance check
+    
+    abscOUT = od_gas;    %%% update absc_OUT (output)
+    end                  % valid gas ID and compressed data existance check
 
   end % gas loop
 

@@ -1,0 +1,28 @@
+#
+# makefile to save kcmix code
+#
+
+KCMIXTAR     = /asl/packages/kcmix_matlabV1.0.tar
+KCMIXTARsmall= /asl/packages/kcmix_matlabV1.0_nodata.tar
+
+dist:
+	cd ../ ;				\
+	rm $(KCMIXTAR) 2> /dev/null || true;	\
+	tar -cvf $(KCMIXTAR)			\
+		PACKAGE_UPnDOWNLOOK_2011/*;                    
+	chmod 664 $(KCMIXTAR)
+
+dist2:
+	cd ../ ;				\
+	rm $(KCMIXTARsmall) 2> /dev/null || true;	\
+	tar -cvf $(KCMIXTARsmall)			\
+		PACKAGE_UPnDOWNLOOK_2011/*.m                \
+                PACKAGE_UPnDOWNLOOK_2011/VariablePressure/* \
+                PACKAGE_UPnDOWNLOOK_2011/Test/*             \
+                PACKAGE_UPnDOWNLOOK_2011/RTPFILES/*         \
+                PACKAGE_UPnDOWNLOOK_2011/private/*          \
+                PACKAGE_UPnDOWNLOOK_2011/JACDOWN/*          \
+                PACKAGE_UPnDOWNLOOK_2011/DOC/*              \
+                PACKAGE_UPnDOWNLOOK_2011/CONVOLUTION/*;
+	chmod 664 $(KCMIXTARsmall)
+

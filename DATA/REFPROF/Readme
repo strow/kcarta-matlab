@@ -1,0 +1,5 @@
+cp /home/sergio/HITRAN2UMBCLBL/refproTRUE_OLD.mat  DATA/REFPROF/refprofH2004.mat
+cp /home/sergio/HITRAN2UMBCLBL/refproTRUE.mat  DATA/REFPROF/refprofH2008.mat
+
+and then edit these files, so as to add on gid = 103 (HDO) 
+with the same prof as gid = 1 (water)
