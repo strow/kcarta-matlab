@@ -1,0 +1,8 @@
+#
+# kcarta/doc git ignore file
+#
+
+!*.pdf
+!*.fig
+!*.png
+

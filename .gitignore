@@ -29,7 +29,7 @@
 *.toc
 *.dvi
 
- figures & docs
+# figures & docs
 *.gif
 *.png
 *.eps
@@ -57,5 +57,5 @@
 
 # directories
 RTPFILES
-private
+
 
