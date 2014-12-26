@@ -1,0 +1,137 @@
+****: An Atmospheric Radiative Transfer Algorithm using Compressed
+Lookup Tables
+
+Sergio De Souza-Machado, L. Larrabee Strow,\
+Howard Motteler and Scott Hannon
+
+Physics Department\
+University of Maryland Baltimore County\
+Baltimore, MD 21250 USA\
+
+Copyright 2011\
+University of Maryland Baltimore County\
+All Rights Reserved\
+v1.00\
+
+Sergio De Souza-Machado: = sergio@umbc.edu\
+L. Larrabee Strow: strow@umbc.edu\
+
+Introduction
+============
+
+stands for “kCompressed Atmospheric Radiative Transfer Algorithm.” This
+is an infrared, “monochromatic” radiative transfer algorithm written for
+a one dimensional non-scattering Earth atmosphere. More documentation is
+found in “kcarta.pdf”. This file shows the user how to convolve the
+output from the Matlab kCARTA runs.
+
+Reminder about kCARTA output
+============================
+
+As given out, the code was optimized for the 605 - 2830 spectral range
+which is the range covered by AIRS, IASA, CRiS, and HIRS and AERI
+instruments. The spectral convolutions we describe in this section are
+designed for this range. In general, the output is of the form
+
+      radsOut or jacsOut or odOut
+
+where for example the fields of the structure are
+
+        freqAllChunks                  1x90000          freq      cm-1
+         radAllChunks                  90000x1          radiances mW/cm2/sr/cm-1
+     iaa_kcomprstats_AllChunks          2x73            Singular Vectors stats
+
+“jacOut” and “odOut” will have fields that are for example
+
+        ejacAllChunks: [90000x1]       surface emissivity jacobians
+        qjacAllChunks: [2x90000x96]    gas amount jacs, for each gas in iDoJac
+        sjacAllChunks: [90000x1]       surface temp jacobians
+        tjacAllChunks: [90000x96]      temperature jacobians
+         wgtAllChunks: [90000x96]      weighting functions
+
+We have provided some general purpose convolvers in the CONVOLVE
+subdirectory. The user is free to modify the routines, at his/her own
+risk. Some of the routines are contained within this package; if the
+user does wish to use them, he/she will need to get more routines from
+us.
+
+    aeri_convolution_results.m          AERI convolver (needs fixing)
+    airs_convolution_results.m          AIRS convolver
+    cris_convolution_results.m          CRIS convolver
+    iasi_convolution_results.m          IASI convolver
+
+    kcarta_fconvkc.m                    sets up the FFT convolver
+
+    generic_convolution_results.m       gaussian convolver
+    quickconvolve.m                     called by generic_convolve
+
+    convolveNplot.m                     Calls one of the convolvers
+
+    rad2bt.m
+
+In everything described below, we assume we are doing either a radiance
+convolution; other convolutions can be done similarly, by pulling out
+the appropriate fields of eg a jac “temperature” convolution
+
+AIRS convolution
+================
+
+[rconv, fconv] = sconv2(rads,freqs,clist,sfile);
+
+Here\
+sfile = path to AIRS SRFs\
+clist = list of AIRS channels that you want results for\
+freqs = input freqs from, radsOut structure\
+rads = input radiances from radsOut structure\
+
+Interferometer convolution
+==========================
+
+rconv, fconv = kcarta\_fconvkc(rads,freqs,ifp,atype,aparg);\
+rconv, fconv = s1fconvkc(rads, ifp, atype, aparg);\
+rconv, fconv = s2fconvkc(rads, ifp, atype, aparg);\
+rconv, fconv = s3fconvkc(rads, ifp, atype, aparg);\
+
+Here\
+freqs = input freqs from, radsOut structure\
+rads = input radiances from radsOut structure\
+ifp = interferometer type\
+atype = apodization\
+aparg = argument (strength) of apodization\
+
+In general the matlab file “ifp” contains the start and stop
+wavenumbers, (fA,fB) that are expected for the convolutions. If freqs
+corresponds exactly to these parameters, then you can directly call
+sXfconvkc. The different flavors X=1,2,3 stand for\
+X = 1 : fast, not very accurate\
+X = 2 : compromise between 1 and 3 (the goldilocks optimal)\
+X = 3 : slow, very accurate\
+
+However if freqs only partially spans (fA,fB), or overspans (fA,fB),
+then kcarta\_fconvkc tries to zero fill required data, or cut out
+unnecessary monochromatic data, before calling s2fconkc.
+
+The parameters (ifp, atype, aparg) for various instruments are :\
+IASI : iasi12992’,’gauss’,6\
+CRIS B1 : ’crisB1’,’hamming’,6\
+CRIS B2 : ’crisB2’,’hamming’,6\
+CRIS B3 : ’crisB3’,’hamming’,6\
+Note : you don’t really need to supply “aparg” ie you can just use\
+rconv, fconv = s3fconvkc(rads, ifp, atype);
+
+Note that the fconvkc routines need to be separately called N times, if
+the interferometer parameters are specified separately for different
+bands.
+
+Generic gaussian convolver
+==========================
+
+[fconv,rconv] = quickconvolve(freqs,rads,rFWHM,rSp);
+
+Here the user can input a FWHM and a channel spacing, and a generic
+gaussian SRF is applied for convolution :\
+freqs = input freqs from, radsOut structure\
+rads = input radiances from radsOut structure\
+rFWHM = FWHM of SRF model\
+rSP = channel spacing\
+
