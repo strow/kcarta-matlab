@@ -58,4 +58,6 @@
 # directories
 RTPFILES
 
+# mkdocs site build
+site
 
