@@ -475,7 +475,7 @@ The :math:`Test` directory contains
 “matlab\_test\_desert\_0725\_2004.mat” which is a radiance computation
 coming from running the “dokcarta\_downlook.m” in that directory.
 
-.. figure:: ../RTPFILES/desert_rtp.png
+.. figure:: desert_rtp.png
    :alt: Sample output from “desert\_op.rtp”, convolved with AIRS SRFs
 
    Sample output from “desert\_op.rtp”, convolved with AIRS SRFs

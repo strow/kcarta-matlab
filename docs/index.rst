@@ -6,17 +6,12 @@
 kCARTA-Matlab Documentation
 ===========================
 
+kCARTA-Matlab is a Matlab implementation of the.
+
 Contents:
 
 .. toctree::
    :maxdepth: 2
 
    kcarta
-
-Indices and tables
-==================
-
-* :ref:`genindex`
-* :ref:`modindex`
-* :ref:`search`
 
