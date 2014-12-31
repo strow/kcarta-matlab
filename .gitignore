@@ -49,5 +49,4 @@
 *~
 
 # sphinx site build
-doc/_build/*
-
+/docs/_build/
