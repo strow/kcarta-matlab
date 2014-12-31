@@ -29,13 +29,6 @@
 *.toc
 *.dvi
 
-# figures & docs
-*.gif
-*.png
-*.eps
-*.pdf
-*.ps
-
 # archives and packages
 *.gz
 *.tgz
@@ -55,9 +48,6 @@
 *.bak
 *~
 
-# directories
-RTPFILES
-
-# mkdocs site build
-site
+# sphinx site build
+doc/_build/*
 

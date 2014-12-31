@@ -1,22 +1,22 @@
 ****: An Atmospheric Radiative Transfer Algorithm using Compressed
 Lookup Tables
 
-Sergio De Souza-Machado, L. Larrabee Strow,\
-Howard Motteler and Scott Hannon
+| Sergio De Souza-Machado, L. Larrabee Strow,
+| Howard Motteler and Scott Hannon
 
-Physics Department\
-University of Maryland Baltimore County\
-Baltimore, MD 21250 USA\
+| Physics Department
+| University of Maryland Baltimore County
+| Baltimore, MD 21250 USA
 
-Copyright 2011\
-University of Maryland Baltimore County\
-All Rights Reserved\
-v1.00\
+| Copyright 2011
+| University of Maryland Baltimore County
+| All Rights Reserved
+| v1.00
 
-Sergio De Souza-Machado: = sergio@umbc.edu\
-L. Larrabee Strow: strow@umbc.edu\
+| Sergio De Souza-Machado: = sergio@umbc.edu
+| L. Larrabee Strow: strow@umbc.edu
 
-<span>**ABSTRACT**</span>
+**ABSTRACT**
 
 is a radiative transfer code for a non-scattering Earth’s atmosphere. As
 packaged, it can be used to output monochromatic gas optical depths, and
@@ -47,7 +47,8 @@ We hope that the ease of use, range of features and speed of , make it a
 useful tool. In addition to the main source code, some packages need to
 be picked up. One is , which allows an user to input a radiosonde or
 model point profile, and output a layer averaged profile that can use.
-Another is the $RTP$ package, which is a AIRS Level II file format.
+Another is the :math:`RTP` package, which is a AIRS Level II file
+format.
 
 This document is very much a work in progress. Some major omissions
 include references, significant examples of output, and comparisons of
@@ -90,8 +91,10 @@ layer emission terms are automatically included in the radiative
 transfer calculation. In addition, reflected thermal and solar terms can
 also be included :
 
-$$R(\nu) = R_{\hbox{\it surface}}(\nu) + R_{\hbox{\it layer emission}}(\nu) + 
-R_{\hbox{\it thermal}}(\nu) + R_{\hbox{\it solar}}(\nu)$$
+.. math::
+
+   R(\nu) = R_{\hbox{\it surface}}(\nu) + R_{\hbox{\it layer emission}}(\nu) + 
+   R_{\hbox{\it thermal}}(\nu) + R_{\hbox{\it solar}}(\nu)
 
 where the terms are the surface, layer emissions, reflected thermal and
 solar respectively. The reflected thermal term is computed accurately by
@@ -112,44 +115,61 @@ can be found in the appropriately named pdf files.
 Analytic Jacobians
 ==================
 
-Taking into account the view angle correction, if $\tau_{i}$ is the
-optical depth due to gas G at layer $i$, given by
-$\tau_{i} = q_{i} K_{i}/\mu{i}$ where the symbols respectively stand for
-optical depth (dimensionless), gas amount (kmoles/cm2), gas absorption
-(cm2/kmol) and $cos(view angle)$, then the finite difference column gas
-jacobian is given by the difference between the new and unperturbed
-radiances $\delta r$ = $r_{new} - r-{0}$ when the gas amounts in layers
-$1$ to $N$ are perturbed by a fraction $\delta$. The (finite
-differences) column jacobians can be obtained from the (gas) layer
-analytic jacobians using
-$$\delta r = \frac{\partial r}{\partial q_1} \delta q_1 + 
-           \frac{\partial r}{\partial q_2} \delta q_2 + ... + 
-           \frac{\partial r}{\partial q_N} \delta q_N$$ or
-$$\delta r = J_{1} \delta q_1 + J_{2} \delta q_2 + ...
-               J_{N} \delta q_N$$ Usually we take a constant
-perturbation to the column ie $q_{l} \rightarrow 
-q_{1}(1 + f)$ where $f \ll 1$. Then $\delta q_{l} \rightarrow f q_{l}$
-and $\delta r = f \{ J_{1} q_1 + J_{2} q_2 + ... + J_{N} q_N \} $. For
+Taking into account the view angle correction, if :math:`\tau_{i}` is
+the optical depth due to gas G at layer :math:`i`, given by
+:math:`\tau_{i} = q_{i} K_{i}/\mu{i}` where the symbols respectively
+stand for optical depth (dimensionless), gas amount (kmoles/cm2), gas
+absorption (cm2/kmol) and :math:`cos(view angle)`, then the finite
+difference column gas jacobian is given by the difference between the
+new and unperturbed radiances :math:`\delta r` = :math:`r_{new} - r-{0}`
+when the gas amounts in layers :math:`1` to :math:`N` are perturbed by a
+fraction :math:`\delta`. The (finite differences) column jacobians can
+be obtained from the (gas) layer analytic jacobians using
+
+.. math::
+
+   \delta r = \frac{\partial r}{\partial q_1} \delta q_1 + 
+              \frac{\partial r}{\partial q_2} \delta q_2 + ... + 
+              \frac{\partial r}{\partial q_N} \delta q_N
+
+or
+
+.. math::
+
+   \delta r = J_{1} \delta q_1 + J_{2} \delta q_2 + ...
+                  J_{N} \delta q_N
+
+ Usually we take a constant perturbation to the column ie
+:math:`q_{l} \rightarrow 
+q_{1}(1 + f)` where :math:`f \ll 1`. Then
+:math:`\delta q_{l} \rightarrow f q_{l}` and
+:math:`\delta r = f \{ J_{1} q_1 + J_{2} q_2 + ... + J_{N} q_N \} `. For
 example, for a 2 layer atmosphere the upwelling radiance (without
-background thermal or solar terms)jacobian terms $J_{l}$ is
+background thermal or solar terms)jacobian terms :math:`J_{l}` is
 
-$$\begin{aligned}
-r = & \epsilon B(T_{s}) exp(-q_{1} K_{1}/\mu_{1})exp(-q_{2} K_{2}/\mu_{2}) +\\
-    & B(1)(1-exp(-q_{1} K_{1}/\mu_{1}))exp(-q_{2} K_{2}/\mu_{2}) + \\
-    & B(2)(1-exp(-q_{2} K_{2}/\mu_{2}))\end{aligned}$$
+.. math::
 
-from which the layer jacobian terms $J_{i}$ reduce to
+   \begin{aligned}
+   r = & \epsilon B(T_{s}) exp(-q_{1} K_{1}/\mu_{1})exp(-q_{2} K_{2}/\mu_{2}) +\\
+       & B(1)(1-exp(-q_{1} K_{1}/\mu_{1}))exp(-q_{2} K_{2}/\mu_{2}) + \\
+       & B(2)(1-exp(-q_{2} K_{2}/\mu_{2}))\end{aligned}
 
-$$\begin{aligned}
-J_{1} = \frac{\partial r}{\partial q_1} = & 
- -\frac{K_1}{\mu_1}\epsilon B(T_{s})exp(-q_1 K_1/\mu_1)exp(-q_2 K_2/\mu_2) + \\
-&-\frac{K_1}{\mu_1} B(1)(exp(-q_{1} K_{1}/\mu{1})exp(-q_{2} K_{2}/\mu{2})\end{aligned}$$
+from which the layer jacobian terms :math:`J_{i}` reduce to
 
-$$\begin{aligned}
-J_{2} = \frac{\partial r}{\partial q_2} = & 
--\frac{K_2}{\mu_2}\epsilon B(T_{s})exp(-q_1 K_1/\mu_1)exp(-q_2 K_2/\mu_2) + \\
-& -\frac{K_2}{\mu_2} B(1)exp(-q_{1} K_{1}/\mu{1})exp(-q_{2} K_{2}/\mu{2}) + \\
-& -\frac{K_2}{\mu_2} B(2)exp(-q_{2} K_{2}/\mu{2})\end{aligned}$$
+.. math::
+
+   \begin{aligned}
+   J_{1} = \frac{\partial r}{\partial q_1} = & 
+    -\frac{K_1}{\mu_1}\epsilon B(T_{s})exp(-q_1 K_1/\mu_1)exp(-q_2 K_2/\mu_2) + \\
+   &-\frac{K_1}{\mu_1} B(1)(exp(-q_{1} K_{1}/\mu{1})exp(-q_{2} K_{2}/\mu{2})\end{aligned}
+
+.. math::
+
+   \begin{aligned}
+   J_{2} = \frac{\partial r}{\partial q_2} = & 
+   -\frac{K_2}{\mu_2}\epsilon B(T_{s})exp(-q_1 K_1/\mu_1)exp(-q_2 K_2/\mu_2) + \\
+   & -\frac{K_2}{\mu_2} B(1)exp(-q_{1} K_{1}/\mu{1})exp(-q_{2} K_{2}/\mu{2}) + \\
+   & -\frac{K_2}{\mu_2} B(2)exp(-q_{2} K_{2}/\mu{2})\end{aligned}
 
 kCompressed Database
 ====================
@@ -172,19 +192,18 @@ sounders.
 
 The temperatures in the spectroscopic database are computed at the
 Standard Profile, as well as ten temperature offsets (in increments of
-$\pm$ 10K) on either side of the Standard Profile. These optical depth
-tables are compressed using a Singular Value Decomposition
-(<span>SVD</span>) technique, to produce our <span>kCompressed</span>
-database.
+:math:`\pm` 10K) on either side of the Standard Profile. These optical
+depth tables are compressed using a Singular Value Decomposition (SVD)
+technique, to produce our kCompressed database.
 
-The current spectroscopic compressed tables use the
-<span>HITRAN98</span> database for both line-parameters and
-cross-sections. The full and first-order $CO_{2}$ linemixing is from
-refining the modeling undertaken by David Tobin. It should be more
-accurate than that currently in <span>GENLN2</span>. in addition, we
-have used the latest O2 and N2 continuum models (see Lafferty and J.-M.
-Hartmann et al in Applied Optics 1996, 1997). Other updates to
-spectroscopy include the “local” water lineshape as defined by CKD.
+The current spectroscopic compressed tables use the HITRAN98 database
+for both line-parameters and cross-sections. The full and first-order
+:math:`CO_{2}` linemixing is from refining the modeling undertaken by
+David Tobin. It should be more accurate than that currently in GENLN2.
+in addition, we have used the latest O2 and N2 continuum models (see
+Lafferty and J.-M. Hartmann et al in Applied Optics 1996, 1997). Other
+updates to spectroscopy include the “local” water lineshape as defined
+by CKD.
 
 To compute the absorption coefficients for an arbitrary profile, the
 look-up tables are interpolated in temperature, and scaled in gas
@@ -196,41 +215,43 @@ pressure interpolation (as long as the new pressures span 1100 to 0.005
 mb).
 
 The speed and features of the code make it an appealing alternative to
-other existing “line by line” codes such as <span>GENLN2</span> and
-<span>LBLRTM</span>. The accuracy of the database has been extensively
-compared to <span>GENLN2</span>. should contain the latest
-spectroscopy/lineshape information. The transmittances computed by are
-smooth and well behaved, which will allow people to develop fast-forward
-models.
+other existing “line by line” codes such as GENLN2 and LBLRTM. The
+accuracy of the database has been extensively compared to GENLN2. should
+contain the latest spectroscopy/lineshape information. The
+transmittances computed by are smooth and well behaved, which will allow
+people to develop fast-forward models.
 
 GasIDs
 ======
 
 The gasIDs used by and follow the HITRAN convention. “gasids\_H2008”
-(and the earlier “gasids\_H92\_H2k”) in this $DOC$ subdirectory, provide
-a list of gasID vs commonly used name and/or chemical formula.
+(and the earlier “gasids\_H92\_H2k”) in this :math:`DOC` subdirectory,
+provide a list of gasID vs commonly used name and/or chemical formula.
 
 Units and Definitions
 =====================
 
 Frequencies are in units of wavenumbers (), temperatures are in Kelvins.
 The gas profiles expected by use path averages over the layers, and are
-in units of $\hbox{\em molecules} {\hbox{cm}}^{-2}$. Temperatures should
-be specified in <span>*kelvin*</span>, while pressures and partial
-pressures should be expressed in <span>*millibar*</span>.
+in units of :math:`\hbox{\em molecules} {\hbox{cm}}^{-2}`. Temperatures
+should be specified in *kelvin*, while pressures and partial pressures
+should be expressed in *millibar*.
 
 Output gas and mixed path optical depths are dimensionless (absorption
-coefficient $\times$ gas amount); obviously so are transmittances.
-Output radiances are in blackbody radiance units ($\hbox{\em milliwatts}
-\;\ m^{-2} sr^{-1}/{\hbox{cm}}^{-1}$). Jacobians can be output in one of
-three modes : (a) $d(\hbox{\em rad})/ds_{m}$, where $s_{m}$ is the
-temperature or gas amount in layer $m$, (b)
-$d(\hbox{\em rad})/ds_{m} \times Z_{m}$, where $s_{m}$ is the
-temperature or gas amount in layer $m$, and $Z_{m}$ is an unit
-perturbation (+1 K if temperature, or +gas amount in $m$th layer) and
-(c) $d(\hbox{\em BT})/ds_{m} \times Z_{m}$, where $s_{m}$ is the
-temperature or gas amount in layer $m$, and $Z_{m}$ is an unit
-perturbation (+1 K if temperature, or +gas amount in $m$th layer)
+coefficient :math:`\times` gas amount); obviously so are transmittances.
+Output radiances are in blackbody radiance units
+(:math:`\hbox{\em milliwatts}
+\;\ m^{-2} sr^{-1}/{\hbox{cm}}^{-1}`). Jacobians can be output in one of
+three modes : (a) :math:`d(\hbox{\em rad})/ds_{m}`, where :math:`s_{m}`
+is the temperature or gas amount in layer :math:`m`, (b)
+:math:`d(\hbox{\em rad})/ds_{m} \times Z_{m}`, where :math:`s_{m}` is
+the temperature or gas amount in layer :math:`m`, and :math:`Z_{m}` is
+an unit perturbation (+1 K if temperature, or +gas amount in
+:math:`m`\ th layer) and (c)
+:math:`d(\hbox{\em BT})/ds_{m} \times Z_{m}`, where :math:`s_{m}` is the
+temperature or gas amount in layer :math:`m`, and :math:`Z_{m}` is an
+unit perturbation (+1 K if temperature, or +gas amount in :math:`m`\ th
+layer)
 
 Installing and running 
 =======================
@@ -245,20 +266,22 @@ Distributing
 
 The distribution is divided into three parts :
 
--   <span>Main tarfile $kcmix_matlabVYYY.tar$</span> where $YYY$ is the
-    version number. This will contain the entire source code
-    distribution, many needed data files, and the documentation.\
+-  | Main tarfile :math:`kcmix_matlabVYYY.tar` where :math:`YYY` is the
+   version number. This will contain the entire source code
+   distribution, many needed data files, and the documentation.
 
--   <span>kCompressed Database</span> : about 600Mb, supplied on CDs. We
-    supply two versions, the big endian or the little endian versions\
+-  | kCompressed Database : about 600Mb, supplied on CDs. We supply two
+   versions, the big endian or the little endian versions
 
 Installing 
 -----------
 
 Having obtained the above three, the user can now proceed to install :
-<span>Untar $kcmix_matlabVYYY.tar$</span> : this will create a main
+Untar :math:`kcmix_matlabVYYY.tar` : this will create a main
 subdirectory, named PACKAGE\_UPnDOWNLOOK\_2011, as well as many
 subdirectories containing the source code, data files and so on.
+
+::
 
     drwxr-xr-x 2 sergio pi_strow    7 Mar 24 17:31 Test
     drwxr-xr-x 2 sergio pi_strow    4 Mar 24 17:29 RTPFILES
@@ -277,17 +300,20 @@ Main directory
 
 This contains the main files a user should need
 
-Routines for uncompressing the database ($kcmix*.m$) and the continuum
-files ($cont*.m$), for doing radiative transfer ($rtchunk\_Tsurf*.m$)
-are included here. The $\_nojac$ extension to the name means the faster
-(non jacobian version), while $\_jac$ is the slower, jacobian version.
-The main routines are $matlab\_kcarta\_downlook_*.m$
+Routines for uncompressing the database (:math:`kcmix*.m`) and the
+continuum files (:math:`cont*.m`), for doing radiative transfer
+(:math:`rtchunk\_Tsurf*.m`) are included here. The :math:`\_nojac`
+extension to the name means the faster (non jacobian version), while
+:math:`\_jac` is the slower, jacobian version. The main routines are
+:math:`matlab\_kcarta\_downlook_*.m`
 
 Note : if the user wants to edit which gases he/she should be included
 in the “atmosphere”, then look for the line that says “edit this list to
 only keep gases you DO want” in matlab\_kcarta\_downlook\_jac.m or
 matlab\_kcarta\_downlook\_nojac.m or matlab\_kcarta\_opticaldepths.m;
-default is to add $ALL$ gases.
+default is to add :math:`ALL` gases.
+
+::
 
     auxiliary_set.m
     contcalc2.m
@@ -321,6 +347,8 @@ resolution of the database must change. Each file in each spectral range
 will contain 10000 points; so for example at the default 0.0025
 resolution of the main IR default band (605-2830 ), the files each span
 25 . We envisage the following :
+
+::
 
       kcartachunks = 00080 : 0002.5 : 00150;  prefix = '/j';
       kcartachunks = 00140 : 0005.0 : 00310;  prefix = '/k';
@@ -360,7 +388,7 @@ JACDOWN
 -------
 
 This has the main driver for a downlook jacobian calculation,
-“jac\_downlook.m” which calls files in the $private$ subdirectory
+“jac\_downlook.m” which calls files in the :math:`private` subdirectory
 underneath this. One can speed up the jacobian code by eg removing the
 looping over the weighting functions, or over the temperatures.
 
@@ -388,17 +416,23 @@ HITRAN version to use, start/stop wavenumbers for the calculations,
 whether or not to do Jacobians, what output units for the Jacobians,
 what CKD version, and name of input rtp file.
 
+::
+
     user_set_input_downlook.m        parameters driving dokcarta_downlook.m
     user_set_input_opticaldepths.m   parameters driving dokcarta_opticaldepths.m
 
 The user needs to supply paths to where the solar files, continuum
 files, nlte files, klayers executables, optical depth database and
-reference profiles are; this is controlled via $user\_set\_dirs.m$
+reference profiles are; this is controlled via :math:`user\_set\_dirs.m`
+
+::
 
     user_set_dirs.m                  set up the paths to directories
 
 Finally the user can commence the computation, calling one or the other
 of the routines named below (which call relevant files from above).
+
+::
 
     dokcarta_downlook.m              compute RT
     dokcarta_opticaldepths.m         compute optical depths
@@ -411,19 +445,23 @@ VariablePressure
 
 This contains the main files a user should need This makes the code(s)
 slower. The structure and content of the directories is the same as
-before $viz$
+before :math:`viz`
+
+::
 
     drwxr-xr-x 2 sergio pi_strow    10 Mar 24 04:49 Test
     drwxr-xr-x 6 sergio pi_strow     8 Mar 23 11:58 private
     drwxr-xr-x 3 sergio pi_strow     4 Mar 23 10:36 JACUP_VarPress
     drwxr-xr-x 3 sergio pi_strow     4 Mar 23 10:35 JACDOWN_VarPress
 
-$Test$ has dokcarta\_downlook.m, dokcarta\_uplook.m (very similar to the
-“downlook” case) and dokcarta\_opticaldepths.m.\
+| :math:`Test` has dokcarta\_downlook.m, dokcarta\_uplook.m (very
+similar to the “downlook” case) and dokcarta\_opticaldepths.m.
 
-$JADOWN\_VarPress$ has jacobian routines for downlooking instruments\
+| :math:`JADOWN\_VarPress` has jacobian routines for downlooking
+instruments
 
-$JACUP\_VarPress$ has jacobian routines for uplooking instruments\
+| :math:`JACUP\_VarPress` has jacobian routines for uplooking
+instruments
 
 Comparisons against f77 and our code
 ====================================
@@ -433,12 +471,12 @@ have errors less than 0.05 K in brightness temperature. The speeds are
 also very similar (roughly about 60 seconds on a 2.6 GHz processor for a
 full radiative transfer calculation).
 
-The $Test$ directory contains “matlab\_test\_desert\_0725\_2004.mat”
-which is a radiance computation coming from running the
-“dokcarta\_downlook.m” in that directory.
+The :math:`Test` directory contains
+“matlab\_test\_desert\_0725\_2004.mat” which is a radiance computation
+coming from running the “dokcarta\_downlook.m” in that directory.
 
-![Sample output from “desert\_op.rtp”, convolved with AIRS
-SRFs](../RTPFILES/desert_rtp.png)
+.. figure:: ../RTPFILES/desert_rtp.png
+   :alt: Sample output from “desert\_op.rtp”, convolved with AIRS SRFs
 
+   Sample output from “desert\_op.rtp”, convolved with AIRS SRFs
 [translatingfiles]
-

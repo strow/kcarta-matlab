@@ -1,5 +1,0 @@
-site_name: kCARTA
-pages:
-- [index.md, Main kCARTA Docs]
-- [driver_files.md, Driver Files]
-- [convolution.md, Convolvers]
