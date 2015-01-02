@@ -206,6 +206,10 @@ htmlhelp_basename = 'kcarta-matlabdoc'
 # -- Options for LaTeX output ---------------------------------------------
 
 latex_elements = {
+
+    'papersize': 'letterpaper',
+    'pointsize': '11pt'
+    
 # The paper size ('letterpaper' or 'a4paper').
 #'papersize': 'letterpaper',
 
@@ -219,12 +223,14 @@ latex_elements = {
 #'figure_align': 'htbp',
 }
 
+
 # Grouping the document tree into LaTeX files. List of tuples
 # (source start file, target name, title,
 #  author, documentclass [howto, manual, or own class]).
 latex_documents = [
   ('index', 'kcarta-matlab.tex', u'kCARTA-Matlab Documentation',
-   u'Sergio De Souza-Machado, L. Larrabee Strow, Howard Motteler, and Scott Hannon', 'manual'),
+   'Sergio De Souza-Machado \\and L. Larrabee Strow \\and Howard Motteler \\and Scott Hannon',
+   'howto'),
 ]
 
 # The name of an image file (relative to this directory) to place at the top of

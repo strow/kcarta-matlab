@@ -1,8 +1,17 @@
-kCARTA
-======
+* COMMENT Export code
+#+EXPORT_SELECT_TAGS: 
+#+LaTeX_CLASS: article
+#+LaTeX_HEADER: \input /Users/strow/Tex/Templates/article_setup
+#+TITLE: ''
+#+AUTHOR: L. Strow 
+#+LaTeX_CLASS_OPTIONS: [11pt]
+#+OPTIONS: h:4 toc:nil num:4
+#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="http://asl.umbc.edu/images/asl.css" />
 
-1 Introduction
---------------
+
+
+
+* Introduction
 
 kCARTA stands for "kCompressed Atmospheric Radiative Transfer
 Algorithm." This is an infrared, "monochromatic" radiative transfer
@@ -28,20 +37,15 @@ a .hdf based file format, and allows us to include all necessary
 parameters (such as profile information, satellite and solar angles,
 emissivities) into a "Radiative Transfer Protocol" file.
 
-2 Radiative transfer
---------------------
+* Radiative transfer
 
 For a downward looking instrument, in a clear sky, the surface term and
 layer emission terms are automatically included in the radiative
 transfer calculation. In addition, reflected thermal and solar terms can
 also be included :
 
-
-
-.. math::
-
-    R(\nu) = R_{\mathrm{surface}}(\nu) + R_{\mathrm{layer\, emission}}(\nu) + 
-    R_{\mathrm{thermal}}(\nu) + R_{\mathrm{solar}}(\nu)
+$$R(\nu) = R_{\mathrm{surface}}(\nu) + R_{\mathrm{layer\, emission}}(\nu) + 
+R_{\mathrm{thermal}}(\nu) + R_{\mathrm{solar}}(\nu)$$
 
 where the terms are the surface, layer emissions, reflected thermal and
 solar respectively. The reflected thermal term is computed accurately by
@@ -59,83 +63,61 @@ that deviate from nadir.
 More documentation on the driver files, and on the convolution routines,
 can be found in the appropriately named pdf files.
 
-3 Analytic Jacobians
---------------------
+* Analytic Jacobians
 
-Taking into account the view angle correction, if :math:`\tau_{i}` is the
-optical depth due to gas G at layer :math:`i`, given by
-:math:`\tau_{i} = q_{i} K_{i}/\mu{i}` where the symbols respectively stand for
+Taking into account the view angle correction, if $\tau_{i}$ is the
+optical depth due to gas G at layer $i$, given by
+$\tau_{i} = q_{i} K_{i}/\mu{i}$ where the symbols respectively stand for
 optical depth (dimensionless), gas amount (kmoles/cm2), gas absorption
-(cm2/kmol) and :math:`\cos(\mathrm{view angle})`, then the finite difference
+(cm2/kmol) and $\cos(\mathrm{view angle})$, then the finite difference
 column gas jacobian is given by the difference between the new and
-unperturbed radiances :math:`\delta r` = :math:`r_{new} - r_{0}` when the gas
-amounts in layers :math:`1` to :math:`N` are perturbed by a fraction :math:`\delta`. The
+unperturbed radiances $\delta r$ = $r_{new} - r_{0}$ when the gas
+amounts in layers $1$ to $N$ are perturbed by a fraction $\delta$. The
 (finite differences) column jacobians can be obtained from the (gas)
 layer analytic jacobians using
-
-
-.. math::
-
-    \delta r = \frac{\partial r}{\partial q_1} \delta q_1 + 
-               \frac{\partial r}{\partial q_2} \delta q_2 + ... + 
-               \frac{\partial r}{\partial q_N} \delta q_N
+$$\delta r = \frac{\partial r}{\partial q_1} \delta q_1 + 
+           \frac{\partial r}{\partial q_2} \delta q_2 + ... + 
+           \frac{\partial r}{\partial q_N} \delta q_N$$
 
 or
 
-
-
-.. math::
-
-    \delta r = J_{1} \delta q_1 + J_{2} \delta q_2 + ...
-                   J_{N} \delta q_N
+$$\delta r = J_{1} \delta q_1 + J_{2} \delta q_2 + ...
+               J_{N} \delta q_N$$ 
 
 Usually we take a constant
-perturbation to the column ie :math:`q_{l} \rightarrow 
-q_{1}(1 + f)` where :math:`f \ll 1`. Then :math:`\delta q_{l} \rightarrow f q_{l}`
-and :math:`\delta r = f(J_{1} q_1 + J_{2} q_2 + ... + J_{N} q_N )`. For
+perturbation to the column ie $q_{l} \rightarrow 
+q_{1}(1 + f)$ where $f \ll 1$. Then $\delta q_{l} \rightarrow f q_{l}$
+and $\delta r = f(J_{1} q_1 + J_{2} q_2 + ... + J_{N} q_N )$. For
 example, for a 2 layer atmosphere the upwelling radiance (without
-background thermal or solar terms)jacobian terms :math:`J_{l}` is
+background thermal or solar terms)jacobian terms $J_{l}$ is
 
+$$\begin{aligned}
+r = & \epsilon B(T_{s}) exp(-q_{1} K_{1}/\mu_{1})exp(-q_{2} K_{2}/\mu_{2}) +\\
+    & B(1)(1-exp(-q_{1} K_{1}/\mu_{1}))exp(-q_{2} K_{2}/\mu_{2}) + \\
+    & B(2)(1-exp(-q_{2} K_{2}/\mu_{2}))\end{aligned}$$
 
+from which the layer jacobian terms $J_{i}$ reduce to
 
-.. math::
+$$\begin{aligned}
+J_{1} = \frac{\partial r}{\partial q_1} = & 
+ -\frac{K_1}{\mu_1}\epsilon B(T_{s})exp(-q_1 K_1/\mu_1)exp(-q_2 K_2/\mu_2) + \\
+&-\frac{K_1}{\mu_1} B(1)(exp(-q_{1} K_{1}/\mu{1})exp(-q_{2} K_{2}/\mu{2})\end{aligned}$$
 
-    \begin{aligned}
-    r = & \epsilon B(T_{s}) exp(-q_{1} K_{1}/\mu_{1})exp(-q_{2} K_{2}/\mu_{2}) +\\
-        & B(1)(1-exp(-q_{1} K_{1}/\mu_{1}))exp(-q_{2} K_{2}/\mu_{2}) + \\
-        & B(2)(1-exp(-q_{2} K_{2}/\mu_{2}))\end{aligned}
+$$\begin{aligned}
+J_{2} = \frac{\partial r}{\partial q_2} = & 
+-\frac{K_2}{\mu_2}\epsilon B(T_{s})exp(-q_1 K_1/\mu_1)exp(-q_2 K_2/\mu_2) + \\
+& -\frac{K_2}{\mu_2} B(1)exp(-q_{1} K_{1}/\mu{1})exp(-q_{2} K_{2}/\mu{2}) + \\
+& -\frac{K_2}{\mu_2} B(2)exp(-q_{2} K_{2}/\mu{2})\end{aligned}$$
 
-from which the layer jacobian terms :math:`J_{i}` reduce to
-
-
-
-.. math::
-
-    \begin{aligned}
-    J_{1} = \frac{\partial r}{\partial q_1} = & 
-     -\frac{K_1}{\mu_1}\epsilon B(T_{s})exp(-q_1 K_1/\mu_1)exp(-q_2 K_2/\mu_2) + \\
-    &-\frac{K_1}{\mu_1} B(1)(exp(-q_{1} K_{1}/\mu{1})exp(-q_{2} K_{2}/\mu{2})\end{aligned}
-
-
-
-.. math::
-
-    \begin{aligned}
-    J_{2} = \frac{\partial r}{\partial q_2} = & 
-    -\frac{K_2}{\mu_2}\epsilon B(T_{s})exp(-q_1 K_1/\mu_1)exp(-q_2 K_2/\mu_2) + \\
-    & -\frac{K_2}{\mu_2} B(1)exp(-q_{1} K_{1}/\mu{1})exp(-q_{2} K_{2}/\mu{2}) + \\
-    & -\frac{K_2}{\mu_2} B(2)exp(-q_{2} K_{2}/\mu{2})\end{aligned}
-
-4 kCompressed Database
-----------------------
+* kCompressed Database
 
 Optical depths are computed for all molecules in the HITRAN database,
 using a profile derived from the 1962 US Standard Atmosphere. These
 optical depths are pre-computed using a Matlab based line by line code.
 
-The current database spans 605 cm\ :sup:`-1`\ to 2805 cm\ :sup:`-1`\ , broken up into chunks
-that are 25 cm\ :sup:`-1`\ wide. The point spacing of the current database is
-0.0025 cm\ :sup:`-1`\ , which is an average over five points spaced at 0.0005 cm\ :sup:`-1`\
+The current database spans 605 cm^{-1} to 2805 cm^{-1} , broken up into chunks
+that are 25 cm^{-1} wide. The point spacing of the current database is
+0.0025 cm^{-1} , which is an average over five points spaced at 0.0005 cm^{-1}
 . One hundred pressure layers are used to generate the database, from
 1100 mb down to 0.005 mb. These pressure layers are the same as those
 used for the AIRS (Atmospheric InfraRed Sounder) Fast Forward Model, for
@@ -147,13 +129,13 @@ levels in contemporary sounders.
 
 The temperatures in the spectroscopic database are computed at the
 Standard Profile, as well as ten temperature offsets (in increments of
-:math:`\pm` 10K) on either side of the Standard Profile. These optical depth
+$\pm$ 10K) on either side of the Standard Profile. These optical depth
 tables are compressed using a Singular Value Decomposition (SVD)
 technique, to produce our kCompressed database.
 
 The current spectroscopic compressed tables use the HITRAN98 database
 for both line-parameters and cross-sections. The full and first-order
-:math:`CO_{2}` linemixing is from refining the modeling undertaken by David
+$CO_{2}$ linemixing is from refining the modeling undertaken by David
 Tobin. It should be more accurate than that currently in GENLN2. in
 addition, we have used the latest O2 and N2 continuum models (see
 Lafferty and J.-M. Hartmann et al in Applied Optics 1996, 1997). Other
@@ -176,56 +158,52 @@ should contain the latest spectroscopy/lineshape information. The
 transmittances computed by kCARTA are smooth and well behaved, which
 will allow people to develop fast-forward models.
 
-5 GasIDs
---------
+* GasIDs
 
 The gasIDs used by kCARTA and kLAYERSfollow the HITRAN convention.
-``gasids_H2008`` (and the earlier ``gasids_H92_H2k``) in this ``DOCS``
+=gasids_H2008= (and the earlier =gasids_H92_H2k=) in this =DOCS=
 subdirectory, provide a list of gasID vs commonly used name and/or
 chemical formula.
 
-6 Units and Definitions
------------------------
+* Units and Definitions
 
-Frequencies are in units of wavenumbers (cm\ :sup:`-1`\ ), temperatures are in
+Frequencies are in units of wavenumbers (cm^{-1} ), temperatures are in
 Kelvins. The gas profiles expected by kCARTA use path averages over the
-layers, and are in units of :math:`\hbox{\em molecules} {\hbox{cm}}^{-2}`.
-Temperatures should be specified in *kelvin*, while pressures and
-partial pressures should be expressed in *millibar*.
+layers, and are in units of $\hbox{\em molecules} {\hbox{cm}}^{-2}$.
+Temperatures should be specified in /kelvin/, while pressures and
+partial pressures should be expressed in /millibar/.
 
 Output gas and mixed path optical depths are dimensionless (absorption
-coefficient :math:`\times` gas amount); obviously so are transmittances.
+coefficient $\times$ gas amount); obviously so are transmittances.
 Output radiances are in blackbody radiance units
-:math:`m^{-2} sr^{-1}/{\hbox{cm}}^{-1}`. Jacobians can be output in one of
-three modes : (a) :math:`d(r)/ds_{m}`, where :math:`s_{m}` is the temperature or gas
-amount in layer :math:`m`, (b) :math:`d(r)/ds_{m} \times Z_{m}`, where :math:`s_{m}` is
-the temperature or gas amount in layer :math:`m`, and :math:`Z_{m}` is an unit
-perturbation (+1 K if temperature, or +gas amount in :math:`m^{th}` layer) and
-(c) :math:`d(BT)/ds_{m} \times Z_{m}`, where :math:`s_{m}` is the temperature or gas
-amount in layer :math:`m`, and :math:`Z_{m}` is an unit perturbation (+1 K if
-temperature, or +gas amount in :math:`m^{th}` layer)
+$m^{-2} sr^{-1}/{\hbox{cm}}^{-1}$. Jacobians can be output in one of
+three modes : (a) $d(r)/ds_{m}$, where $s_{m}$ is the temperature or gas
+amount in layer $m$, (b) $d(r)/ds_{m} \times Z_{m}$, where $s_{m}$ is
+the temperature or gas amount in layer $m$, and $Z_{m}$ is an unit
+perturbation (+1 K if temperature, or +gas amount in $m^{th}$ layer) and
+(c) $d(BT)/ds_{m} \times Z_{m}$, where $s_{m}$ is the temperature or gas
+amount in layer $m$, and $Z_{m}$ is an unit perturbation (+1 K if
+temperature, or +gas amount in $m^{th}$ layer)
 
-7 Installation
---------------
+* Installation
 
 This is for the user that wants to install and use kCARTA as quickly as
 possible. We purposely keep this user manual short, and ask the user to
-examine the ``user_set*.m`` codes in the ``Test`` subdirectory in orderto
+examine the =user_set*.m= codes in the =Test= subdirectory in orderto
 understand how to use the package.
 
 The distribution is divided into three parts :
 
-- Matlab source on `github <http://github.com/strow/kcarta-matlab>`_.
+-  Matlab source on [[http://github.com/strow/kcarta-matlab][github]].
 
-- kCompressed Database: about 600Mb, supplied via our ftp site. We
-  supply two versions, big or little endian.
+-  kCompressed Database: about 600Mb, supplied via our ftp site. We
+   supply two versions, big or little endian.
 
-After cloning ``kcarta-matlab.git`` from github, you will find the main
-directory, ``PACKAGE_UPnDOWNLOOK_2011``, and many subdirectories
+After cloning =kcarta-matlab.git= from github, you will find the main
+directory, =PACKAGE_UPnDOWNLOOK_2011=, and many subdirectories
 containing the source code, data files and so on.
 
-::
-
+#+BEGIN_EXAMPLE
     drwxr-xr-x 2 sergio pi_strow    7 Mar 24 17:31 Test
     drwxr-xr-x 2 sergio pi_strow    4 Mar 24 17:29 RTPFILES
     drwxr-xr-x 2 sergio pi_strow   13 Mar 24 17:23 DOC
@@ -234,31 +212,29 @@ containing the source code, data files and so on.
     drwxr-xr-x 6 sergio pi_strow    9 Mar 23 12:40 private
     drwxr-xr-x 3 sergio pi_strow    4 Mar 23 10:35 JACDOWN
     drwxr-xr-x 6 sergio pi_strow    6 Mar 22 15:38 DATA
+#+END_EXAMPLE
 
-8 Overview by Source Directory
-------------------------------
+* Overview by Source Directory
 
-8.1 Main directory
-~~~~~~~~~~~~~~~~~~
+** Main directory
 
 This contains the main files needed if using a pressure layering that is
 the same as the AIRS 100 layers, which is generally sufficient for nadir
 sounders.
 
-Routines for uncompressing the database ``kcmix*.m`` and the continuum
-files ``cont*.m``, for doing radiative transfer ``rtchunk_Tsurf*.m`` are
-included here. The ``_nojac`` extension to the name means the faster (non
-jacobian version), while ``_jac`` is the slower, jacobian version. The
-main routines are ``matlab_kcarta_downlook_.m``.
+Routines for uncompressing the database =kcmix*.m= and the continuum
+files =cont*.m=, for doing radiative transfer =rtchunk_Tsurf*.m= are
+included here. The =_nojac= extension to the name means the faster (non
+jacobian version), while =_jac= is the slower, jacobian version. The
+main routines are =matlab_kcarta_downlook_.m=.
 
 Note: if the user wants to edit which gases he/she should be included in
 the "atmosphere", then look for the line that says "edit this list to
-only keep gases you DO want" in ``matlab_kcarta_downlook_jac.m`` or
-``matlab_kcarta_downlook_nojac.m`` or ``matlab_kcarta_opticaldepths.m``; the
-default is to add :math:`ALL` gases.
+only keep gases you DO want" in =matlab_kcarta_downlook_jac.m= or
+=matlab_kcarta_downlook_nojac.m= or =matlab_kcarta_opticaldepths.m=; the
+default is to add $ALL$ gases.
 
-::
-
+#+BEGIN_EXAMPLE
     Main directory files:
 
     auxiliary_set.m
@@ -283,79 +259,73 @@ default is to add :math:`ALL` gases.
     rtchunk_Tsurf.m
     temp_interp_weights_jac.m
     temp_interp_weights.m
+#+END_EXAMPLE
 
-The existing packages is optimized for the 605 - 2830 cm\ :sup:`-1`\ spectral
+The existing packages is optimized for the 605 - 2830 cm^{-1} spectral
 range which is the range covered by AIRS, IASI, CrIS, and HIRS and AERI
 instruments. However the code is flexible enough to allow optical depth
 and radiance calculations in other spectral bands. Since the FWHM of
 lines gets smaller (larger) as the wavenumbers get smaller (larger), the
 resolution of the database must change. Each file in each spectral range
-will contain 10000 points; so for example at the default 0.0025 cm\ :sup:`-1`\
-resolution of the main IR default band (605-2830 cm\ :sup:`-1`\ ), the files each
+will contain 10000 points; so for example at the default 0.0025 cm^{-1}
+resolution of the main IR default band (605-2830 cm^{-1} ), the files each
 span 25 cm-1 . We envisage the following :
 
-::
-
-    kcartachunks = 00080 : 0002.5 : 00150;  prefix = '/j';
-    kcartachunks = 00140 : 0005.0 : 00310;  prefix = '/k';
-    kcartachunks = 00300 : 0010.0 : 00510;  prefix = '/p';
-    kcartachunks = 00500 : 0015.0 : 00605;  prefix = '/q';
-    kcartachunks = 00605 : 0025.0 : 02830;  prefix = '/r'; ** default **
-    kcartachunks = 02830 : 0025.0 : 03580;  prefix = '/s';
-    kcartachunks = 03550 : 0100.0 : 05650;  prefix = '/m';
-    kcartachunks = 05550 : 0150.0 : 08350;  prefix = '/n';
-    kcartachunks = 08250 : 0250.0 : 12250;  prefix = '/o';
-    kcartachunks = 12000 : 0500.0 : 25000;  prefix = '/v';
-    kcartachunks = 25000 : 1000.0 : 44000;  prefix = '/u';
+#+BEGIN_EXAMPLE
+      kcartachunks = 00080 : 0002.5 : 00150;  prefix = '/j';
+      kcartachunks = 00140 : 0005.0 : 00310;  prefix = '/k';
+      kcartachunks = 00300 : 0010.0 : 00510;  prefix = '/p';
+      kcartachunks = 00500 : 0015.0 : 00605;  prefix = '/q';
+      kcartachunks = 00605 : 0025.0 : 02830;  prefix = '/r'; ** default **
+      kcartachunks = 02830 : 0025.0 : 03580;  prefix = '/s';
+      kcartachunks = 03550 : 0100.0 : 05650;  prefix = '/m';
+      kcartachunks = 05550 : 0150.0 : 08350;  prefix = '/n';
+      kcartachunks = 08250 : 0250.0 : 12250;  prefix = '/o';
+      kcartachunks = 12000 : 0500.0 : 25000;  prefix = '/v';
+      kcartachunks = 25000 : 1000.0 : 44000;  prefix = '/u';
+#+END_EXAMPLE
 
 It is the responsibiliy of the user to set fA,fB in the
-``user_set_input*`` files such that they only span **one** spectral range.
+=user_set_input*= files such that they only span *one* spectral range.
 For example, one run covering 605-2830 cm-1 is fine, as is another run
 covering 500-605 cm-1 . But the code as written will not permit a single
 run covering 500-2830 cm-1 .
 
-8.2 private
-~~~~~~~~~~~
+** private
 
 This subdir contains files that are called by the main routines, and
 should not be modified.
 
-8.3 DOC
-~~~~~~~
+** DOC
 
 The documentation for this package
 
-8.4 CONVOLUTION
-~~~~~~~~~~~~~~~
+** CONVOLUTION
 
 Convolution routines. We include generic gaussian convolvers, as well as
 AIRS SRF convolvers, and IASI/CRiS convolvers. Note the files contained
 in this subdir will not be supported.
 
-8.5 JACDOWN
-~~~~~~~~~~~
+** JACDOWN
 
 This has the main driver for a downlook jacobian calculation,
-``jac_downlook.m`` which calls files in the :math:`private` subdirectory
+=jac_downlook.m= which calls files in the $private$ subdirectory
 underneath this. One can speed up the jacobian code by eg removing the
 looping over the weighting functions, or over the temperatures.
 
-8.6 RTPFILES
-~~~~~~~~~~~~
+** RTPFILES
 
 Sample rtpfiles for this package; "desert" is a downlooking case at 100
 AIRS layers, while the other is an uplooking case at a different
 layering scheme. In addition we provide a subdirectory with some binary
 files output from the f77 code.
 
-8.7 DATA
-~~~~~~~~
+** DATA
 
 Contains subdirectories with continuum, solar, NLTE and CO2 Chifunction
 datafiles.
 
-8.8 Test
-~~~~~~~~
+** Test
 
 Examples of two driverfiles, one which computes optical depths (based on
 a list the user supplies), and the other which computes radiances (and
@@ -367,61 +337,61 @@ HITRAN version to use, start/stop wavenumbers for the calculations,
 whether or not to do Jacobians, what output units for the Jacobians,
 what CKD version, and name of input rtp file.
 
-::
-
+#+BEGIN_EXAMPLE
     user_set_input_downlook.m        parameters driving dokcarta_downlook.m
     user_set_input_opticaldepths.m   parameters driving dokcarta_opticaldepths.m
+#+END_EXAMPLE
 
 The user needs to supply paths to where the solar files, continuum
 files, nlte files, klayers executables, optical depth database and
-reference profiles are; this is controlled via :math:`user_set_dirs.m`
+reference profiles are; this is controlled via $user_set_dirs.m$
 
-::
-
+#+BEGIN_EXAMPLE
     user_set_dirs.m                  set up the paths to directories
+#+END_EXAMPLE
 
 Finally the user can commence the computation, calling one or the other
 of the routines named below (which call relevant files from above).
 
-::
-
+#+BEGIN_EXAMPLE
     dokcarta_downlook.m              compute RT
     dokcarta_opticaldepths.m         compute optical depths
+#+END_EXAMPLE
 
 This subdir also includes two matlab files, containing radiances output
 using H2004 and H2008.
 
-8.9 VariablePressure
-~~~~~~~~~~~~~~~~~~~~
+** VariablePressure
 
 This contains the main files a user should need for a pressure layering
 different than the AIRS 100 layers. This makes the code(s) slower. The
-structure and content of the directories is the same as before :math:`viz`
+structure and content of the directories is the same as before $viz$
 
-::
-
+#+BEGIN_EXAMPLE
     drwxr-xr-x 2 sergio pi_strow    10 Mar 24 04:49 Test
     drwxr-xr-x 6 sergio pi_strow     8 Mar 23 11:58 private
     drwxr-xr-x 3 sergio pi_strow     4 Mar 23 10:36 JACUP_VarPress
     drwxr-xr-x 3 sergio pi_strow     4 Mar 23 10:35 JACDOWN_VarPress
+#+END_EXAMPLE
 
-:math:`Test` has ``dokcarta_downlook.m``, ``dokcarta_uplook.m`` (very similar to
-the "downlook" case) and ``dokcarta_opticaldepths.m.``
+$Test$ has =dokcarta_downlook.m=, =dokcarta_uplook.m= (very similar to
+the "downlook" case) and =dokcarta_opticaldepths.m.=\\
 
-``JADOWN_VarPress`` has jacobian routines for downlooking instruments
+=JADOWN_VarPress= has jacobian routines for downlooking instruments\\
 
-``JACUP_VarPress`` has jacobian routines for uplooking instruments
+=JACUP_VarPress= has jacobian routines for uplooking instruments\\
 
-9 Comparisons against f77 and our code
---------------------------------------
+* Comparisons against f77 and our code
 
 We have tested this code against the f77 kCARTA code and across the IR
 bands, have errors less than 0.05 K in brightness temperature. The
 speeds are also very similar (roughly about 60 seconds on a 2.6 GHz
 processor for a full radiative transfer calculation).
 
-The ``Test`` directory contains ``matlab_test_desert_0725_2004.mat`` which
-is a radiance computation coming from running the ``dokcarta_downlook.m``
+The =Test= directory contains =matlab_test_desert_0725_2004.mat= which
+is a radiance computation coming from running the =dokcarta_downlook.m=
 in that directory.
 
-.. image:: ./desert_rtp.png
+#+CAPTION: Sample output from =desert_op.rtp= convolved with AIRS SRFs
+
+[[./desert_rtp.png]]
