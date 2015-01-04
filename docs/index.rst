@@ -47,8 +47,11 @@ code and the documentation!
 Contents:
 
 .. toctree::
-    :maxdepth: 2
+    :maxdepth: 3
 
     README.rst
     kcarta.rst
+    driver_files.rst
+    convolution.rst
 
+    

@@ -1,8 +1,8 @@
-kCARTA
+KCARTA
 ======
 
-1 Introduction
---------------
+Introduction
+------------
 
 kCARTA stands for "kCompressed Atmospheric Radiative Transfer
 Algorithm." This is an infrared, "monochromatic" radiative transfer
@@ -28,8 +28,8 @@ a .hdf based file format, and allows us to include all necessary
 parameters (such as profile information, satellite and solar angles,
 emissivities) into a "Radiative Transfer Protocol" file.
 
-2 Radiative transfer
---------------------
+Radiative transfer
+------------------
 
 For a downward looking instrument, in a clear sky, the surface term and
 layer emission terms are automatically included in the radiative
@@ -59,8 +59,8 @@ that deviate from nadir.
 More documentation on the driver files, and on the convolution routines,
 can be found in the appropriately named pdf files.
 
-3 Analytic Jacobians
---------------------
+Analytic Jacobians
+------------------
 
 Taking into account the view angle correction, if :math:`\tau_{i}` is the
 optical depth due to gas G at layer :math:`i`, given by
@@ -126,8 +126,8 @@ from which the layer jacobian terms :math:`J_{i}` reduce to
     & -\frac{K_2}{\mu_2} B(1)exp(-q_{1} K_{1}/\mu{1})exp(-q_{2} K_{2}/\mu{2}) + \\
     & -\frac{K_2}{\mu_2} B(2)exp(-q_{2} K_{2}/\mu{2})\end{aligned}
 
-4 kCompressed Database
-----------------------
+kCompressed Database
+--------------------
 
 Optical depths are computed for all molecules in the HITRAN database,
 using a profile derived from the 1962 US Standard Atmosphere. These
@@ -176,16 +176,16 @@ should contain the latest spectroscopy/lineshape information. The
 transmittances computed by kCARTA are smooth and well behaved, which
 will allow people to develop fast-forward models.
 
-5 GasIDs
---------
+GasIDs
+------
 
 The gasIDs used by kCARTA and kLAYERSfollow the HITRAN convention.
 ``gasids_H2008`` (and the earlier ``gasids_H92_H2k``) in this ``DOCS``
 subdirectory, provide a list of gasID vs commonly used name and/or
 chemical formula.
 
-6 Units and Definitions
------------------------
+Units and Definitions
+---------------------
 
 Frequencies are in units of wavenumbers (cm\ :sup:`-1`\ ), temperatures are in
 Kelvins. The gas profiles expected by kCARTA use path averages over the
@@ -205,8 +205,8 @@ perturbation (+1 K if temperature, or +gas amount in :math:`m^{th}` layer) and
 amount in layer :math:`m`, and :math:`Z_{m}` is an unit perturbation (+1 K if
 temperature, or +gas amount in :math:`m^{th}` layer)
 
-7 Installation
---------------
+Installation
+------------
 
 This is for the user that wants to install and use kCARTA as quickly as
 possible. We purposely keep this user manual short, and ask the user to
@@ -235,11 +235,11 @@ containing the source code, data files and so on.
     drwxr-xr-x 3 sergio pi_strow    4 Mar 23 10:35 JACDOWN
     drwxr-xr-x 6 sergio pi_strow    6 Mar 22 15:38 DATA
 
-8 Overview by Source Directory
-------------------------------
+Overview by Source Directory
+----------------------------
 
-8.1 Main directory
-~~~~~~~~~~~~~~~~~~
+Main directory
+~~~~~~~~~~~~~~
 
 This contains the main files needed if using a pressure layering that is
 the same as the AIRS 100 layers, which is generally sufficient for nadir
@@ -314,48 +314,48 @@ For example, one run covering 605-2830 cm-1 is fine, as is another run
 covering 500-605 cm-1 . But the code as written will not permit a single
 run covering 500-2830 cm-1 .
 
-8.2 private
-~~~~~~~~~~~
+private
+~~~~~~~
 
 This subdir contains files that are called by the main routines, and
 should not be modified.
 
-8.3 DOC
-~~~~~~~
+DOC
+~~~
 
 The documentation for this package
 
-8.4 CONVOLUTION
-~~~~~~~~~~~~~~~
+CONVOLUTION
+~~~~~~~~~~~
 
 Convolution routines. We include generic gaussian convolvers, as well as
 AIRS SRF convolvers, and IASI/CRiS convolvers. Note the files contained
 in this subdir will not be supported.
 
-8.5 JACDOWN
-~~~~~~~~~~~
+JACDOWN
+~~~~~~~
 
 This has the main driver for a downlook jacobian calculation,
 ``jac_downlook.m`` which calls files in the :math:`private` subdirectory
 underneath this. One can speed up the jacobian code by eg removing the
 looping over the weighting functions, or over the temperatures.
 
-8.6 RTPFILES
-~~~~~~~~~~~~
+RTPFILES
+~~~~~~~~
 
 Sample rtpfiles for this package; "desert" is a downlooking case at 100
 AIRS layers, while the other is an uplooking case at a different
 layering scheme. In addition we provide a subdirectory with some binary
 files output from the f77 code.
 
-8.7 DATA
-~~~~~~~~
+DATA
+~~~~
 
 Contains subdirectories with continuum, solar, NLTE and CO2 Chifunction
 datafiles.
 
-8.8 Test
-~~~~~~~~
+Test
+~~~~
 
 Examples of two driverfiles, one which computes optical depths (based on
 a list the user supplies), and the other which computes radiances (and
@@ -391,8 +391,8 @@ of the routines named below (which call relevant files from above).
 This subdir also includes two matlab files, containing radiances output
 using H2004 and H2008.
 
-8.9 VariablePressure
-~~~~~~~~~~~~~~~~~~~~
+VariablePressure
+~~~~~~~~~~~~~~~~
 
 This contains the main files a user should need for a pressure layering
 different than the AIRS 100 layers. This makes the code(s) slower. The
@@ -412,8 +412,8 @@ the "downlook" case) and ``dokcarta_opticaldepths.m.``
 
 ``JACUP_VarPress`` has jacobian routines for uplooking instruments
 
-9 Comparisons against f77 and our code
---------------------------------------
+Comparisons against f77 and our code
+------------------------------------
 
 We have tested this code against the f77 kCARTA code and across the IR
 bands, have errors less than 0.05 K in brightness temperature. The
@@ -424,4 +424,6 @@ The ``Test`` directory contains ``matlab_test_desert_0725_2004.mat`` which
 is a radiance computation coming from running the ``dokcarta_downlook.m``
 in that directory.
 
-.. image:: ./desert_rtp.png
+.. figure:: ./desert_rtp.png
+ 
+   Sample output from ``desert_op.rtp`` convolved with AIRS SRFs

@@ -2,13 +2,10 @@
 #+EXPORT_SELECT_TAGS: 
 #+LaTeX_CLASS: article
 #+LaTeX_HEADER: \input /Users/strow/Tex/Templates/article_setup
-#+TITLE: ''
-#+AUTHOR: L. Strow 
+#+TITLE: KCARTA
 #+LaTeX_CLASS_OPTIONS: [11pt]
-#+OPTIONS: h:4 toc:nil num:4
+#+OPTIONS: h:4 toc:nil num:0 author:nil
 #+HTML_HEAD: <link rel="stylesheet" type="text/css" href="http://asl.umbc.edu/images/asl.css" />
-
-
 
 
 * Introduction
@@ -215,7 +212,6 @@ containing the source code, data files and so on.
 #+END_EXAMPLE
 
 * Overview by Source Directory
-
 ** Main directory
 
 This contains the main files needed if using a pressure layering that is
@@ -393,5 +389,4 @@ is a radiance computation coming from running the =dokcarta_downlook.m=
 in that directory.
 
 #+CAPTION: Sample output from =desert_op.rtp= convolved with AIRS SRFs
-
 [[./desert_rtp.png]]

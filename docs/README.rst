@@ -1,8 +1,8 @@
-README
+Readme
 ======
 
-1 Introduction
---------------
+Introduction
+------------
 
 ``kcarta-matlab`` is a Matlab based version of kCARTA (also available
 under github) which was designed to be the Reference Clear Sky Forward
@@ -30,15 +30,15 @@ In order to run kcmix, the user also needs to install/download
 3) klayers package, which takes in a LEVELS rtp file and produces a LAYERS 
    average rtp file, needed for RT calculations
 
-2 Main Top Level Routines
--------------------------
+Main Top Level Routines
+-----------------------
 
 kcrad
     Radiative transfer top-level wrapper, manages defaults and
     loops on chunks, calling kcmix2, contcalc, and rtchunk
 
 rtchunk
-    Radiative transfer calc's in 10nil point chunks, including
+    Radiative transfer calc's in 10^4 point chunks, including
     reflected solar and basic reflected thermal
 
 kcmix2
@@ -52,8 +52,8 @@ kcmix100
 contcalc
     Continuum calculation from kcarta tabulated values
 
-3 Performance
--------------
+Performance
+-----------
 
 Code for the mixed absorptions has been tested against the Fortran
 kcarta and line-by-line codes.  The code for radiance calculations
@@ -67,11 +67,13 @@ a maya cluster node.  A top level breakdown of runtimes had
 
 .. table::
 
-    ==========  ======
-    kcmix2      51 pct 
-    rtchunk     35 pct 
-    contcalc    13 pct 
-    ==========  ======    
+    +----------+--------+
+    | kcmix2   | 51 pct |
+    +----------+--------+
+    | rtchunk  | 35 pct |
+    +----------+--------+
+    | contcalc | 13 pct |
+    +----------+--------+
 
 Interpolation is less than 1 pct of kcmix runtime, and calculation
 of interpolation weights even less, because we are interpolating the
@@ -79,32 +81,34 @@ compact representation.  The most time consuming lines in kcmix2 are
 
 .. table::
 
-      ======   ===========================================
-      29 pct   load tabulated coefficients                  
-      23 pct   apply the decompression transform            
-      10 pct   check for existance of the coefficient file  
-      ======   ===========================================
+    +--------+---------------------------------------------+
+    | 29 pct | load tabulated coefficients                 |
+    +--------+---------------------------------------------+
+    | 23 pct | apply the decompression transform           |
+    +--------+---------------------------------------------+
+    | 10 pct | check for existance of the coefficient file |
+    +--------+---------------------------------------------+
 
 The rest is spread around, mostly in find statements, dividing out
 by the reference profile, and so on.  Except possibly for the load
 there is isn't much left to optimize.
 
-4 Data
-------
+Data
+----
 
 ``kcarta-matlab`` uses compressed tabulated optical depths.  The optical
 depths are generated from GENLN2 or other line-by-line codes.  Code to
 do this compression is in an earlier "push" of the abscmp
 subdirectory, see the README there for an overview.
 
-5 Documentation
----------------
+Documentation
+-------------
 
 Documentation is available in the ``docs`` subdirectory, and is fairly
 up-to-date. 
 
-6 Authors
----------
+Authors
+-------
 
 All ``kcarta-matlab`` code is by H. Motteler, with guidance for the
 radiative transfer calculations from Sergio DeSouza-Machado and Scott

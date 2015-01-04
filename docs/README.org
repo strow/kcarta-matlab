@@ -1,3 +1,12 @@
+* COMMENT Export code
+#+EXPORT_SELECT_TAGS: 
+#+LaTeX_CLASS: article
+#+LaTeX_HEADER: \input /Users/strow/Tex/Templates/article_setup
+#+LaTeX_CLASS_OPTIONS: [11pt]
+#+TITLE: Readme
+#+OPTIONS: h:4 toc:nil num:0 author:nil
+#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="http://asl.umbc.edu/images/asl.css" />
+
 * Introduction
 
 =kcarta-matlab= is a Matlab based version of kCARTA (also available
@@ -51,17 +60,25 @@ Runtime performance is good.  Recent benchmarks with ktest1.m from
 and the version '24' of the water continuum code took 83 seconds on
 a maya cluster node.  A top level breakdown of runtimes had
 
+|----------+--------|
 | kcmix2   | 51 pct |
+|----------+--------|
 | rtchunk  | 35 pct |
+|----------+--------|
 | contcalc | 13 pct |
+|----------+--------|
 
 Interpolation is less than 1 pct of kcmix runtime, and calculation
 of interpolation weights even less, because we are interpolating the
 compact representation.  The most time consuming lines in kcmix2 are
 
+|--------+---------------------------------------------|
 | 29 pct | load tabulated coefficients                 |
+|--------+---------------------------------------------|
 | 23 pct | apply the decompression transform           |
+|--------+---------------------------------------------|
 | 10 pct | check for existance of the coefficient file |
+|--------+---------------------------------------------|
 
 The rest is spread around, mostly in find statements, dividing out
 by the reference profile, and so on.  Except possibly for the load
@@ -79,20 +96,11 @@ subdirectory, see the README there for an overview.
 Documentation is available in the =docs= subdirectory, and is fairly
 up-to-date. 
 
-
 * Authors
 
 All =kcarta-matlab= code is by H. Motteler, with guidance for the
 radiative transfer calculations from Sergio DeSouza-Machado and Scott
 Hannon.  L. Larrabee Strow is Principal Investigator, and we all
 contributed to the fundamental ideas and initial development.
-
-* COMMENT Export code
-#+EXPORT_SELECT_TAGS: 
-#+LaTeX_CLASS: article
-#+LaTeX_HEADER: \input /Users/strow/Tex/Templates/article_setup
-#+LaTeX_CLASS_OPTIONS: [11pt]
-#+OPTIONS: h:3 toc:nil num:2
-#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="http://asl.umbc.edu/images/asl.css" />
 
 
