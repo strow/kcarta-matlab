@@ -39,7 +39,7 @@
 % these next two define where the input rtp file is in
 %   dir is the directory where the file is in
 %   fin is the actual file
-%   example : dirin = '/asl/s1/sergio'; 
+%   example : dirin = '/yourdir/'; 
 %             fin = 'pin_feb2002_sea_airsnadir_op.sun.rtp';
 %
 % iProfRun is which of the rtp profiles to run
@@ -61,8 +61,8 @@
 % iaa_kcomprstats_AllChunks          2x73            Singular Vectors stats
 %
 % ropt0 : reproduces important input parameters (from set_dirs) eg
-%             kpath: '/asl/s1/sergio/KCMIX_DATABASE/H2004_matlab'
-%            soldir: '/home/sergio/MATLABCODE/KCMIX2/KCMIXCODE/solarV2'
+%             kpath: '/yourdir/KCMIX_DATABASE/H2004_matlab'
+%            soldir: '/yourdir/MATLABCODE/KCMIX2/KCMIXCODE/solarV2'
 %              cdir: '/asl/data/kcarta/KCARTADATA/General/CKDieee_le'
 %           nltedir: [1x60 char]
 %    co2ChiFilePath: '/asl/data/kcarta/KCARTADATA/General/ChiFile/'
@@ -106,9 +106,7 @@ CKD = '5';
 iBreakoutCont = +1;
 
 % these next two define the input dir and rtp file
-%dirin = '/home/sergio/MATLABCODE/KCMIX2/PACKAGE_UPnDOWNLOOK_2011/RTPFILES/';
-%fin = 'uplook_op.rtp';
-dirin = '/home/sergio/MATLABCODE/KCMIX2/PACKAGE_UPnDOWNLOOK_2011/RTPFILES/';
+dirin = '/yourdir/KCMIX2/PACKAGE_UPnDOWNLOOK_2011/RTPFILES/';
 fin   = 'desert_op.rtp'; 
 
 % iProfRun is which of the rtp profiles to run

@@ -30,18 +30,7 @@ tHigh = sum(raVT(iNumLayer-4:iNumLayer))/5;
       pred(4) = scos1*vsec1;
       pred(5) = scos1*tHigh;
       pred(6) = suncos;
-   
-%      disp('sarta preds = ')
-%      format short e
-%      pred
-%      format
 
-%     !/asl/packages/sartaV106/Src/incFTC_apr05_nte.f
-%     FNCOFN = '/asl/data/sarta_database/Data_jan04untun/Coef/setnte_oct05.dat'
-%     !matlab cd : /home/sergio/KCARTADATA/NLTE/SARTA_COEFS/
-%     !fname='/asl/data/sarta_database/Data_jan04untun/Coef/setnte_oct05.dat';
-%     ![idchan, freq, coef] = rd_nte_be(fname);
-%     !/wrt_nte_le.m
 fncoefn = nltedir;
 ee = exist(fncoefn);
 if ee == 0

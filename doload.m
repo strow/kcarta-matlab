@@ -6,6 +6,12 @@ function [h,ha,p,pa] = doload(dirin,fin,klayers_code,iAirs,junkdir);
 junkdir = klayers_code.junkdir;
 
 filein = [dirin '/' fin];
+if ~exist(filein)
+  xdir = pwd;
+  fprintf(1,'  current dir is %s \n',xdir);
+  fprintf(1,'  looking for rtp file %s \n',filein);
+  error('hmm file not found');
+end
 
 if (iAirs >= 0)
   klayers = ['!' klayers_code.airs ' fin=' filein];

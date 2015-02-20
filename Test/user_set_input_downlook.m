@@ -40,7 +40,7 @@
 % these next two define where the input rtp file is in
 %   dir is the directory where the file is in
 %   fin is the actual file
-%   example : dirin = '/asl/s1/sergio'; 
+%   example : dirin = '/yourdir/'; 
 %             fin = 'pin_feb2002_sea_airsnadir_op.sun.rtp';
 %
 % iProfRun is which of the rtp profiles to run
@@ -67,8 +67,8 @@
 % iaa_kcomprstats_AllChunks          2x73            Singular Vectors stats
 %
 % ropt0 : reproduces important input parameters (from set_dirs) eg
-%             kpath : '/asl/s1/sergio/KCMIX_DATABASE/H2004_matlab'
-%            soldir : '/home/sergio/MATLABCODE/KCMIX2/KCMIXCODE/solarV2'
+%             kpath : '/yourdi/H2004_matlab'
+%            soldir : '/yourdir/solarV2'
 %              cdir : '/asl/data/kcarta/KCARTADATA/General/CKDieee_le'
 %           nltedir : [1x60 char]
 %    co2ChiFilePath : '/asl/data/kcarta/KCARTADATA/General/ChiFile/'
@@ -114,7 +114,6 @@ fA = 2205;  fB = 2430;
 fA = 2255;  fB = 2305; 
 fA = 2105;  fB = 2405; 
 fA = 605;  fB = 2830; 
-fA = 1780;  fB = 1805; 
 
 % iDoJac tells controls the jacobians gasids (-1 for none)
 %iDoJac = [1 2];        %% WV (includes continuum) and CO2
@@ -129,21 +128,9 @@ CKD = '6';
 
 % these next two define the input dir and rtp file
 % iProfRun is which of the rtp profiles to run
-dirin = '/home/sergio/MATLABCODE/KCMIX2/PACKAGE_UPnDOWNLOOK_2011/RTPFILES/';
-  fin   = 'desert_op.rtp'; 
+dirin   = 'Test/';
+  fin   = 'feb2002_raw_op_airs.rad.constemiss.rtp';
   iProfRun = 49;
-dirin = '/asl/s1/sergio/';
-  fin   = 'pin_feb2002_sea_airsnadir_op.so2.80gases.rtp'; 
-  iProfRun = 49;
-dirin = '/asl/s1/sergio/';
-  fin   = 'feb2002_raw_op_airs.rad.constemiss_downlook_day.rtp';
-  iProfRun = 49;
-dirin = '/home/tangborn/rtp/';
-  fin   = 'pin_feb2002_sea_airsnadir_g80_op_scanang.so2.rtp';
-  iProfRun = 5;
-dirin = '/asl/s1/strow/rtprod_cris/2013/08/28/';
-  fin   = 'test.rtp';
-  iProfRun = 262;
 
 % iNLTE is which NLTE model to run
 %   example iNLTE = -1; % SARTA

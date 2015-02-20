@@ -1,6 +1,6 @@
-function [absc, fr, iNumVec] = kcmix(prof, gidIN, vchunk, ropt0, refp,df)
+function [absc, fr, iNumVec] = kcmix2(prof, gidIN, vchunk, ropt0, refp,df)
 
-% function [absc, fr, iNumVec] = kcmix(prof, vchunk, ropt0, refp)
+% function [absc, fr, iNumVec] = kcmix2(prof, vchunk, ropt0, refp)
 % 
 % calculate a 25 1/cm "chunk" of mixed absorptions for a
 % supplied profile, from tabulated compressed absorptions
@@ -77,10 +77,6 @@ fr = vchunk + (0:9999)*df;
 %% ropt0.iMatlab_vs_f77 = +1;    %% use Matlab binary database
 if ropt0.iMatlab_vs_f77 == -1
   % kCARTA databases
-  %datadir = '/strowdata1/shared/sergio/MATLABCODE/Kcarta/Data';
-  %kpathh2o = fullfile(datadir,'v07.ieee-le/h2o.ieee-le');
-  %kpathco2 = fullfile(datadir,'v24.ieee-le/co2.ieee-le');
-  %kpathetc = fullfile(datadir,'v07.ieee-le/etc.ieee-le');
   kpathh2o = ropt0.kpathh2o;
   kpathhDo = ropt0.kpathhDo;
   kpathco2 = ropt0.kpathco2;
@@ -310,28 +306,6 @@ for gind = xyz : xyz
         chi = load(chi);
         chi = chi(:,2); chi = chi*ones(1,length(prof.mtemp));
         absc = absc.*chi;
-        end
-      end
-
-    iPlot = 54;    %% plot gas 54
-    iPlot = 9999;  %% plot all gases
-    iPlot = -1;    %% no plot
-    if iPlot == 9999    %%% plot all gases
-      if gid > 2 
-        [w1,d1] = see_umbcLBL_chunk_gasid(gid,vchunk); 
-        semilogy(w1,sum(absc'),w1,sum(d1(4:100,:)),'r');    
-        title([num2str(gid) ' (b) Matlab (r) US StdProf']);  grid; pause  
-      else
-        semilogy(fr,sum(absc'));
-        title([num2str(gid) ' (b) Matlab']);  grid; pause        
-        end
-    elseif iPlot > 0 & iPlot ~= 2 & iPlot < 200   %% plot only ind gas ....
-      if gid == iPlot
-        [dkc,rkc] = readkcstd('/home/sergio/KCARTA/WORK/aaa.dat');
-        [w1,d1] = see_umbcLBL_chunk_gasid(gid,vchunk); 
-        semilogy(w1,sum(absc'),w1,sum(d1(4:100,:)),rkc,sum(dkc'),'r')
-        title([num2str(gid) ' (b) Matlab (g) US StdProf (r) f77']);  
-        grid; pause        
         end
       end
 

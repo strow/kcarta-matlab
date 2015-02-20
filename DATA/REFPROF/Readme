@@ -3,3 +3,18 @@ cp /home/sergio/HITRAN2UMBCLBL/refproTRUE.mat  DATA/REFPROF/refprofH2008.mat
 
 and then edit these files, so as to add on gid = 103 (HDO) 
 with the same prof as gid = 1 (water)
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+for NLTE
+%      disp('sarta preds = ')
+%      format short e
+%      pred
+%      format
+%
+%     !/asl/packages/sartaV106/Src/incFTC_apr05_nte.f
+%     FNCOFN = '/asl/data/sarta_database/Data_jan04untun/Coef/setnte_oct05.dat'
+%     !matlab cd : /home/sergio/KCARTADATA/NLTE/SARTA_COEFS/
+%     !fname='/asl/data/sarta_database/Data_jan04untun/Coef/setnte_oct05.dat';
+%     ![idchan, freq, coef] = rd_nte_be(fname);
+%     !/wrt_nte_le.m
