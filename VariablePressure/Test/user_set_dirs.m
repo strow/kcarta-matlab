@@ -83,15 +83,14 @@
 soldir = '/asl/data/kcarta/KCARTADATA/KCMIX/DATA/SOLARv2/';
 
 % path to continuum files ...
-cdir = '/asl/data/kcarta/KCARTADATA/KCMIX/DATA/CKDieee_le/';
+cdir = '/asl/data/kcarta/KCARTADATA/General/CKDieee_le/'
 cswt = 1.0; cfwt = 1.0;   %% self and forn weights
 
 % path and name NLTE files ....
-nltedir = '/asl/data/kcarta/KCARTADATA/KCMIX/DATA/NLTE/setnte_oct05.le.dat';
+nltedir = '/asl/data/kcarta/KCARTADATA/NLTE/SARTA_COEFS/setnte_oct05.le.dat';
 
 % path to CO2 chifiles
-co2ChiFilePath = ...
-   '/asl/data/kcarta/KCARTADATA/KCMIX/DATA/ChiFile/';
+co2ChiFilePath = '/asl/data/kcarta/KCARTADATA/General/ChiFile/';
 
 %% these are the klayers execs
 klayers_code.aeri = '/yourdir/klayers/Bin/klayers_aeri999';          %% AERI
