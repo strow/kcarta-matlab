@@ -1,4 +1,4 @@
-function [rads] = matlab_kcarta_downlook_nojac(head,prof,aux_struct,ropt0);
+function [rads] = downlook_nojac(head,prof,aux_struct,ropt0);
 %
 % function [rads]=matlab_kcarta_downlook_nojac(head,prof,aux_struct,ropt0);
 %
@@ -59,8 +59,10 @@ gasids = refpro.glist;
 fchunk = fA : df*10000 : fB; nchunk = length(fchunk);
 absc = []; zang = [];
 
-freqAllChunks = zeros(1,10000*nchunk);
-radAllChunks  = zeros(10000*nchunk,1);
+% freqAllChunks = zeros(1,10000*nchunk);
+% radAllChunks  = zeros(10000*nchunk,1);
+freqAllChunks = [];
+radAllChunks  = [];
 if iDebug > 0
   abscAllChunks   = zeros(10000*nchunk,nlays);
   abscAllChunksG2 = zeros(10000*nchunk,nlays);
@@ -84,7 +86,7 @@ copt.cfwt  = cfwt;
 %tic
 %profile on -history
 
-for cc = 1 : length(fchunk)
+parfor cc = 1 : length(fchunk)
   iaCountNumVec = [];
 
   ff = fchunk(cc);
@@ -153,11 +155,11 @@ for cc = 1 : length(fchunk)
     rplanckmod = ones(size(absc));
   end
 
-  if iDebug > 0
-    abscAllChunks(chunkindex,:) = absc;  
-    abscAllChunksG2(chunkindex,:) = abscG2;  
-    planckAllChunks(chunkindex,:) = rplanckmod;  
-    end
+%   if iDebug > 0
+%     abscAllChunks(chunkindex,:) = absc;  
+%     abscAllChunksG2(chunkindex,:) = abscG2;  
+%     planckAllChunks(chunkindex,:) = rplanckmod;  
+%     end
 
   profX = prof;
   if iDebug > 1000 & iDebug < 2000
@@ -167,8 +169,10 @@ for cc = 1 : length(fchunk)
 
   [rad25,therm25,zang] = rtchunk_Tsurf(profX, absc, freq , rplanckmod, ropt0);
 
-  freqAllChunks(chunkindex) = freq;
-  radAllChunks(chunkindex) = rad25;
+%   freqAllChunks(chunkindex) = freq;
+%   radAllChunks(chunkindex) = rad25;
+  freqAllChunks = [freqAllChunks freq];
+  radAllChunks = [radAllChunks rad25];
 
   iaa_kcomprstats_AllChunks = [iaa_kcomprstats_AllChunks; iaCountNumVec];
   end
