@@ -37,20 +37,22 @@ if iFreqOrNoise == 1
     load cris_chans_jan2012.mat
     y = hcris.vchan;
 
-    addpath /home/sergio/MATLABCODE/CRIS_HiRes
-    [nscrisOut,wnOut] = cris_noise(1);
-    y = wnOut;
-    disp('warning : wn are sorted, istead of 1:1305 and then guard chans')
+    %% not doing noise
+    %addpath /home/sergio/MATLABCODE/CRIS_HiRes
+    %[nscrisOut,wnOut] = cris_noise(1);
+    %y = wnOut;
+    %disp('warning : wn are sorted, istead of 1:1305 and then guard chans')
 
   elseif findstr(instr,'cris1305') | findstr(instr,'CRIS1305')
-    load /home/sergio/MATLABCODE/CRIS_HiRes/cris_wavenumbers.mat
+     %load /home/sergio/MATLABCODE/CRIS_HiRes/cris_wavenumbers.mat
+    load cris_wavenumbers.mat
     y = wchx2;
   elseif findstr(instr,'crisHR') | findstr(instr,'CRISHR')
-    load /home/sergio/MATLABCODE/CRIS_HiRes/cris_wavenumbers.mat
+     %load /home/sergio/MATLABCODE/CRIS_HiRes/cris_wavenumbers.mat
+    load cris_wavenumbers.mat
     y = hwchx2;
   elseif findstr(instr,'airs') | findstr(instr,'AIRS')
-    fx = '/home/sergio/MATLABCODE/';
-    fx = [fx 'AIRS_IASI_AMSU_JACS_gas_T/airs_chanlist_calib_tomp'];
+    fx = 'airs_chanlist_calib_tomp';
     dd = load(fx);
     %% everything is screwup here ie need to re-order things 
     %% from this Lockhed Martin file
@@ -72,23 +74,23 @@ if iFreqOrNoise == 2
           (2155-2*2.5):2.5:(2550+2*2.5)]';
     load cris_chans_jan2012.mat
     y1 = hcris.vchan;
-    addpath /home/sergio/MATLABCODE/CRIS_HiRes
-    [nscrisOut,wnOut] = cris_noise(1);
-    y = nscrisOut;
+    %% not doing noise
+    %addpath /home/sergio/MATLABCODE/CRIS_HiRes
+    %[nscrisOut,wnOut] = cris_noise(1);
+    %y = nscrisOut;
     disp('warning : cris noise in NeDN (rad units!!) -- use convertNEDTtoNEDN')
   elseif findstr(instr,'cris1305') | findstr(instr,'CRIS1305')
-    addpath /home/sergio/MATLABCODE/CRIS_HiRes
-    [nscrisOut,wnOut] = cris_noise(2);
+     %addpath /home/sergio/MATLABCODE/CRIS_HiRes
+     %%[nscrisOut,wnOut] = cris_noise(2);
     y = nscrisOut;
     disp('warning : cris noise in NeDN (rad units!!) -- use convertNEDTtoNEDN')
   elseif findstr(instr,'crisHR') | findstr(instr,'CRISHR')
-    addpath /home/sergio/MATLABCODE/CRIS_HiRes
-    [nscrisOut,wnOut] = cris_noise(10);
+     %addpath /home/sergio/MATLABCODE/CRIS_HiRes
+     %[nscrisOut,wnOut] = cris_noise(10);
     y = nscrisOut;
     disp('warning : cris noise in NeDN (rad units!!) -- use convertNEDTtoNEDN')
   elseif findstr(instr,'airs') | findstr(instr,'AIRS')
-    fx = '/home/sergio/MATLABCODE/';
-    fx = [fx 'AIRS_IASI_AMSU_JACS_gas_T/airs_chanlist_calib_tomp'];
+    fx = 'airs_chanlist_calib_tomp';
     dd = load(fx);
     %% everything is screwup here ie need to re-order things 
     %% from this Lockhed Martin file
