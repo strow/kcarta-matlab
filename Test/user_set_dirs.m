@@ -114,7 +114,7 @@
 soldir = '/asl/data/kcarta/KCARTADATA/KCMIX/DATA/SOLARv2';
 
 % path to continuum files ...
-cdir = '/asl/data/kcarta/KCARTADATA/General/CKDieee_le/'
+cdir = '/asl/data/kcarta/KCARTADATA/General/CKDieee_le/';
 cswt = 1.0; cfwt = 1.0;   %% self and forn weights
 
 % path and name NLTE files ....

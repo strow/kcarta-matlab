@@ -77,8 +77,8 @@ rFracBot = ...
 
 pr_p2 = prof.plevs(nlevs-1);
 pr_p1 = prof.spres;
-p1 = (pr_p2 - pr_p1)/log(pr_p2/pr_p1);
-t1 = interp1(prof.plays(1:nlays),prof.ptemp(1:nlays),p1,[],'extrap');
+p1    = (pr_p2 - pr_p1)/log(pr_p2/pr_p1);
+t1    = interp1(prof.plays(1:nlays),prof.ptemp(1:nlays),p1,'linear','extrap');
 prof.ptemp(nlays) = t1;
 fprintf(1,'bottom layer : frac= %8.6f pavg = %8.6f Temp = %8.6f \n',rFracBot,p1,t1);
 
