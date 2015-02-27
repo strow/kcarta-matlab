@@ -9,7 +9,7 @@ function [hout,pout,iWarning,fout,rout] = driver_process_kcarta_rtp(hin,hain,pin
 %
 % input
 %   hin,hain,pin,pain : comes from rtpread(profile)
-%   profiles          : which ones to subset and run matlab-kcarta for (1 : default all)
+%   profiles          : which ones to subset and run matlab-kcarta for (-1 : default all)
 %   iInstr            : which instr SRF to use
 %                         +1 : AIRS (default)     
 %                         +2 : IASI
@@ -68,6 +68,17 @@ end
 for iCurrentProf = 1 : length(px.stemp)
   fprintf(1,'processing %4i out of %4i profiles \n',iCurrentProf,length(px.stemp))
   [radsOut,stuff] = dokcarta_downlook_rtp(hx,hain,px,pain,iCurrentProf);
+
+  [mmr,nnr] = size(radsOut.radAllChunks);
+  [mmf,nnf] = size(radsOut.freqAllChunks);
+  if (mmr*nnr ~= mmf*nnf)
+    error('rads and freq sizes incompatible')
+  end
+  if (nnf ~= mmr)
+    disp('you probably did this in parallel, resizing radiance')
+    radsOut.radAllChunks = reshape(radsOut.radAllChunks,1,nnf)';                                                  
+  end                                                                                                             
+
   monorad(iCurrentProf,:) = radsOut.radAllChunks';
 end
 
