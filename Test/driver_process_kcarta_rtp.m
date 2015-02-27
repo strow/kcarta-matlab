@@ -158,8 +158,8 @@ elseif iInstr == 4
 end
 
 iWarning = 0;
-hout = hin;
-pout = pin;
+hout = hx;
+pout = px;
 [mm,nn] = size(fout);
 
 if hout.nchan ~= length(fout)
