@@ -118,7 +118,8 @@ cdir = '/asl/data/kcarta/KCARTADATA/General/CKDieee_le/';
 cswt = 1.0; cfwt = 1.0;   %% self and forn weights
 
 % path and name NLTE files ....
-nltedir = '/asl/data/kcarta/KCARTADATA/NLTE/SARTA_COEFS/setnte_oct05.le.dat';
+% nltedir = '/asl/data/kcarta/KCARTADATA/NLTE/SARTA_COEFS/setnte_oct05.le.dat';   %% old
+nltedir = '/asl/data/kcarta/KCARTADATA/NLTE/SARTA_COEFS/nonLTE7_m150.le.dat';   %% new
 kpathCO2_4umNLTE_OD = '/asl/data/kcarta/KCARTADATA/NLTE/LA_UA_kcomp/';
 kpathCO2_4umNLTE_PL = '/asl/data/kcarta/KCARTADATA/NLTE/LA_UA_kcomp/';
 
