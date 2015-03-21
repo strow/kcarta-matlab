@@ -17,32 +17,68 @@ function [idchan, freq, coef] = rd_nte_be(fname);
 
 % Created: 15 March 2005, Scott Hannon
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-% Expected value of ifm = 4*(1 + 1 + 6) = 32
 % This is 4 bytes each for (idchan, freq, & 6 coefs)
-ifm_exp=32;
+% Expected value of ifm = 4*(1 + 1 + 6) = 32 
+ifm_exp(1) = 32;
+
+% This is 4 bytes each for (idchan, freq, & 7 coefs)
+% Expected value of ifm = 4*(1 + 1 + 7) = 36 
+ifm_exp(2) = 36;
+
+% This is 4 bytes each for (idchan, freq, & 8 coefs)
+% Expected value of ifm = 4*(1 + 1 + 8) = 40
+ifm_exp(3) = 40;
+
+% This is 4 bytes each for (idchan, freq, & 9 coefs)
+% Expected value of ifm = 4*(1 + 1 + 9) = 44 
+ifm_exp(4) = 44;
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % The code below should not require modifications
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 d = dir(fname);
-junk = d.bytes/(ifm_exp + 8);
+nCoeff = -1;
+junk(1) = d.bytes/(ifm_exp(1) + 8*1);
+junk(2) = d.bytes/(ifm_exp(2) + 8*1);
+junk(3) = d.bytes/(ifm_exp(3) + 8*1);
+junk(4) = d.bytes/(ifm_exp(4) + 8*1);
 nchan = round(junk);
-if (abs(junk - nchan) > 0.0001)
+if (abs(junk(1) - nchan(1)) < 0.0001)
+  disp('looks like 6 coeffs')
+  nCoeff = 6;
+  xnchan = nchan(1);
+  xifm = 32;
+elseif (abs(junk(2) - nchan(2)) < 0.0001)
+  disp('looks like 7 coeffs')
+  nCoeff = 7;
+  xnchan = nchan(2);
+  xifm = 36;
+elseif (abs(junk(3) - nchan(3)) < 0.0001)
+  disp('looks like 8 coeffs')
+  nCoeff = 8;
+  xnchan = nchan(3);
+  xifm = 40;
+elseif (abs(junk(4) - nchan(4)) < 0.0001)
+  disp('looks like 9 coeffs')
+  nCoeff = 9;
+  xnchan = nchan(4);
+  xifm = 44;
+else
+ fprintf(1,'rd_nlte_le : %s \n',fname)
    error('Unexpected file size')
 end
 
+ifm_exp = xifm;
+nchan = xnchan;
 
 % Open output file
 fid=fopen(fname,'r','ieee-be');
 
-
 % Dimension output arrays
 idchan=zeros(nchan,1);
 freq=zeros(nchan,1);
-coef=zeros(nchan,6);
-
+coef=zeros(nchan,nCoeff);
 
 % Loop over the channels
 for ic=1:nchan
@@ -60,9 +96,9 @@ for ic=1:nchan
    end
 
    % Read data for this channel
-   idchan(ic)=fread(fid,1,'integer*4');
-   freq(ic)=fread(fid,1,'real*4');
-   coef(ic,:)=fread(fid,[1,6],'real*4');
+   idchan(ic) = fread(fid,1,'integer*4');
+   freq(ic)   = fread(fid,1,'real*4');
+   coef(ic,:) = fread(fid,[1,nCoeff],'real*4');
 
    % Read FORTRAN end-of-record marker
    ifm=fread(fid,1,'integer*4');

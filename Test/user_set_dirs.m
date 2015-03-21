@@ -118,8 +118,13 @@ cdir = '/asl/data/kcarta/KCARTADATA/General/CKDieee_le/';
 cswt = 1.0; cfwt = 1.0;   %% self and forn weights
 
 % path and name NLTE files ....
-% nltedir = '/asl/data/kcarta/KCARTADATA/NLTE/SARTA_COEFS/setnte_oct05.le.dat';   %% old
-nltedir = '/asl/data/kcarta/KCARTADATA/NLTE/SARTA_COEFS/nonLTE7_m150.le.dat';   %% new
+% nltedir = '/asl/data/kcarta/KCARTADATA/NLTE/SARTA_COEFS/setnte_oct05.le.dat';   %% AIRS old
+% nltedir = '/asl/data/kcarta/KCARTADATA/NLTE/SARTA_COEFS/nonLTE7_m150.le.dat';   %% AIRS new
+
+%nltedir = '/asl/data/sarta_database/Data_IASI_may09/Coef/nte_7term.dat'; %% IASI newer but be, so shuft it to KCARTADATA and rename
+% cp /asl/data/sarta_database/Data_IASI_may09/Coef/nte_7term.dat /asl/data/kcarta/KCARTADATA/NLTE/SARTA_COEFS/IASI_may09_nte_7term.be.dat
+nltedir = '/asl/data/kcarta/KCARTADATA/NLTE/SARTA_COEFS/IASI_may09_nte_7term.be.dat';
+
 kpathCO2_4umNLTE_OD = '/asl/data/kcarta/KCARTADATA/NLTE/LA_UA_kcomp/';
 kpathCO2_4umNLTE_PL = '/asl/data/kcarta/KCARTADATA/NLTE/LA_UA_kcomp/';
 

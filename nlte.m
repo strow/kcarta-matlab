@@ -37,13 +37,28 @@ if ee == 0
   fprintf(1,'you have set nlte file = %s \n',fncoefn)
   error('file DNE');
 end
-[ichan, frqchn, coefn] = rd_nte_le(fncoefn);
+ibe = strfind(fncoefn,'.be.dat');
+ile = strfind(fncoefn,'.le.dat');
+if length(ibe) > 0 & length(ile) > 0 
+  fprintf(1,'nlte file %s : looking for be.dat or le.dat in name ...\n',fncoefn)
+  error('how can the nlte file be both le and be???')
+elseif length(ibe) == 0  & length(ile) == 0
+  fprintf(1,'nlte file %s : looking for be.dat or le.dat in name ...\n',fncoefn)
+  error('how can the nlte file be neither le and be???')
+elseif length(ile) > 0 & length(ibe) == 0
+  [ichan, frqchn, coefn] = rd_nte_le(fncoefn);
+elseif length(ibe) > 0 & length(ile) == 0
+  [ichan, frqchn, coefn] = rd_nte_be(fncoefn);
+end
+
 nchnte = length(ichan);
 
 % !/asl/packages/sartaV106/Src/calnte.f
 raDrad = coefn(:,1:6) * pred';
 
+% adjust for co2 mixing ratio
 [mm,nn] = size(coefn);
+%fprintf(1,'CO2TOP,CO2NTE = %8.6f %8.6f nn = %2i \n',CO2TOP,CO2NTE,nn)
 if nn == 7
   raDrad = raDrad .* (coefn(:,7)*(CO2TOP - CO2NTE) + 1.0);
 end

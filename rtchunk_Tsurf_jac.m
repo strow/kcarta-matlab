@@ -186,11 +186,15 @@ for i = ipath
   iout = iout + 1;
 end
 
-if prof.solzen < 90 & (freq(1) < 2391.098 & freq(length(freq)) > 2224.888)
-  disp('  adding on NLTE')
+if prof.solzen < 90 & (freq(1) < 2391.098 & freq(length(freq)) > 2224.888) & ropt.iNLTE == -1
+  disp('  adding on NLTE SARTA')
   %% see /asl/data/sarta_database/Data_AIRS_apr08/Coef/tunmlt_wcon_nte.txt
   raVT = prof.ptemp(ipath);
-  radnlte = nlte(freq,prof.satzen,zang,sunang,raVT,length(raVT),nltedir);
+  hxx.ptype = 1;
+  %radnlte = nlte(freq,prof.satzen,zang,sunang,raVT,length(raVT),nltedir);
+  [ppmvLAY,ppmvAVG,ppmvMAX] = layers2ppmv(hxx,prof,1:length(prof.stemp),2);
+  co2top = ppmvLAY(end);
+  radnlte = nlte(freq,prof.satzen,zang,sunang,raVT,length(raVT),co2top,nltedir);
   rad = rad + radnlte;
   %allrad(:,iout) = rad;
 end

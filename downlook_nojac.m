@@ -86,8 +86,8 @@ copt.cfwt  = cfwt;
 %tic
 %profile on -history
 
-%% for cc = 1 : length(fchunk)
-parfor cc = 1 : length(fchunk)
+for cc = 1 : length(fchunk)
+  %% parfor cc = 1 : length(fchunk)
   iaCountNumVec = [];
 
   ff = fchunk(cc);
@@ -141,7 +141,8 @@ parfor cc = 1 : length(fchunk)
 %      ret
 
     else
-      %% CO2 LTE as well as all other gases 3-81
+      %% CO2 LTE as well as all other gases 3-81; if iNLTE = -1 then daytime effects are added on in 
+      %% rtchunk_Tsurf.m
       [absc,freq,iNumVec] = kcmix2(itlo, ithi, twlo, twhi, pi1Out, gid, ...
                                  profileG,ff,ropt0,refp,fr0,absc, prefix);
 

@@ -117,7 +117,7 @@ if rsolar > 0
   % sfrq and srad, the solar radiance data for this chunk
   if freq(1) >= 605.0 & freq(1) < 2830-0.1
     eval(sprintf('load %s/srad%d', soldir, freq(1)));
-    rsol = srad(:)*1000;      %%%change to correct units
+    rsol = srad(:)*1000;      %%% change to correct units
   else
     rsol = ttorad(freq,5800);
   end
@@ -125,12 +125,12 @@ if rsolar > 0
   clear srad sfrq
 
   %[sunang]=sunang_conv( sza, alt );
-  [sunang]=sunang_conv(prof.solzen,prof.palts);
+  [sunang] = sunang_conv(prof.solzen,prof.palts);
 
   % get absorptions along solar path
   solang = 2*pi*sunang'/360;	     % convert to radians
-  secth = sec(solang(1:nlays));
-  wtmp = ones(length(freq),1) * secth;   % weights for each layer and frequency
+  secth  = sec(solang(1:nlays));
+  wtmp   = ones(length(freq),1) * secth;   % weights for each layer and frequency
   solabs = sum(absc .* wtmp, 2);  % sum rows for total column absorption
   rsol0  = rsol0.*exp(-solabs);   % propagate solar down to surface, for jacs
 
@@ -176,6 +176,13 @@ pplanck = ttorad(freq,prof.stemp);
 rad = pplanck .* efine;
 rad = rad + rsol + rthm;
 
+% figure(2); plot(freq,rsol,'b',freq,rthm,'r',freq,rad/100,'k'); hold on; pause(0.1)
+% if freq(1) == 2405
+%   figure(1); clf; plot(freq,sum(absc'));
+%   keyboard
+% end
+
+
 iout = 1;
 %allrad(:,iout) = rad;
 % loop on layers, starting at the surface
@@ -189,7 +196,7 @@ if prof.solzen >= 90
     %allrad(:,iout) = rad;
   end
 elseif prof.solzen < 90
-  if (freq(end) < 2205 | freq(1) > 2405)
+  if (freq(end) < 2205 | freq(1) >= 2405)
     %% normal LTE
     for i = ipath
       pplanck = ttorad(freq,prof.ptemp(i));
@@ -215,8 +222,8 @@ elseif prof.solzen < 90
       [ppmvLAY,ppmvAVG,ppmvMAX] = layers2ppmv(hxx,prof,1:length(prof.stemp),2);
       co2top = ppmvLAY(end);
       radnlte = nlte(freq,prof.satzen,zang,sunang,raVT,length(raVT),co2top,nltedir);
-
       rad = rad + radnlte;
+
     elseif ropt.iNLTE == -2
       disp('  adding on NLTE FAST kComp')
       for i = ipath

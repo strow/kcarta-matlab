@@ -1,5 +1,5 @@
 function [rads,jacs] = ...
-    matlab_kcarta_downlook_jac(head,prof,aux_struct,ropt0,iDoJac,iJacobOutput);
+    downlook_jac(head,prof,aux_struct,ropt0,iDoJac,iJacobOutput);
 % function 
 %   [rads,jacs] = ...
 %  matlab_kcarta_downlook_jac(head,prof,aux_struct,ropt0,iDoJac,iJacobOutput)
@@ -111,7 +111,8 @@ copt.cfwt  = cfwt;
 %tic
 %profile on -history
 
-for cc = 1 : nchunk
+%% for cc = 1 : nchunk
+parfor cc = 1 : nchunk
   iaCountNumVec = [];
 
   ff = fchunk(cc);
@@ -178,6 +179,7 @@ for cc = 1 : nchunk
     abscAllChunks(chunkindex,:) = absc;  
     end
 
+  %% if iNLTE = -1 then daytime effects are added on in rtchunk_Tsurf.m
   [rad25,therm25,zang,efine,rSol25,raaRad] = ...
      rtchunk_Tsurf_jac(prof, absc, freq , ropt0);
   [qjac,tjac,wgt,sjac,ejac] = ...

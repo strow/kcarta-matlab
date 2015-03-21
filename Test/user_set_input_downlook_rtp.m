@@ -134,6 +134,7 @@ dirin   = 'Test/';
   iProfRun = 49;
 
 % iNLTE is which NLTE model to run
-%   example iNLTE = -1; % SARTA
-%   example iNLTE = -2; % kCARTA Compressed
-iNLTE = -2;
+%   example iNLTE = -1; % SARTA, use this
+%   example iNLTE = -2; % kCARTA Compressed not yet done
+iNLTE = -1;
+
