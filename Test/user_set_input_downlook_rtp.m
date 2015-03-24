@@ -132,6 +132,8 @@ dirin   = 'Test/';
   fin   = 'feb2002_raw_op_airs.rad.constemiss.rtp';
   fin   = 'feb2002_raw_op_day_airs.rad.constemiss.rtp';
   iProfRun = 49;
+  fin   = 'test_night.rtp';
+  iProfRun = 1;
 
 % iNLTE is which NLTE model to run
 %   example iNLTE = -1; % SARTA, use this

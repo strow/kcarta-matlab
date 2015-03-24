@@ -58,9 +58,30 @@ zang = zang(1:prof.nlevs-1);
 %[zang]=vaconv( sva, salt, alt );
 rHeight = 705000;
 rHeight = max(prof.palts);
-rHeight = prof.zobs;
-rAngleY = saconv(prof.satzen, rHeight);
-[zang]=vaconv(rAngleY,prof.zobs,prof.palts);
+rHeight = prof.zobs;  %% in meters
+if abs(prof.scanang) > 90 & abs(prof.satzen) < 90 & rHeight > 0
+  %% eg prof.scanang = -9999 
+  %%    prof.satzen  = 2.5
+  %%    prof.zobs    = 705000
+  rAngleY = saconv(prof.satzen, rHeight);   %% this is now SCANANG
+elseif abs(prof.scanang) < 90
+  %% eg prof.scanang = 5.003 
+  %%    prof.satzen  = 5.757
+  %%    prof.zobs    = 829743
+else
+  fprintf(1,'scanang = %8.6f \n',prof.scanang)
+  fprintf(1,'need valid satzen = %8.6f  and sat height %8.6f \n',prof.satzen,prof.zobs)
+  error('cannot figure out scanang')
+end
+zang    = vaconv(rAngleY,prof.zobs,prof.palts);  %% these are the zenith view angles at layers
+[zang prof.palts/1000]
+fprintf(1,'scanang = %8.6f satzen = %8.6f sat height %8.6f \n',rAngleY,prof.satzen,prof.zobs)
+
+%zangTOA = vaconv(rAngleY,prof.zobs,prof.zobs);   %% this is zenith view angle at satellite
+%                                                 %% and should be same as scanang!!!!
+%fprintf(1,'satzen angle zangTOA = vaconv(rAngleY,prof.zobs,prof.zobs) = %8.6f\n',zangTOA)
+
+error('xxx')
 zang = zang(1:prof.nlevs-1);
 
 rtherm  = ropt.rtherm;
