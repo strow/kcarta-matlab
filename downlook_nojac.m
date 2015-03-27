@@ -56,6 +56,10 @@ gasids = refpro.glist;
 % disp('>>>>>>>>>>>>>>>> only using gases ...')
 % gasids = 103
 
+%edit this to test only certain chunks
+%fA = 1905;
+%fB = 2130;
+
 fchunk = fA : df*10000 : fB; nchunk = length(fchunk);
 absc = []; zang = [];
 
@@ -101,7 +105,7 @@ for cc = 1 : length(fchunk)
   iDidNLTE = -1;
   for jj = 1 : length(gasids)
     gid = gasids(jj);
-    %fprintf(1,'chunk %4i, doing gasID = %3i \n',ff,gid);
+    % fprintf(1,'chunk %4i, doing gasID = %3i \n',ff,gid);
 
     if iDebug > 0 & gid == 2
       abscG2 = zeros(10000,nlays);
@@ -110,6 +114,7 @@ for cc = 1 : length(fchunk)
     if gid == 1
       [absc,freq,iNumVec] = kcmix2(itlo, ithi, twlo, twhi, pi1Out, gid, ...
                                  profileG,ff,ropt0,refp,fr0,absc, prefix);
+      %% absc = zeros(size(absc)); disp('no wv') %% turn off water
 
       iaCountNumVec(jj) = iNumVec;
     

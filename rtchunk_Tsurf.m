@@ -74,14 +74,13 @@ else
   error('cannot figure out scanang')
 end
 zang    = vaconv(rAngleY,prof.zobs,prof.palts);  %% these are the zenith view angles at layers
-[zang prof.palts/1000]
-fprintf(1,'scanang = %8.6f satzen = %8.6f sat height %8.6f \n',rAngleY,prof.satzen,prof.zobs)
+%fprintf(1,'scanang = %8.6f satzen = %8.6f sat height %8.6f \n',rAngleY,prof.satzen,prof.zobs)
 
+%%%% this is not needed
 %zangTOA = vaconv(rAngleY,prof.zobs,prof.zobs);   %% this is zenith view angle at satellite
 %                                                 %% and should be same as scanang!!!!
 %fprintf(1,'satzen angle zangTOA = vaconv(rAngleY,prof.zobs,prof.zobs) = %8.6f\n',zangTOA)
 
-error('xxx')
 zang = zang(1:prof.nlevs-1);
 
 rtherm  = ropt.rtherm;

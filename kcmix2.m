@@ -1,4 +1,4 @@
-function [absc, fr, iNumVec] = kcmix(itlo, ithi, twlo, twhi, pi1Out, gidIN, ...
+function [absc, fr, iNumVec] = kcmix2(itlo, ithi, twlo, twhi, pi1Out, gidIN, ...
                                   prof, vchunk, ropt0, refp,...
                                   fr,absc, prefix, df)
 
@@ -144,6 +144,9 @@ for gind = xyz : xyz
 	  qw11 = 0;
         end
 
+        %fprintf(1,'%3i  %8.6f %8.6f %8.6f %8.6f\n',Li,twlo(Li),twhi(Li),qw11,qw12)
+        %fprintf(1,'%3i  %8.6f %8.6f\n',Li,twhi(Li),qw12)
+
 	% interpolate temperature and partial pressure
 	kcmp1(:,Li) = kcomp(:,iLr,itlo(Li),qi11) * twlo(Li) * qw11 + ...
 		      kcomp(:,iLr,ithi(Li),qi11) * twhi(Li) * qw11 + ...
@@ -158,6 +161,7 @@ for gind = xyz : xyz
          ((prof.gamnt(Li,gind)./refpro.gamnt(iLr,rgind)) .^ kpow);
 
     end % layer loop
+%error('lkjlkj')
 
 
     % accumulate expanded absorptions
@@ -197,7 +201,14 @@ for gind = xyz : xyz
       od_gas(wonk) = 0.0;
     end
 
-    absc = absc + od_gas;    %%% update absc (output) from the (input) value
+      absc = absc + od_gas;    %%% update absc (output) from the (input) value
+% this is debugging WV vs HDO
+%     if gid ~= 103
+%       absc = absc + od_gas;    %%% update absc (output) from the (input) value
+%     elseif gid == 103
+%       disp('pah haevy water')
+%     end
+
   end % valid gas ID and compressed data existance check
 
 end % gas loop

@@ -176,7 +176,7 @@ elseif iHITRAN == 2008
   str = ['       --->>> using H2008 kComp Files ... ' str0];
   fprintf(1,'%s \n',str);
   refp   = '/asl/data/kcarta/KCARTADATA/KCMIX/DATA/REFPROF/refprofH2008.mat';
-  %% this is for Matlab : iMatlab_vs_f77 == -1 
+  %% this is for Matlab : iMatlab_vs_f77 == +1 
   kpath = '/dunno_where/KCMIX_DATABASE/H2008_matlab'; 
   %% this is for    f77 : iMatlab_vs_f77 == -1 
   kdatadir = '/asl/data/kcarta/';
@@ -188,12 +188,12 @@ elseif iHITRAN == 2012
   str = ['       --->>> using H2012 kComp Files ... ' str0];
   fprintf(1,'%s \n',str);
   refp   = '/asl/data/kcarta/KCARTADATA/KCMIX/DATA/REFPROF/refprofH2012.mat';
-  %% this is for Matlab : iMatlab_vs_f77 == -1 
+  %% this is for Matlab : iMatlab_vs_f77 == +1 
   kpath = '/dunno_where/KCMIX_DATABASE/H2012_matlab'; 
   %% this is for    f77 : iMatlab_vs_f77 == -1 
   kdatadir = '/asl/data/kcarta/';
   kpathh2o = [kdatadir 'H2012.ieee-le/IR605/h2o_ALLISO.ieee-le/'];
-  kpathhDo = [kdatadir 'H2012.ieee-le/IR605/h2o_ALLISO.ieee-le/'];
+  kpathhDo = [kdatadir 'H2012.ieee-le/IR605/hdo.ieee-le/'];
   kpathco2 = ['/asl/data/kcarta/UMBC_CO2_H1998.ieee-le/CO2ppmv385.ieee-le/'];
   kpathetc = [kdatadir 'H2012.ieee-le/IR605/etc.ieee-le/'];
 end

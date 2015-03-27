@@ -34,8 +34,11 @@ for ip = iCurrentProf
     end
   end
 
-stuff.freqs = [fA fB]; stuff.input_rtpfile = [dirin '/' fin];
-stuff.layersprof = prof;  stuff.iDoJac = iDoJac;   stuff.iProfRun = iProfRun;
+stuff.freqs = [fA fB]; 
+stuff.input_rtpfile = [dirin '/' fin];
+stuff.layersprof = prof;  
+stuff.iDoJac = iDoJac;   
+stuff.iProfRun = iProfRun;
 stuff.iJacobOutput = iJacobOutput;
 
 clear aux_struct iProfRun iHITRAN
