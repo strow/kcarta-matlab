@@ -124,7 +124,7 @@ iDoJac = -1 ;          %% nothing
 iJacobOutput = +1;        %% dBT/dT, dBT/dq*q
 
 % CKD is the CKD version : choose 1,2,3,4,5
-CKD = '6';
+CKD = '1';
 
 % these next two define the input dir and rtp file
 % iProfRun is which of the rtp profiles to run
@@ -132,6 +132,7 @@ dirin   = 'Test/';
   fin   = 'feb2002_raw_op_airs.rad.constemiss.rtp';
   fin   = 'feb2002_raw_op_day_airs.rad.constemiss.rtp';
   iProfRun = 49;
+dirin   = 'Test/';  
   fin   = 'test_night.rtp';
   iProfRun = 1;
 

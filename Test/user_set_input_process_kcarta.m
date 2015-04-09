@@ -125,6 +125,7 @@ iJacobOutput = +1;        %% dBT/dT, dBT/dq*q
 
 % CKD is the CKD version : choose 1,2,3,4,5
 CKD = '6';
+CKD = '1';
 
 % these next two define the input dir and rtp file
 % iProfRun is which of the rtp profiles to run

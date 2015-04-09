@@ -3,7 +3,8 @@ function [zang]=vaconv( sva, salt, alt );
 
 % function [zang]=vaconv( sva, salt, alt );
 %
-% Convert the satellite viewing angle into the local path zenith angle.
+% Convert the satellite viewing angle (scanang)
+% into the local path zenith angle (at ground, this is satzen)
 %
 % Input:
 %    sva  : (1 x nobs) satellite/observing viewing angle (degrees)

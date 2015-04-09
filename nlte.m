@@ -9,7 +9,7 @@ CO2NTE = 370; %% default
 if raFreq(1) > 2405 | raFreq(length(raFreq)) < 2205
   %% no NLTE
   return
-  end
+end
 
 suncos = raSunAngles(1);           %% at surface
 scos1  = raSunAngles(iNumLayer);   %% at TOA

@@ -55,16 +55,19 @@ function [rad,rthm, zang,efine,rsol0] = rtchunk_Tsurf(prof, absc, freq, rplanckm
 [zang]=vaconv(prof.satzen,prof.zobs,prof.palts);
 zang = zang(1:prof.nlevs-1);
 
-%[zang]=vaconv( sva, salt, alt );
-rHeight = 705000;
-rHeight = max(prof.palts);
+%[zang]=vaconv( sva, salt, alt ); %% effectively changes scanang (sva) into satzen (local angle at gnd)
+%typically for AIRS rHeight = 705000  ie height should be in meters
+
 rHeight = prof.zobs;  %% in meters
+rAngleY = saconv(prof.satzen, rHeight);   %% assume satzen ok, compute SCANANG
+
 if abs(prof.scanang) > 90 & abs(prof.satzen) < 90 & rHeight > 0
   %% eg prof.scanang = -9999 
   %%    prof.satzen  = 2.5
   %%    prof.zobs    = 705000
   rAngleY = saconv(prof.satzen, rHeight);   %% this is now SCANANG
-elseif abs(prof.scanang) < 90
+elseif abs(prof.scanang) < 90 & abs(prof.satzen) < 90 & rHeight > 0
+  %% THINGS are OK
   %% eg prof.scanang = 5.003 
   %%    prof.satzen  = 5.757
   %%    prof.zobs    = 829743
@@ -73,6 +76,7 @@ else
   fprintf(1,'need valid satzen = %8.6f  and sat height %8.6f \n',prof.satzen,prof.zobs)
   error('cannot figure out scanang')
 end
+
 zang    = vaconv(rAngleY,prof.zobs,prof.palts);  %% these are the zenith view angles at layers
 %fprintf(1,'scanang = %8.6f satzen = %8.6f sat height %8.6f \n',rAngleY,prof.satzen,prof.zobs)
 

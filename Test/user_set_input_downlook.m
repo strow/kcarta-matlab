@@ -131,6 +131,9 @@ CKD = '6';
 dirin   = 'Test/';
   fin   = 'feb2002_raw_op_airs.rad.constemiss.rtp';
   iProfRun = 49;
+dirin   = '/home/sergio/KCARTA/IP_PROFILES/';
+  fin   = 'junk49.op.rtp';
+  iProfRun = 49;
 
 % iNLTE is which NLTE model to run
 %   example iNLTE = -1; % SARTA

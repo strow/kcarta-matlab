@@ -1,7 +1,7 @@
 function [radsOut,stuff] = dokcarta_downlook_rtp(h,ha,p,pa,iCurrentProf);
 
 %% user has set his/her inputs
-user_set_input_downlook
+user_set_input_downlook_rtp
 
 %% user has set paths to files
 user_set_dirs 
@@ -25,6 +25,9 @@ iDebug = +0;
 for ip = iCurrentProf
   fprintf(1,'processing profile %5i \n',ip);
   [head, prof] = subset_rtp(h, p, h.glist, [], ip);
+  if prof.solzen == -9999 | prof.solzen < 0
+     prof.solzen = 150;  %% turn off
+   end
   [nlays,prof,rFracBot,ropt0] = initialize_kcmix(prof,iDownLook,ropt0);
   aux_struct = auxiliary_set(fA,fB,nlays,rFracBot,CKD,cswt,cfwt,refp);
   if iDoJac(1) > 0

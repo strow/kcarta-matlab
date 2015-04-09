@@ -85,13 +85,14 @@ copt.cvers = CKD;
 copt.cdir  = cdir;
 copt.cswt  = cswt;
 copt.cfwt  = cfwt;
+
 [ci1,ci2,ctw1,ctw2] = continuum_temp_interp_weights(profileG, freqX, copt);
 
 %tic
 %profile on -history
 
-for cc = 1 : length(fchunk)
-  %% parfor cc = 1 : length(fchunk)
+%%for cc = 1 : length(fchunk)
+parfor cc = 1 : length(fchunk)
   iaCountNumVec = [];
 
   ff = fchunk(cc);
@@ -123,7 +124,7 @@ for cc = 1 : length(fchunk)
       % absc = cont; disp(' >>>>>>>>>>>>> ONLY cont!!! <<<<<<<<<<<')
       % absc = absc; disp(' >>>>>>>>>>>>> NO cont!!! <<<<<<<<<<<')
 
-    elseif gid == 2 & prof.solzen < 90 & ropt0.iNLTE == -2 & ...
+    elseif gid == 2 & prof.solzen >= 0 & prof.solzen < 90 & ropt0.iNLTE == -2 & ...
        (ff(1) >= 2205 & ff(end) < 2405)
 
       fprintf(1,'CO2 FAST Compressed NLTE for chunk %4i solzen %8.6f iNLTE %2i\n',ff(1),prof.solzen,ropt0.iNLTE)

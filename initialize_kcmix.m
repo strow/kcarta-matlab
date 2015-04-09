@@ -58,9 +58,11 @@ if ~isfield(prof,'pobs')
   end
 end
 
-if prof.satzen == -9999
-  disp(' ------------>>>> warning : setting prof.satzen = prof.scanang');
-  prof.satzen = prof.scanang;
+if prof.satzen == -9999 & prof.zobs > 0
+  %disp(' ------------>>>> warning : setting prof.satzen = prof.scanang');
+  %prof.satzen = prof.scanang;
+  prof.satzen = vaconv(prof.scanang, prof.zobs, prof.salti);
+  fprintf(1,'WARNING ... set satzen = vaconv(scanang,salti,zobs) = %8.6f \n',prof.satzen)
 end
 
 %%% need prof.plevs(nlays) < prof.spres < prof.plevs(nlays+1), which is same as
