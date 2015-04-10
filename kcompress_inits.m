@@ -15,12 +15,8 @@ nlay = length(prof.mpres);  % number of layers in input profile
 
 %% ropt0.iMatlab_vs_f77 = -1;    %% use f77 binary database
 %% ropt0.iMatlab_vs_f77 = +1;    %% use Matlab binary database
-if ropt0.iMatlab_vs_f77 == -1
   % kCARTA databases
   kpathh2o = ropt0.kpathh2o;
   kpathhDo = ropt0.kpathhDo;
   kpathco2 = ropt0.kpathco2;
   kpathetc = ropt0.kpathetc;
-elseif ropt0.iMatlab_vs_f77 == +1
-  kpath = ropt0.kpath;
-end

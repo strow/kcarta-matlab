@@ -109,7 +109,7 @@ tauG2S  = zeros(length(freq),1);
 % ---------------
 % reflected solar
 % ---------------
-if rsolar > 0
+if rsolar
 
   dstsun = 1.496E+11;              % distance from earth to sun
   radsun = 6.956E+8;		   % radius of the sun

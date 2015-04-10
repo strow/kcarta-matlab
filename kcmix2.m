@@ -66,11 +66,7 @@ for gind = xyz : xyz
   gid = prof.glist(gind);
 
   % get file name of compressed data for this gas and chunk
-  if ropt0.iMatlab_vs_f77 < 0
     cgxfile = get_kcompname_F77(ropt0,vchunk,gid,prefix);
-  else
-    cgxfile = sprintf('%s/cg%dv%d.mat', kpath, gid, vchunk);
-  end
 
   % index of current gas ID in the reference profile
   rgind = find(refpro.glist == gid);
@@ -89,11 +85,7 @@ for gind = xyz : xyz
     %   gid         1 x 1         HITRAN gas ID
     %   kcomp       d x 100 x 11  compressed coefficients
     %
-    if ropt0.iMatlab_vs_f77 < 0
       [fr, fstep, toffset, kcomp, B, gid, ktype] = rdgaschunk_le(cgxfile); 
-    else
-      eval(sprintf('load %s', cgxfile));
-    end
 
     [n, d] = size(B);
     iNumVec = d;   %% we found compressed data
