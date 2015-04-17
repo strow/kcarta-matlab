@@ -208,7 +208,7 @@ iout = 1;
 % loop on layers, starting at the surface
 
 %if prof.solzen >= 90
-if ~rsolar
+if rsolar == -1
    %% normal LTE during night
    for i = ipath
       pplanck = ttorad(freq,prof.ptemp(i));
@@ -217,7 +217,7 @@ if ~rsolar
       %allrad(:,iout) = rad;
    end
 % elseif prof.solzen < 90
-elseif rsolar
+elseif rsolar == 1
    if (freq(end) < 2205 | freq(1) >= 2405)
       %% normal LTE
       for i = ipath
