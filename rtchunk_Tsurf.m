@@ -81,6 +81,7 @@ xabsc(:,lbot) = xabsc(:,lbot)*blmult;
 %                                                 %% and should be same as scanang!!!!
 %fprintf(1,'satzen angle zangTOA = vaconv(rAngleY,prof.zobs,prof.zobs) = %8.6f\n',zangTOA)
 
+%keyboard
 zang = zang(1:prof.nlevs-1);
 
 rtherm  = ropt.rtherm;
@@ -129,6 +130,8 @@ tauG2S  = zeros(length(freq),1);
 % ---------------
 if rsolar
 
+   disp('doing reflective solar')
+   
    dstsun = 1.496E+11;              % distance from earth to sun
    radsun = 6.956E+8;		   % radius of the sun
    omega = pi * (radsun/dstsun)^2;  % solid angle of sun from earth
@@ -208,7 +211,7 @@ iout = 1;
 % loop on layers, starting at the surface
 
 %if prof.solzen >= 90
-if rsolar == -1
+if ~rsolar
    %% normal LTE during night
    for i = ipath
       pplanck = ttorad(freq,prof.ptemp(i));
@@ -217,7 +220,7 @@ if rsolar == -1
       %allrad(:,iout) = rad;
    end
 % elseif prof.solzen < 90
-elseif rsolar == 1
+elseif rsolar
    if (freq(end) < 2205 | freq(1) >= 2405)
       %% normal LTE
       for i = ipath
