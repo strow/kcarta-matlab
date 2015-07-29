@@ -91,7 +91,7 @@ copt.cfwt  = cfwt;
 %profile on -history
 
 %for cc = 1 : length(fchunk)
-parfor cc = 1 : length(fchunk)
+for cc = 1 : length(fchunk)
    %for cc = 1 : length(fchunk)
   iaCountNumVec = [];
 
