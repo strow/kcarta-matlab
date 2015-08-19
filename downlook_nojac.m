@@ -90,14 +90,14 @@ copt.cfwt  = cfwt;
 %tic
 %profile on -history
 
-%for cc = 1 : length(fchunk)
-parfor cc = 1 : length(fchunk)
+for cc = 1 : length(fchunk)
+%parfor cc = 1 : length(fchunk)
    %for cc = 1 : length(fchunk)
   iaCountNumVec = [];
 
   ff = fchunk(cc);
   fr0 = ff + (0:9999)*df;
-  fprintf(1,'doing chunk %4i \n',ff(1));
+%  fprintf(1,'doing chunk %4i \n',ff(1));
 
   absc = zeros(10000,nlays);
 

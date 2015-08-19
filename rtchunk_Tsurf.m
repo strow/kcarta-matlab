@@ -64,7 +64,8 @@ function [rad,rthm, zang,efine,rsol0] = rtchunk_Tsurf(prof, absc, freq, rplanckm
 [npts,nlay]=size(absc);
 
 plevs = prof.plevs;
-ii = min(find(plevs >= prof.spres-5));
+%ii = min(find(plevs >= prof.spres-5));
+ii = min(find(plevs >= prof.spres));
 lbot = min([ii - 1,nlay]);
 blmult = (prof.spres - plevs(lbot))./(plevs(lbot+1)-plevs(lbot));
 indlay = 1:lbot;
@@ -130,7 +131,7 @@ tauG2S  = zeros(length(freq),1);
 % ---------------
 if rsolar
 
-   disp('doing reflective solar')
+%   disp('doing reflective solar')
    
    dstsun = 1.496E+11;              % distance from earth to sun
    radsun = 6.956E+8;		   % radius of the sun
