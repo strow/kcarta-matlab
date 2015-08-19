@@ -92,7 +92,6 @@ copt.cfwt  = cfwt;
 
 for cc = 1 : length(fchunk)
 %parfor cc = 1 : length(fchunk)
-   %for cc = 1 : length(fchunk)
   iaCountNumVec = [];
 
   ff = fchunk(cc);
