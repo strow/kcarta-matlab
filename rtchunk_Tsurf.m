@@ -50,17 +50,22 @@ function [rad,rthm, zang,efine,rsol0] = rtchunk_Tsurf(prof, absc, freq, rplanckm
 %    H. Motteler, 
 %    14 June 02
 %
-
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%{
+%% all this is commented out
 %[zang]=vaconv( sva, salt, alt );
+%[zang]=vaconv( sva, salt, alt ); %% effectively changes scanang (sva) into satzen (local angle at gnd)
+% this code probably from Howard
 [zang]=vaconv(prof.satzen,prof.zobs,prof.palts);
 zang = zang(1:prof.nlevs-1);
-
-%[zang]=vaconv( sva, salt, alt ); %% effectively changes scanang (sva) into satzen (local angle at gnd)
-%typically for AIRS rHeight = 705000  ie height should be in meters
-
+%}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%{
+%% all this is commented out
+% this code from Sergio, trying to fix things if eg satzen not there
+% typically for AIRS rHeight = 705000  ie height should be in meters
 rHeight = prof.zobs;  %% in meters
 rAngleY = saconv(prof.satzen, rHeight);   %% assume satzen ok, compute SCANANG
-
 if abs(prof.scanang) > 90 & abs(prof.satzen) < 90 & rHeight > 0
   %% eg prof.scanang = -9999 
   %%    prof.satzen  = 2.5
@@ -76,16 +81,20 @@ else
   fprintf(1,'need valid satzen = %8.6f  and sat height %8.6f \n',prof.satzen,prof.zobs)
   error('cannot figure out scanang')
 end
-
-zang    = vaconv(rAngleY,prof.zobs,prof.palts);  %% these are the zenith view angles at layers
+zang = vaconv(rAngleY,prof.zobs,prof.palts);  %% these are the zenith view angles at layers
+zang = zang(1:prof.nlevs-1);
 %fprintf(1,'scanang = %8.6f satzen = %8.6f sat height %8.6f \n',rAngleY,prof.satzen,prof.zobs)
-
 %%%% this is not needed
 %zangTOA = vaconv(rAngleY,prof.zobs,prof.zobs);   %% this is zenith view angle at satellite
 %                                                 %% and should be same as scanang!!!!
 %fprintf(1,'satzen angle zangTOA = vaconv(rAngleY,prof.zobs,prof.zobs) = %8.6f\n',zangTOA)
+%}
 
-zang = zang(1:prof.nlevs-1);
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%% this code from Scott
+zlay = 0.5*(prof.palts(1:end-1) + prof.palts(2:end));
+zang = sunang_conv(prof.satzen,zlay);                     %% scott
 
 rtherm  = ropt.rtherm;
 rsolar  = ropt.rsolar;	

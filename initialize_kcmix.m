@@ -1,4 +1,4 @@
-function [nlays,prof,rFracBot,ropt] = initialize_kcmix(prof0,iDownLook,ropt0);
+function [nlays,prof,rFracBot,ropt] = initialize_kcmix(head,prof0,iDownLook,ropt0);
 
 % function [nlays,prof,rFracBot,ropt] = ...
 %                  initialize_kcmix(prof0,iDownLook,ropt0);
@@ -43,9 +43,9 @@ end
 if ~isfield(prof,'plays') 
   prof.plays = zeros(size(prof.plevs));
   plays = prof.plevs;
-  playsA = plays(1:100,:)-plays(2:101,:);
-  playsB = log(plays(1:100,:)./plays(2:101,:));
-  prof.plays(1:100,:) = playsA./playsB;
+  playsA = plays(1:end-1,:)-plays(2:end,:);
+  playsB = log(plays(1:end-1,:)./plays(2:end,:));
+  prof.plays(1:end-1,:) = playsA./playsB;
 end
 
 if ~isfield(prof,'pobs') 
@@ -71,7 +71,25 @@ if (prof.plevs(nlays) > prof.spres)
   error('prof.plevs(nlays) > prof.spres');
 end
 if (prof.plevs(nlevs) < prof.spres)
-  error('prof.plevs(nlevs) < prof.spres');
+  prof.spres
+  prof.plevs(nlevs)
+  disp('prof.plevs(nlevs) < prof.spres .... going to dangerously see if I can flip things');
+  if prof.plevs(1) < prof.spres
+    error('nope cannot flip things around')
+  else
+    prof000 = prof;
+    ilevs = 1:prof.nlevs;
+    ilays = 1:prof.nlevs-1;    
+    prof.plevs(ilevs) = flipud(prof.plevs(ilevs));
+    prof.plays(ilays) = flipud(prof.plays(ilays));    
+    prof.ptemp(ilays) = flipud(prof.ptemp(ilays));
+    prof.palts(ilevs) = flipud(prof.palts(ilevs));        
+    for iG = 1 : head.ngas
+      str = ['prof.gas_' num2str(head.glist(iG)) '(ilays) = flipud(prof.gas_' num2str(head.glist(iG)) '(ilays));'];
+      eval(str)
+    end
+    keyboard
+  end
 end
 
 rFracBot = ...

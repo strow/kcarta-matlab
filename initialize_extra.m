@@ -1,4 +1,4 @@
-%% paths to either tha Matlab or f77 kcompressed files
+%% paths to either the Matlab or f77 kcompressed files
 ropt0.iMatlab_vs_f77 = iMatlab_vs_f77;
 if iMatlab_vs_f77 == +1 
    %% use Matlab kComp files
@@ -12,6 +12,8 @@ elseif iMatlab_vs_f77 == -1
 else
   error('need kComp files to either be Matlab (+1) or f77 ieee-le (-1)')
 end
+
+iNLTE = -1;
 
 ropt0.soldir         = soldir;
 ropt0.cdir           = cdir;

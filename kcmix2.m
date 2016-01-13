@@ -72,6 +72,7 @@ for gind = xyz : xyz
     cgxfile = sprintf('%s/cg%dv%d.mat', kpath, gid, vchunk);
   end
 
+  
   % index of current gas ID in the reference profile
   rgind = find(refpro.glist == gid);
 
@@ -80,7 +81,7 @@ for gind = xyz : xyz
   % check that we have reference and compressed data for this gas
   if ~isempty(rgind) & exist(cgxfile) == 2
     
-    % fprintf(1,'   found kCompressed file ... %s \n',cgxfile);
+    fprintf(1,'   found kCompressed file ... %s \n',cgxfile);
 
     % load compressed coefficient file, defines var's:
     %

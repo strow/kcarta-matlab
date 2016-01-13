@@ -102,8 +102,8 @@
 iAirs = +1;
 
 % iHITRAN sets the kCompressed directory, based on HITRAN
-iHITRAN = 2008;
 iHITRAN = 2012;
+iHITRAN = 2008;
 
 % iMatlab_vs_f77 : use Matlab (+1) or ieee-le (-1) kcomp database
 iMatlab_vs_f77 = +1;   % use Matlab version
@@ -128,13 +128,17 @@ CKD = '1';
 
 % these next two define the input dir and rtp file
 % iProfRun is which of the rtp profiles to run
-dirin   = 'Test/';
-  fin   = 'feb2002_raw_op_airs.rad.constemiss.rtp';
-  fin   = 'feb2002_raw_op_day_airs.rad.constemiss.rtp';
-  iProfRun = 49;
-dirin   = 'Test/';  
-  fin   = 'test_night.rtp';
-  iProfRun = 1;
+% NOT NEEDED
+% dirin   = 'Test/';
+%  fin   = 'feb2002_raw_op_airs.rad.constemiss.rtp';
+%  fin   = 'feb2002_raw_op_day_airs.rad.constemiss.rtp';
+%  iProfRun = 49;
+%dirin   = 'Test/';  
+%  fin   = 'test_night.rtp';
+%  iProfRun = 1;
+dirin = 'NotNeeded9999';
+fin = 'junkfile9999';
+iProfRun = -9999;
 
 % iNLTE is which NLTE model to run
 %   example iNLTE = -1; % SARTA, use this

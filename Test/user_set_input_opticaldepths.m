@@ -93,12 +93,14 @@ iMatlab_vs_f77 = -1;   % use f77 version
 % fA and fB are start and stop wavenumbers
 %fA = 500   fB =  605; 
 fA = 605;  fB = 2830; 
-fA = 1780;  fB = 1805; 
+fA = 1780;  fB = 1805;
+fA = 630;  fB = 705;
 
 % iGasDoOD gives the gasIDs to be included
 %iGasDoOD = [1 103];        %% only do WV (includes continuum) and CO2
 iGasDoOD = 9999;            %% do all
-iGasDoOD = [9999];            %% do all
+iGasDoOD = 9999;            %% do all
+iGasDoOD = [1 2 3 4 5 6 7 51 52 60 103]; %% for Eli Mlawer stuff
 
 % CKD is the CKD version : choose 1,2,3,4,5
 CKD = '6';
@@ -107,10 +109,13 @@ CKD = '6';
 iBreakoutCont = +1;
 
 % these next two define the input dir and rtp file 
-  dirin = '/yourdir/';
+dirin = '/yourdir/';
   fin   = 'desert_op.rtp'; 
   iProfRun = 1;
 dirin = '/asl/s1/strow/rtprod_cris/2013/08/28/';
   fin   = 'test.rtp';
   iProfRun = 262;
+dirin = '/home/sergio/KCARTA/WORK/';
+  fin   = 'tape5_tape6.op.rtp';
+  iProfRun = 1;
 

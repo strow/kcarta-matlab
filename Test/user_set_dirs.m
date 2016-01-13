@@ -112,24 +112,27 @@
 
 % path to solar files ...
 soldir = '/asl/data/kcarta/KCARTADATA/KCMIX/DATA/SOLARv2';
+soldir = '/asl/data/kcarta/solar/';
 
 % path to continuum files ...
 cdir = '/asl/data/kcarta/KCARTADATA/General/CKDieee_le/';
+cdir = '/asl/data/kcarta/ckd/';
 cswt = 1.0; cfwt = 1.0;   %% self and forn weights
 
 % path and name NLTE files ....
 % nltedir = '/asl/data/kcarta/KCARTADATA/NLTE/SARTA_COEFS/setnte_oct05.le.dat';   %% AIRS old
 % nltedir = '/asl/data/kcarta/KCARTADATA/NLTE/SARTA_COEFS/nonLTE7_m150.le.dat';   %% AIRS new
-
-%nltedir = '/asl/data/sarta_database/Data_IASI_may09/Coef/nte_7term.dat'; %% IASI newer but be, so shuft it to KCARTADATA and rename
+%nltedir = '/asl/data/sarta_database/Data_IASI_may09/Coef/nte_7term.dat'; %% IASI newer but be, so shift it to KCARTADATA and rename
 % cp /asl/data/sarta_database/Data_IASI_may09/Coef/nte_7term.dat /asl/data/kcarta/KCARTADATA/NLTE/SARTA_COEFS/IASI_may09_nte_7term.be.dat
 nltedir = '/asl/data/kcarta/KCARTADATA/NLTE/SARTA_COEFS/IASI_may09_nte_7term.be.dat';
+nltedir = '/asl/data/kcarta/nlte/';
 
 kpathCO2_4umNLTE_OD = '/asl/data/kcarta/KCARTADATA/NLTE/LA_UA_kcomp/';
 kpathCO2_4umNLTE_PL = '/asl/data/kcarta/KCARTADATA/NLTE/LA_UA_kcomp/';
 
 % path to CO2 chifiles
 co2ChiFilePath = '/asl/data/kcarta/KCARTADATA/General/ChiFile/';
+co2ChiFilePath = '/asl/data/kcarta/chifile/';
 
 %% these are the klayers execs
 klayers_code.aeri = '/yourdir/klayersV204/Bin/klayers_aeri999';      %% AERI
@@ -180,10 +183,18 @@ elseif iHITRAN == 2008
   kpath = '/dunno_where/KCMIX_DATABASE/H2008_matlab'; 
   %% this is for    f77 : iMatlab_vs_f77 == -1 
   kdatadir = '/asl/data/kcarta/';
-  kpathh2o = [kdatadir 'H2008.ieee-le/IR605/h2o_ALLISO.ieee-le/'];
-  kpathhDo = [kdatadir 'H2008.ieee-le/IR605/h2o_ALLISO.ieee-le//'];
+  kpathh2o = [kdatadir 'H2008_IR.v1.ieee-le/h2o_ALLISO.ieee-le/'];
+  kpathhDo = [kdatadir 'H2008_IR.v1.ieee-le/h2o_ALLISO.ieee-le/'];
+  kpathhDo = [kdatadir 'H2008_IR.v1.ieee-le/hDo.ieee-le/'];
   kpathco2 = ['/asl/data/kcarta/UMBC_CO2_H1998.ieee-le/CO2ppmv385.ieee-le/'];
-  kpathetc = [kdatadir 'H2008.ieee-le/IR605/etc.ieee-le/'];
+  kpathetc = [kdatadir 'H2008_IR.v1.ieee-le/etc.ieee-le/'];
+
+  refp   = ['/asl/data/kcarta/ref_profs/refprofH2008.mat'];
+  kpathh2o = [kdatadir 'H2008_IR/h2o/'];
+  kpathhDo = [kdatadir 'H2008_IR/hdo/'];
+  kpathco2 = ['/asl/data/kcarta/H1988_IR/co2_umbc_ppmv385/'];
+  kpathetc = [kdatadir 'H2008_IR/etc/'];
+
 elseif iHITRAN == 2012
   str = ['       --->>> using H2012 kComp Files ... ' str0];
   fprintf(1,'%s \n',str);

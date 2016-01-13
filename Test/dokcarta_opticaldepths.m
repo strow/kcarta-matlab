@@ -22,7 +22,7 @@ iDebug = +0;
 for ip = iProfRun
   fprintf(1,'processing profile %5i \n',ip);
   [head, prof] = subset_rtp(h, p, h.glist, [], ip);
-  [nlays,prof,rFracBot,ropt0] = initialize_kcmix(prof,iDownLook,ropt0);
+  [nlays,prof,rFracBot,ropt0] = initialize_kcmix(head,prof,iDownLook,ropt0);
   aux_struct = auxiliary_set(fA,fB,nlays,rFracBot,CKD,cswt,cfwt,refp);
   odsOut = opticaldepths(head,prof,aux_struct,ropt0,iGasDoOD,iBreakoutCont);
 end

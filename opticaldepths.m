@@ -1,4 +1,4 @@
-function ods = matlab_kcarta_opticaldepths(head,prof,aux_struct,ropt0,iGasDoOD,iBreakoutCont);
+function ods = opticaldepths(head,prof,aux_struct,ropt0,iGasDoOD,iBreakoutCont);
 %
 % fcn [absc]=matlab_kcarta_opticaldepths(head,prof,aux_struct,ropt0,iGasDoOD,iBreakoutCont);
 %
@@ -119,8 +119,12 @@ for cc = 1 : length(fchunk)
 
   for jj = 1 : length(gasids)
     gid = gasids(jj);
+    if gid == 101 | gid == 102
+      gid
+      error('gids 101,102 automatically included with WV, please remove from user_set_blah')
+    end
+    
     %fprintf(1,'   chunk %4i, doing gasID = %3i \n',ff,gid);
-
     [absc,freq,iNumVec] = kcmix2(itlo, ithi, twlo, twhi, pi1Out, gid, ...
                                  profileG,ff,ropt0,refp,fr0,absc,prefix);
 

@@ -2,6 +2,9 @@
 % are spaced approx 2 cm-1 apart in this region, so we need to interpolate
 % to the 0.0025 cm-1 of KCARTA
 
+% fixed it so that if the spline from AIRS 1 cm-1 to kcarta 0.025 cm-1 is ever negative, it is set to 0
+% that means kcarta will overall return LTE calc at this errant channel.
+
 function radNLTE = nlte(raFreq,satzen,raSatAngles,raSunAngles,raVT,iNumLayer,CO2TOP,nltedir)
 
 CO2NTE = 370; %% default
@@ -68,4 +71,7 @@ oo = find(raFreq > max(frqchn) | raFreq < min(frqchn));
 if length(oo) > 0
   radNLTE(oo) = 0.0;
 end
+
+oo = find(radNLTE < 0);
+radNLTE(oo) = 0.0;
 
