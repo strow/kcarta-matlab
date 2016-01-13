@@ -33,7 +33,7 @@ df       = aux_struct.atm.df;
 f0       = aux_struct.atm.f0;
 nlays    = aux_struct.atm.nlays;
 rFracBot = aux_struct.atm.rFracBot;
-CKD      = aux_struct.cont.CKD;
+CKD      = aux_struct.cont.CKD
 cswt     = aux_struct.cont.cswt;
 cfwt     = aux_struct.cont.cfwt;
 refp     = aux_struct.refp;
@@ -91,13 +91,13 @@ copt.cfwt  = cfwt;
 %tic
 %profile on -history
 
-%%for cc = 1 : length(fchunk)
-parfor cc = 1 : length(fchunk)
+for cc = 1 : length(fchunk)
+%parfor cc = 1 : length(fchunk)
   iaCountNumVec = [];
 
   ff = fchunk(cc);
   fr0 = ff + (0:9999)*df;
-  fprintf(1,'doing chunk %4i \n',ff(1));
+%  fprintf(1,'doing chunk %4i \n',ff(1));
 
   absc = zeros(10000,nlays);
 

@@ -8,13 +8,11 @@
 
 # data & misc
 *.h5
-*.dat
 *.hdf
 *.mat
 *.fig
 *.log
 *.core
-*.rtp
 
 # tex work files
 *.aux

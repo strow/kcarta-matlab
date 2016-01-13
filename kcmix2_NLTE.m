@@ -97,11 +97,7 @@ for gind = xyz : xyz
     %   gid         1 x 1         HITRAN gas ID
     %   kcomp       d x 100 x 11  compressed coefficients
     %
-    if ropt0.iMatlab_vs_f77 < 0
       [fr, fstep, toffset, kcomp, B, gid, ktype] = rdgaschunk_le(cgxfile); 
-    else
-      eval(sprintf('load %s', cgxfile));
-    end
 
     [n, d] = size(B);
     iNumVec = d;   %% we found compressed data

@@ -1,6 +1,4 @@
-function out = user_set_input_process_kcarta_rtp(,ha,p,pa);
-
-% this driver file is used to set up the input parameters for a 
+% This driver file is used to set up the input parameters for a 
 % downlooking (AIRS/IASI/CRiS) computation
 % Assumption : user_set_dirs.m has been set correctly!!!!
 %
@@ -8,17 +6,6 @@ function out = user_set_input_process_kcarta_rtp(,ha,p,pa);
 % 
 % %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % INPUTS (with examples)
-%
-% iAirs drives klayers, and eventually the convolver
-%   iAirs = 0,-1,+1,2,3  : raw, AIRS, IASI, CRiS
-%   example : iAirs = +1;     %%% doing things for AIRS
-%
-% iHITRAN sets the kCompressed directory, based on HITRAN
-%   iHITRAN = 2000,2004,2008,2012 are your options
-%
-% iMatlab_vs_f77 tells the code whether the database is Matlab or ieee-le 
-%   iMatlab_vs_f77 = +1   use Matlab version
-%   iMatlab_vs_f77 = -1   use f77 version
 %
 % fA and fB are start and stop wavenumbers
 %   example : fA = 605;  fB = 830; 
@@ -38,12 +25,6 @@ function out = user_set_input_process_kcarta_rtp(,ha,p,pa);
 %
 % CKD is the CKD version : choose 1,2,3,4,5
 %   example : CKD = '1';
-%
-% these next two define where the input rtp file is in
-%   dir is the directory where the file is in
-%   fin is the actual file
-%   example : dirin = '/yourdir/'; 
-%             fin = 'pin_feb2002_sea_airsnadir_op.sun.rtp';
 %
 % iProfRun is which of the rtp profiles to run
 %   example iProfRun = 1;
@@ -97,44 +78,22 @@ function out = user_set_input_process_kcarta_rtp(,ha,p,pa);
 %     wgtAllChunks: [90000x96]      weighting functions
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%% user defined %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%% user defined %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%% user defined %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-% iAirs drives klayers, and ultimately the convolver
-iAirs = iInstr;
-
-% iHITRAN sets the kCompressed directory, based on HITRAN
-iHITRAN = 2008;
-iHITRAN = 2012;
-
-% iMatlab_vs_f77 : use Matlab (+1) or ieee-le (-1) kcomp database
-iMatlab_vs_f77 = +1;   % use Matlab version
-iMatlab_vs_f77 = -1;   % use f77 version
 
 % fA and fB are start and stop wavenumbers
-fA = 2205;  fB = 2430; 
-fA = 2255;  fB = 2305; 
-fA = 2105;  fB = 2405; 
 fA = 605;  fB = 2830; 
+
+% iNLTE is which NLTE model to run
+%   example iNLTE = -1; % SARTA
+%   example iNLTE = -2; % kCARTA Compressed
+iNLTE = -1;
 
 % iDoJac tells controls the jacobians gasids (-1 for none)
 %iDoJac = [1 2];        %% WV (includes continuum) and CO2
-iDoJac = -1 ;          %% nothing
 %iDoJac = [2];        %% CO2
+iDoJac = -1 ;           %% nothing
 
 % iJacobOutput controls the output jacobians units
 iJacobOutput = +1;        %% dBT/dT, dBT/dq*q
 
 % CKD is the CKD version : choose 1,2,3,4,5
 CKD = '6';
-
-% these next two define the input dir and rtp file
-% iProfRun is which of the rtp profiles to run
-dirin   = 'Test/';
-  fin   = 'rtp_process.rtp';
-  iProfRun = iCurrentProf;
-
-% iNLTE is which NLTE model to run
-%   example iNLTE = -1; % SARTA
-%   example iNLTE = -2; % kCARTA Compressed
-iNLTE = -1;

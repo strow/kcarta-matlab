@@ -1,4 +1,4 @@
-function [nlays,prof,rFracBot,ropt] = initialize_kcmix(head,prof0,iDownLook,ropt0);
+function [nlays,prof,rFracBot] = initialize_kcmix(prof0,iDownLook,ropt0);
 
 % function [nlays,prof,rFracBot,ropt] = ...
 %                  initialize_kcmix(prof0,iDownLook,ropt0);
@@ -58,11 +58,9 @@ if ~isfield(prof,'pobs')
   end
 end
 
-if prof.satzen == -9999 & prof.zobs > 0
-  %disp(' ------------>>>> warning : setting prof.satzen = prof.scanang');
-  %prof.satzen = prof.scanang;
+if prof.satzen == -9999
+  disp(' ------------>>>> warning : prof.satzen no good, convert from scanang');
   prof.satzen = vaconv(prof.scanang, prof.zobs, prof.salti);
-  fprintf(1,'WARNING ... set satzen = vaconv(scanang,salti,zobs) = %8.6f \n',prof.satzen)
 end
 
 %%% need prof.plevs(nlays) < prof.spres < prof.plevs(nlays+1), which is same as
@@ -102,13 +100,13 @@ t1    = interp1(prof.plays(1:nlays),prof.ptemp(1:nlays),p1,'linear','extrap');
 prof.ptemp(nlays) = t1;
 fprintf(1,'bottom layer : frac= %8.6f pavg = %8.6f Temp = %8.6f \n',rFracBot,p1,t1);
 
-% add params for solar on/off and backgnd thermal on/off
-ropt = ropt0;
-if prof.solzen < 90
-  ropt.rsolar = +1;  %%sun on
-else
-  ropt.rsolar = -1;
-end
-
-ropt.rtherm = 2;   %% 0,1,2 = none/simple/accurate background thermal
-
+% % add params for solar on/off and backgnd thermal on/off
+% ropt = ropt0;
+% if prof.solzen < 90
+%   ropt.rsolar = +1;  %%sun on
+% else
+%   ropt.rsolar = -1;
+% end
+% 
+% ropt.rtherm = 2;   %% 0,1,2 = none/simple/accurate background thermal
+% 
