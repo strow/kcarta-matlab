@@ -63,6 +63,8 @@ function [rad,rthm, zang,efine,rsol0] = rtchunk_Tsurf(prof, absc, freq, rplanckm
 % zang    = vaconv(rAngleY,prof.zobs,prof.palts);  %% these are the zenith view angles at layers
 % %fprintf(1,'scanang = %8.6f satzen = %8.6f sat height %8.6f \n',rAngleY,prof.satzen,prof.zobs)
 
+%}
+
 [npts,nlay]=size(absc);
 
 plevs = prof.plevs;
@@ -86,6 +88,8 @@ xabsc(:,lbot) = xabsc(:,lbot)*blmult;
 %}
 
 %keyboard
+% Local path zenith angle for each layer
+
 zang = zang(1:prof.nlevs-1);
 
 rtherm  = ropt.rtherm;
