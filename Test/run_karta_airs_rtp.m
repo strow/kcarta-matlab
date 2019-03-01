@@ -1,39 +1,62 @@
 % Test profile for comparing kcarta to sarta
 addpath /asl/matlib/h4tools
 addpath /asl/matlib/aslutil
-addpath ~/Git/airs_decon/Test
-addpath ~/Git/kcarta-matlab
-addpath ~/Git/kcarta-matlab/Test
-addpath ~/Git/rtp_prod2/util
-addpath ~/Git/ccast/source
-addpath ~/Matlab/Utility
-addpath ~/Git/matlib/sconv
+addpath /home/sergio/MATLABCODE/kcarta-matlab/
+addpath /home/sergio/MATLABCODE/kcarta-matlab/Test
+addpath /home/sergio/MATLABCODE/kcarta-matlab/
 
-addpath ~/Git/kcarta-matlab/private/ANGLES
-addpath ~/Git/kcarta-matlab/private/BACKGND_THERMAL
-addpath ~/Git/kcarta-matlab/private/READERS
-addpath ~/Git/kcarta-matlab/private/JACOBIAN_AUX
+% addpath /home/sergio/MATLABCODE/kcarta-matlab/rtp_prod2/util
+% addpath /home/sergio/MATLABCODE/kcarta-matlab/ccast/source
+% addpath ~/Matlab/Utility
+% addpath /home/sergio/MATLABCODE/kcarta-matlab/matlib/sconv
 
+addpath /home/sergio/MATLABCODE/kcarta-matlab//private/ANGLES
+addpath /home/sergio/MATLABCODE/kcarta-matlab//private/BACKGND_THERMAL
+addpath /home/sergio/MATLABCODE/kcarta-matlab//private/READERS
+addpath /home/sergio/MATLABCODE/kcarta-matlab//private/JACOBIAN_AUX
 
-iMatlab_vs_f77 = -1
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% INITIALIZATION OF PROFILE RTP and prof number
 
-% Get obs and rcalc using IASI RTA converted to CrIS
-%[h,ha,p,pa]=rtpread('test_night.rtp');
-[h,ha,p,pa]=rtpread('junk49.rp.rtp');
+%% baby stuff, no jacs
+iprof = 1; topts = []; rtpfile = 'test_night.rtp';
+iprof = 1; topts = []; rtpfile = 'junk49.rp.rtp';
+iprof = 1; topts = []; rtpfile = '/home/sergio/KCARTA/WORK/clear_h3a2new.op.rtp';
+
+%% more involved, do jac calcs
+iprof = 21; topts.iDoJac = 1; topts.iJacobOutput = 1;
+rtpfile = '/home/sergio/MATLABCODE/oem_pkg_run_sergio_AuxJacs/MakeJacskCARTA/CLEAR_JACS/latbin1_40.clr.rp.rtp';
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% MAIN BODY OF CODE
+[h,ha,p,pa]=rtpread(rtpfile);
+
 p.nlevs = double(p.nlevs);
 
 % btobs = real(rad2bt(h.vchan,p.robs1(:,1)));
 % btcal = real(rad2bt(h.vchan,p.rcalc(:,1)));
 
 % Compute kcarta-matlab version
-iprof = 1;
 psub = rtp_sub_prof(p,iprof);
-rkc = dokcarta_downlook_rtp(h,ha,psub,pa,iprof);
-%dokcarta_downlook_rtp;
-%rkc = rad;  % temporary
+
+if length(topts) == 0
+  [rkc] = dokcarta_downlook_rtp(h,ha,psub,pa,iprof);
+  disp('your output structure is "rkc" ')
+else
+  addpath /home/sergio/MATLABCODE/kcarta-matlab/JACDOWN
+  [rkc,jacs] = dokcarta_downlook_rtp(h,ha,psub,pa,iprof,topts);
+  disp('your output structures are "rkc" and "jacs" ')
+end
+
 radkc  = reshape(rkc.radAllChunks,890000,1);
 freqkc = rkc.freqAllChunks;
 
+disp('>>>>> stopping here before convolving <<<<< ')
+return
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% CONVOLUTIONS
+
+% Get obs and rcalc using IASI RTA converted to CrIS
 % Convert to CrIS ILS
 opts.resmode = 'hires2';
 wlaser = 773.1301;
@@ -52,8 +75,10 @@ k = find(h.ichan <= 2211);  % Get real channels
 btobs = btobs(k);
 btcal = btcal(k);
 
+%%%%%%%%%%%%%%%%%%%%%%%%%
+
 % Convert kcarta to IASI
-addpath ~/Git/iasi_decon
+addpath /home/sergio/MATLABCODE/kcarta-matlab/iasi_decon
 
 [r_iasi,f_iasi] = kc2iasi(radkc,freqkc);
 btkc_iasi = rad2bt(f_iasi,r_iasi);
@@ -87,3 +112,5 @@ rad_pt2 = p.rcalc;
 r_iasi = [rad_pt1; rad_pt2];
 clear rad_pt1 rad_pt2
 btcal_i = rad2bt(fiasi,r_iasi);
+
+%%%%%%%%%%%%%%%%%%%%%%%%%

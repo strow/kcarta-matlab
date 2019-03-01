@@ -111,8 +111,8 @@ copt.cfwt  = cfwt;
 %tic
 %profile on -history
 
-%% for cc = 1 : nchunk
-parfor cc = 1 : nchunk
+%% parfor cc = 1 : nchunk
+for cc = 1 : nchunk
   iaCountNumVec = [];
 
   ff = fchunk(cc);

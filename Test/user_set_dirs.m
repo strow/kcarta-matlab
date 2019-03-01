@@ -1,4 +1,5 @@
 hitran = 'H2012';
+%hitran = 'H2016';
 kcdir  = '/asl/data/kcarta';
 
 opt.CKD = '6';

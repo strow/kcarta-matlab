@@ -4,10 +4,21 @@ function [rad,jacsOut] = dokcarta_downlook_rtp(h,ha,p,pa,iCurrentProf,opt);
 
 jacsOut = [];
 
+if ~exist('opt')
+  opt = struct;
+end
+
 global iDebug
 iDebug = +0;      
 
 % Select kCompressed version of HITRAN
+
+iMatlab_vs_f77 = -1
+if isfield(opt,'iMatlab_vs_f77')
+  iMatlab_vs_f77 = opt.iMatlab_vs_f77; 
+else ~isfield(opt,'iMatlab_vs_f77')
+  opt.iMatlab_vs_f77 = iMatlab_vs_f77;
+end
 
 % Start/stop wavenumbers
 fA = 605;  fB = 2830; 
@@ -22,9 +33,23 @@ opt.iNLTE = -1;   % Do nlte
 % iDoJac = [2];   % CO2, etc
 %iDoJac = -1;     % Don't do Jacobians
 iDoJac = -1;     % Don't do Jacobians
+if isfield(opt,'iDoJac')
+  iDoJac = opt.iDoJac;
+end
 
 % iJacobOutput controls the output jacobians units
 iJacobOutput = +1;  % 1 == dBT/dT, 2? == dBT/dq*q??
+if isfield(opt,'iJacobOutput')
+  iDoJac = opt.iJacobOutput;
+end
+
+if iDoJac > 0 & iJacobOutput == 1
+  disp('doing dBT/dT jacs')
+elseif iDoJac > 0 & iJacobOutput == 2
+  disp('doing  dBT/dq*q jacs');
+end
+  
+user_set_dirs
 
 for ip = iCurrentProf
 %   fprintf(1,'processing profile %5i \n',ip);
@@ -35,6 +60,7 @@ for ip = iCurrentProf
    else
       opt.rsolar = false;
    end
+   
    opt.rtherm = 2;   %% 0,1,2 = none/simple/accurate background thermal
    aux_struct = auxiliary_set(fA,fB,nlays,rFracBot,opt.CKD,opt.cswt,opt.cfwt,opt.refp);
    if iDoJac > 0
