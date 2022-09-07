@@ -18,14 +18,14 @@ addpath /home/sergio/MATLABCODE/kcarta-matlab//private/JACOBIAN_AUX
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%% INITIALIZATION OF PROFILE RTP and prof number
 
-%% baby stuff, no jacs
-iprof = 1; topts = []; rtpfile = 'test_night.rtp';
-iprof = 1; topts = []; rtpfile = 'junk49.rp.rtp';
-iprof = 1; topts = []; rtpfile = '/home/sergio/KCARTA/WORK/clear_h3a2new.op.rtp';
-
 %% more involved, do jac calcs
 iprof = 21; topts.iDoJac = 1; topts.iJacobOutput = 1;
 rtpfile = '/home/sergio/MATLABCODE/oem_pkg_run_sergio_AuxJacs/MakeJacskCARTA/CLEAR_JACS/latbin1_40.clr.rp.rtp';
+
+%% baby stuff, no jacs
+iprof = 1; topts = []; rtpfile = '/home/sergio/KCARTA/WORK/clear_h3a2new.op.rtp';
+iprof = 1; topts = []; rtpfile = 'junk49.rp.rtp';
+iprof = 1; topts = []; rtpfile = 'test_night.rtp';
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% MAIN BODY OF CODE

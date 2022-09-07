@@ -40,7 +40,7 @@ end
 % iJacobOutput controls the output jacobians units
 iJacobOutput = +1;  % 1 == dBT/dT, 2? == dBT/dq*q??
 if isfield(opt,'iJacobOutput')
-  iDoJac = opt.iJacobOutput;
+  iJacobOutput = opt.iJacobOutput;
 end
 
 if iDoJac > 0 & iJacobOutput == 1
